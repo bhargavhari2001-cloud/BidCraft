@@ -1,0 +1,74 @@
+[
+  {
+    "id": "kb-001",
+    "title": "Cloud Infrastructure & Migration Capabilities",
+    "category": "Technical",
+    "content": "Our team has extensive experience designing and implementing cloud migration strategies across AWS, Azure, and Google Cloud Platform. We follow a structured 5-phase migration methodology: Assessment, Planning, Migration, Optimization, and Governance. Our certified cloud architects have successfully migrated over 200 enterprise workloads, reducing infrastructure costs by an average of 35% while improving uptime to 99.99%. We leverage Infrastructure as Code (Terraform, CloudFormation) and containerization (Docker, Kubernetes) to ensure reproducible, scalable deployments.",
+    "tags": ["cloud", "aws", "azure", "migration", "infrastructure", "kubernetes", "docker", "terraform"],
+    "createdAt": "2025-01-15T10:00:00Z",
+    "updatedAt": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "kb-002",
+    "title": "SOC 2 Type II & HIPAA Compliance",
+    "category": "Security & Compliance",
+    "content": "We maintain SOC 2 Type II certification with annual audits conducted by an independent third-party firm. Our security program encompasses all five Trust Service Criteria: Security, Availability, Processing Integrity, Confidentiality, and Privacy. For healthcare clients, we are fully HIPAA compliant with documented Business Associate Agreements, encrypted PHI handling, and annual HIPAA training for all staff. Our incident response plan is tested quarterly with tabletop exercises, and we maintain a documented Business Continuity and Disaster Recovery plan with RPO < 1 hour and RTO < 4 hours.",
+    "tags": ["soc2", "hipaa", "compliance", "security", "audit", "encryption", "incident-response"],
+    "createdAt": "2025-01-15T10:00:00Z",
+    "updatedAt": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "kb-003",
+    "title": "Enterprise Software Development Methodology",
+    "category": "Methodology",
+    "content": "We employ a hybrid Agile/SAFe methodology tailored to enterprise environments. Our development process includes 2-week sprints with daily standups, sprint planning, retrospectives, and demos. We use a CI/CD pipeline with automated testing (unit, integration, and E2E tests achieving >90% code coverage). Our quality assurance process includes code reviews, static analysis (SonarQube), and security scanning (SAST/DAST). We follow GitFlow branching strategy and maintain comprehensive documentation using Confluence and automated API docs.",
+    "tags": ["agile", "safe", "methodology", "cicd", "testing", "quality-assurance", "devops"],
+    "createdAt": "2025-01-15T10:00:00Z",
+    "updatedAt": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "kb-004",
+    "title": "Team Qualifications & Certifications",
+    "category": "Staffing",
+    "content": "Our technical team comprises 150+ professionals including AWS Certified Solutions Architects, Azure Solutions Architects, Certified Scrum Masters (CSM), PMP-certified project managers, and CISSP-certified security engineers. Average team member tenure is 4.5 years, and we maintain a 92% employee retention rate. Key team leads hold advanced degrees in Computer Science and relevant industry certifications. We assign dedicated project managers, technical leads, and QA leads to each engagement with clearly defined RACI matrices.",
+    "tags": ["team", "certifications", "aws", "azure", "pmp", "cissp", "staffing", "qualifications"],
+    "createdAt": "2025-01-15T10:00:00Z",
+    "updatedAt": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "kb-005",
+    "title": "Government & Public Sector Experience",
+    "category": "Experience & References",
+    "content": "We have delivered solutions for 15+ federal, state, and local government agencies over the past 8 years. Notable engagements include modernizing a state Department of Revenue's tax processing system (serving 6M+ taxpayers), building a real-time emergency management platform for a county government, and implementing a cloud-based case management system for a federal agency. All government projects were delivered on time and within budget, with client satisfaction scores averaging 4.7/5.0. We hold FedRAMP authorization and maintain compliance with FISMA, NIST 800-53, and Section 508 accessibility standards.",
+    "tags": ["government", "public-sector", "fedramp", "references", "federal", "state", "nist"],
+    "createdAt": "2025-01-15T10:00:00Z",
+    "updatedAt": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "kb-006",
+    "title": "Pricing Model & Cost Structure",
+    "category": "Pricing",
+    "content": "We offer flexible pricing models including Fixed Price, Time & Materials, and hybrid approaches. Our rates are competitive within the industry and reflect the senior-level expertise we bring to each engagement. We provide detailed cost breakdowns by phase, role, and deliverable to ensure full transparency. Volume discounts are available for multi-year engagements, and we offer a satisfaction guarantee for the first 30 days of any new engagement. All proposals include a not-to-exceed ceiling with formal change order processes for scope modifications.",
+    "tags": ["pricing", "cost", "rates", "fixed-price", "time-materials", "budget"],
+    "createdAt": "2025-01-15T10:00:00Z",
+    "updatedAt": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "kb-007",
+    "title": "Data Security & Access Controls",
+    "category": "Security & Compliance",
+    "content": "We implement defense-in-depth security architecture with multi-layered controls. All data is encrypted at rest (AES-256) and in transit (TLS 1.3). We enforce role-based access control (RBAC) with the principle of least privilege, multi-factor authentication for all system access, and maintain detailed audit logs with 12-month retention. Our security operations center monitors systems 24/7, and we conduct annual penetration testing by certified third-party firms. We comply with GDPR, CCPA, and other applicable data privacy regulations.",
+    "tags": ["security", "encryption", "rbac", "mfa", "gdpr", "penetration-testing", "data-privacy"],
+    "createdAt": "2025-01-15T10:00:00Z",
+    "updatedAt": "2025-01-15T10:00:00Z"
+  },
+  {
+    "id": "kb-008",
+    "title": "Microservices & API Architecture",
+    "category": "Technical",
+    "content": "We specialize in designing and building microservices architectures using industry best practices. Our standard technology stack includes Node.js/TypeScript and Python for backend services, React/Next.js for frontend applications, and PostgreSQL, MongoDB, and Redis for data persistence. We implement API gateways (Kong, AWS API Gateway), service mesh (Istio), and event-driven architectures (Kafka, RabbitMQ). All APIs follow RESTful conventions with OpenAPI 3.0 documentation, and we support GraphQL where appropriate. Our microservices are containerized and orchestrated via Kubernetes with auto-scaling capabilities.",
+    "tags": ["microservices", "api", "nodejs", "react", "kubernetes", "architecture", "graphql"],
+    "createdAt": "2025-01-15T10:00:00Z",
+    "updatedAt": "2025-01-15T10:00:00Z"
+  }
+]
