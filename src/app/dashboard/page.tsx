@@ -34,18 +34,18 @@ export default function DashboardPage() {
 
   // Compute stats
   const totalRFPs = sessions.length;
-  const totalQuestions = sessions.reduce((sum, s) => sum + s.questions.length, 0);
+  const totalQuestions = sessions.reduce((sum, s: RFPSession) => sum + s.questions.length, 0);
   const totalAnswered = sessions.reduce(
-    (sum, s) =>
+    (sum, s: RFPSession) =>
       sum + s.responses.filter((r) => r.status === "generated" || r.status === "edited").length,
     0
   );
   const totalEdited = sessions.reduce(
-    (sum, s) => sum + s.responses.filter((r) => r.status === "edited").length,
+    (sum, s: RFPSession) => sum + s.responses.filter((r) => r.status === "edited").length,
     0
   );
 
-  const allResponses = sessions.flatMap((s) => s.responses).filter((r) => r.status === "generated" || r.status === "edited");
+  const allResponses = sessions.flatMap((s: RFPSession) => s.responses).filter((r) => r.status === "generated" || r.status === "edited");
   const avgConfidence =
     allResponses.length > 0
       ? Math.round(allResponses.reduce((sum, r) => sum + r.confidence, 0) / allResponses.length)

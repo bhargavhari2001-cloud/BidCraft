@@ -16,15 +16,18 @@ export async function semanticSearch(
     matchCount?: number;
     matchThreshold?: number;
     category?: string | null;
+    // Pass a pre-computed embedding to avoid a redundant Voyage AI call
+    precomputedEmbedding?: number[];
   }
 ): Promise<SemanticSearchResult[]> {
   const {
     matchCount = 5,
     matchThreshold = 0.3,
     category = null,
-  } = options || {};
+    precomputedEmbedding,
+  } = options ?? {};
 
-  const queryEmbedding = await generateEmbedding(query, "query");
+  const queryEmbedding = precomputedEmbedding ?? await generateEmbedding(query, "query");
 
   const supabase = getSupabaseServerClient();
   const { data, error } = await supabase.rpc("match_knowledge_base", {
@@ -34,9 +37,6 @@ export async function semanticSearch(
     filter_category: category,
   });
 
-  if (error) {
-    throw new Error(`Semantic search failed: ${error.message}`);
-  }
-
-  return (data || []) as SemanticSearchResult[];
+  if (error) throw new Error(`Semantic search failed: ${error.message}`);
+  return (data ?? []) as SemanticSearchResult[];
 }

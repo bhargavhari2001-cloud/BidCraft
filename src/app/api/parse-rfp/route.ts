@@ -1,38 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import mammoth from "mammoth";
+import { workbookToText } from "@/lib/xlsxParser";
+import { notifySlack } from "@/lib/notify";
+import { checkRateLimit, getClientIP, rateLimitError } from "@/lib/rateLimit";
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+const ALLOWED_EXTENSIONS = new Set(["pdf", "docx", "txt", "xlsx", "xls", "csv"]);
+const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10 MB
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 10 parses per minute per IP (expensive operation)
+  const ip = getClientIP(request);
+  const rl = checkRateLimit(ip, 10);
+  if (!rl.allowed) return rateLimitError(rl.resetAt);
+
   try {
     const formData = await request.formData();
     const file = formData.get("file") as File;
 
     if (!file) {
-      return NextResponse.json(
-        { error: "No file provided" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
     const fileName = file.name;
-    const ext = fileName.split(".").pop()?.toLowerCase();
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    const ext = fileName.split(".").pop()?.toLowerCase() ?? "";
 
-    // Validate file type
-    if (!["pdf", "docx", "txt", "xlsx", "xls", "csv"].includes(ext || "")) {
+    if (!ALLOWED_EXTENSIONS.has(ext)) {
       return NextResponse.json(
-        { error: "Unsupported file type. Please upload PDF or DOCX." },
+        { error: "Unsupported file type. Please upload PDF, DOCX, TXT, or spreadsheet." },
         { status: 400 }
       );
     }
 
-    // Validate file size (10MB)
-    if (buffer.length > 10 * 1024 * 1024) {
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    if (buffer.length > MAX_FILE_BYTES) {
       return NextResponse.json(
         { error: "File too large. Maximum size is 10MB." },
         { status: 400 }
@@ -41,8 +46,8 @@ export async function POST(request: NextRequest) {
 
     const isPdf = ext === "pdf";
     const isDocx = ext === "docx";
+    const isSheet = ext === "xlsx" || ext === "xls" || ext === "csv";
 
-    // Extract text from DOCX using mammoth
     let docxText = "";
     if (isDocx) {
       try {
@@ -57,6 +62,24 @@ export async function POST(request: NextRequest) {
       } catch {
         return NextResponse.json(
           { error: "Failed to read DOCX file. It may be corrupted." },
+          { status: 400 }
+        );
+      }
+    }
+
+    let sheetText = "";
+    if (isSheet) {
+      try {
+        sheetText = workbookToText(buffer);
+        if (!sheetText.trim()) {
+          return NextResponse.json(
+            { error: "Could not extract data from the spreadsheet. It may be empty." },
+            { status: 400 }
+          );
+        }
+      } catch {
+        return NextResponse.json(
+          { error: "Failed to read spreadsheet. It may be corrupted or password-protected." },
           { status: 400 }
         );
       }
@@ -110,6 +133,13 @@ Respond ONLY with valid JSON in this exact format, no other text:
           text: `${prompt}\n\nHere is the RFP document text extracted from a Word document:\n\n---\n${docxText.substring(0, 30000)}\n---`,
         },
       ];
+    } else if (isSheet) {
+      userContent = [
+        {
+          type: "text",
+          text: `${prompt}\n\nHere is the RFP content extracted from a spreadsheet (one CSV block per sheet):\n\n---\n${sheetText}\n---`,
+        },
+      ];
     } else {
       userContent = [
         {
@@ -143,11 +173,13 @@ Respond ONLY with valid JSON in this exact format, no other text:
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      fileName,
-      ...parsedResult,
-    });
+    notifySlack(
+      `📄 New RFP parsed: *${parsedResult.rfp_title || fileName}* — ${
+        parsedResult.total_questions ?? (parsedResult.questions?.length || 0)
+      } questions extracted.`
+    );
+
+    return NextResponse.json({ success: true, fileName, ...parsedResult });
   } catch (error: unknown) {
     console.error("RFP parsing error:", error);
     const errorMessage =

@@ -66,51 +66,52 @@ function buildProfileContext(profile: CompanyProfile | null, companyName?: strin
 }
 
 // ── Knowledge base context builder ──
+// Exported so callers can place this in the USER message rather than the
+// system prompt, which keeps the system prompt stable and maximises
+// Anthropic prompt-cache hit rates across questions in a single RFP session.
 
-interface KBSource {
+export interface KBSource {
   title: string;
   content: string;
   similarity?: number;
 }
 
-function buildKBContext(sources: KBSource[]): string {
+export function buildKBSection(sources: KBSource[]): string {
   if (!sources.length) return "";
 
-  return `\nKNOWLEDGE BASE REFERENCES (ordered by relevance — use these to build your response):
+  return `KNOWLEDGE BASE REFERENCES (ordered by relevance — use these to build your response):
 ${sources
   .map(
     (kb, i) =>
-      `[KB-${i + 1}] ${kb.title}${kb.similarity ? ` (${Math.round(kb.similarity * 100)}% relevance)` : ""}:
-${kb.content}`
+      `[KB-${i + 1}] ${kb.title}${kb.similarity ? ` (${Math.round(kb.similarity * 100)}% relevance)` : ""}:\n${kb.content}`
   )
   .join("\n\n")}
 
-IMPORTANT: When referencing information from these knowledge base entries, naturally incorporate the facts, metrics, and specifics. Do NOT say "according to our knowledge base" — instead, state the information as your company's own capabilities and experience.
-`;
+IMPORTANT: Naturally incorporate the facts, metrics, and specifics from these entries. Do NOT say "according to our knowledge base" — state the information as your company's own capabilities and experience.`;
 }
 
 // ── Main prompt builder ──
+// kbSources intentionally removed from PromptConfig: KB context belongs in
+// the user message so the system prompt stays identical across all questions
+// in a session, enabling Anthropic prompt caching (~60–80% latency reduction).
 
 export interface PromptConfig {
   questionText: string;
   questionCategory: string;
   companyProfile: CompanyProfile | null;
   companyName?: string;
-  kbSources: KBSource[];
   tone: ResponseTone;
   length: ResponseLength;
 }
 
 export function buildSystemPrompt(config: PromptConfig): string {
-  const { companyProfile, companyName, kbSources, tone, length } = config;
+  const { companyProfile, companyName, tone, length } = config;
 
   const profileCtx = buildProfileContext(companyProfile, companyName);
-  const kbCtx = buildKBContext(kbSources);
 
   return `You are an expert RFP response writer with 15+ years of experience helping companies win government and enterprise contracts. You write professional, compelling, and technically accurate responses.
 
 ${profileCtx}
-${kbCtx}
 
 TONE: ${TONE_INSTRUCTIONS[tone]}
 

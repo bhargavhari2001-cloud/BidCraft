@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { checkRateLimit, getClientIP, rateLimitError } from "@/lib/rateLimit";
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+const MAX_FILE_BYTES = 10 * 1024 * 1024;
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 10 parses per minute per IP
+  const ip = getClientIP(request);
+  const rl = checkRateLimit(ip, 10);
+  if (!rl.allowed) return rateLimitError(rl.resetAt);
+
   try {
     const formData = await request.formData();
     const file = formData.get("file") as File;
@@ -16,7 +22,15 @@ export async function POST(request: NextRequest) {
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const isPdf = file.name.endsWith(".pdf");
+
+    if (buffer.length > MAX_FILE_BYTES) {
+      return NextResponse.json(
+        { error: "File too large. Maximum size is 10MB." },
+        { status: 400 }
+      );
+    }
+
+    const isPdf = file.name.toLowerCase().endsWith(".pdf");
 
     const prompt = `You are an expert at extracting company information from documents. Analyze the following company document and extract structured information.
 
@@ -60,13 +74,15 @@ Be thorough but only include information explicitly stated in the document. Resp
         : [
             {
               type: "text",
-              text: `${prompt}\n\nHere is the company document:\n\n---\n${buffer.toString("utf-8").substring(0, 30000)}\n---`,
+              text: `${prompt}\n\nHere is the company document:\n\n---\n${buffer
+                .toString("utf-8")
+                .substring(0, 30000)}\n---`,
             },
           ];
 
     const message = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 4096,
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 2048,
       messages: [{ role: "user", content: userContent }],
     });
 

@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "types": []
+  },
+  "include": [
+    "typecheck-stubs",
+    "src/lib/xlsxParser.ts",
+    "src/lib/notify.ts",
+    "src/lib/pdfGenerator.ts",
+    "src/app/api/kb-hygiene/route.ts",
+    "src/app/api/parse-rfp/route.ts",
+    "src/components/LibraryHealth.tsx",
+    "src/components/ExportModal.tsx"
+  ]
+}

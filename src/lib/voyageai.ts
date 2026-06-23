@@ -1,35 +1,51 @@
 const VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings";
 const MODEL = "voyage-3-lite";
 
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  maxAttempts = 3,
+  baseDelayMs = 600
+): Promise<T> {
+  let lastError: unknown;
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastError = err;
+      if (attempt < maxAttempts - 1) {
+        // Exponential backoff: 600ms, 1200ms, 2400ms
+        await new Promise((r) => setTimeout(r, baseDelayMs * 2 ** attempt));
+      }
+    }
+  }
+  throw lastError;
+}
+
 export async function generateEmbeddings(
   texts: string[],
   inputType: "document" | "query" = "document"
 ): Promise<number[][]> {
   const apiKey = process.env.VOYAGE_API_KEY;
-  if (!apiKey) {
-    throw new Error("VOYAGE_API_KEY environment variable is not set");
-  }
+  if (!apiKey) throw new Error("VOYAGE_API_KEY environment variable is not set");
 
-  const response = await fetch(VOYAGE_API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: MODEL,
-      input: texts,
-      input_type: inputType,
-    }),
+  return withRetry(async () => {
+    const response = await fetch(VOYAGE_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({ model: MODEL, input: texts, input_type: inputType }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Voyage AI error (${response.status}): ${errorText}`);
+    }
+
+    const data = await response.json();
+    return data.data.map((item: { embedding: number[] }) => item.embedding);
   });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Voyage AI error (${response.status}): ${errorText}`);
-  }
-
-  const data = await response.json();
-  return data.data.map((item: { embedding: number[] }) => item.embedding);
 }
 
 export async function generateEmbedding(

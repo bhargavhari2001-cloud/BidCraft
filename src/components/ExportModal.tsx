@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { RFPQuestion, GeneratedResponse, ResponseFeedback } from "@/types";
 import { generateResponseDocx } from "@/lib/docxGenerator";
+import { generateResponsePdf } from "@/lib/pdfGenerator";
 import { showToast } from "@/components/Toast";
 
 export interface ExportModalProps {
@@ -123,6 +124,46 @@ export default function ExportModal({
     } catch (err) {
       console.error("Export error:", err);
       showToast("error", "Failed to generate document. Please try again.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  // ── PDF export (same payload, second format) ──
+  const handleExportPdf = async () => {
+    if (stats.willExport === 0) {
+      showToast("error", "No questions to export. Check your filter settings.");
+      return;
+    }
+    setIsGenerating(true);
+    try {
+      const blob = await generateResponsePdf({
+        rfpTitle,
+        issuingOrganization: issuingOrg,
+        submissionDeadline: deadline,
+        questions,
+        responses,
+        feedbackMap,
+        companyName: companyName.trim() || undefined,
+        rfpReferenceNumber: rfpRefNumber.trim() || undefined,
+        includeTableOfContents: includeToc,
+        includeOnlyCompleted,
+        includeConfidenceScores,
+        includeSourceReferences: includeSourceRefs,
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      const datePart = new Date().toISOString().split("T")[0];
+      const titleSlug = (rfpTitle || "RFP-Responses").replace(/[^a-zA-Z0-9\s-]/g, "").trim();
+      a.download = `${titleSlug}_${datePart}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("success", "PDF exported successfully");
+      onClose();
+    } catch (err) {
+      console.error("PDF export error:", err);
+      showToast("error", "Failed to generate PDF. Please try again.");
     } finally {
       setIsGenerating(false);
     }
@@ -279,6 +320,14 @@ export default function ExportModal({
             className="px-4 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm text-white/60 hover:bg-white/[0.08] hover:text-white/80 transition-colors"
           >
             Cancel
+          </button>
+          <button
+            onClick={handleExportPdf}
+            disabled={isGenerating || stats.willExport === 0}
+            className="px-4 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-sm text-white/60 hover:bg-white/[0.08] hover:text-white/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Generate and download PDF document"
+          >
+            PDF
           </button>
           <button
             onClick={handleExport}

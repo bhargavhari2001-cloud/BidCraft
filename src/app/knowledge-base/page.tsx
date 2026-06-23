@@ -11,6 +11,7 @@ import {
   SemanticSearchResult,
 } from "@/lib/knowledgeBaseService";
 import { showToast } from "@/components/Toast";
+import LibraryHealth from "@/components/LibraryHealth";
 import {
   ArrowLeft,
   Plus,
@@ -354,6 +355,8 @@ export default function KnowledgeBasePage() {
             {isLoading ? "Loading..." : `${entries.length} entries`} — these inform AI-generated RFP responses
           </p>
         </div>
+
+        <LibraryHealth />
 
         {/* Search + Filters */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
