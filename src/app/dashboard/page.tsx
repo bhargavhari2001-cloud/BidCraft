@@ -104,20 +104,22 @@ export default function DashboardPage() {
             Dashboard
           </h1>
           <span style={{ fontSize: 11.5, color: "var(--faint,#8A867D)", whiteSpace: "nowrap" }}>
-            {greeting()}, Dana — {totalRFPs > 0 ? totalRFPs : 6} bids in flight
+            {greeting()} — {totalRFPs > 0 ? totalRFPs : 6} bids in flight
           </span>
         </div>
         <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
-          <div style={{
-            display: "flex", alignItems: "center", gap: 8,
-            width: "100%", maxWidth: 420, padding: "7px 12px",
-            background: "var(--surface,#fff)", border: "1px solid var(--bd,#E5E3DC)",
-            borderRadius: 9, color: "var(--placeholder,#9b978d)",
-          }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
-            <span style={{ fontSize: 13, color: "var(--faint2,#a8a499)" }}>Search questions, answers, bids…</span>
-            <span style={{ marginLeft: "auto", fontFamily: "'Geist Mono',monospace", fontSize: 10, color: "var(--faint3,#bdb9ae)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 4, padding: "1px 5px" }}>⌘K</span>
-          </div>
+          <label style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", maxWidth: 420, padding: "7px 12px", background: "var(--surface,#fff)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 9, cursor: "text" }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint2,#a8a499)" strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0 }} aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
+            <input
+              type="search"
+              placeholder="Search questions, answers, bids…"
+              style={{
+                flex: 1, border: "none", background: "transparent", outline: "none",
+                fontSize: 13, color: "var(--text,#1B1A17)", fontFamily: "'Geist',sans-serif",
+              }}
+            />
+            <span style={{ flexShrink: 0, fontFamily: "'Geist Mono',monospace", fontSize: 10, color: "var(--faint3,#bdb9ae)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 4, padding: "1px 5px" }}>⌘K</span>
+          </label>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
           <button
