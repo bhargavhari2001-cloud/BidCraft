@@ -498,7 +498,7 @@ export default function ReviewPage() {
   // ── Empty state ──
   if (questions.length === 0) {
     return (
-      <div className="min-h-full bg-[#FAF9F6] text-[#1B1A17] flex items-center justify-center">
+      <div className="h-full overflow-y-auto bg-[#FAF9F6] text-[#1B1A17] flex items-center justify-center">
         <div className="text-center">
           <FileText className="w-12 h-12 text-[#bdb9ae] mx-auto mb-4" />
           <h2 className="text-xl font-semibold mb-2">No RFP Data Found</h2>
@@ -516,7 +516,7 @@ export default function ReviewPage() {
 
   // ── Render ──
   return (
-    <div className="min-h-full bg-[#FAF9F6] text-[#1B1A17] flex flex-col">
+    <div className="h-full overflow-y-auto bg-[#FAF9F6] text-[#1B1A17] flex flex-col">
       {/* ── Nav ── */}
       <nav className="border-b border-[#E5E3DC] bg-[#FAF9F6]/90 backdrop-blur-xl sticky top-0 z-50 shrink-0">
         <div className="max-w-screen-2xl mx-auto px-4 h-14 flex items-center justify-between gap-4">

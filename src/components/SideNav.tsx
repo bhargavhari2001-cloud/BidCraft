@@ -233,14 +233,14 @@ export default function SideNav() {
               display: "flex", alignItems: "center", justifyContent: "center",
               color: "#fff", fontSize: 12, fontWeight: 600,
             }}>
-              DM
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
             </div>
             <div style={{ flex: 1, minWidth: 0, lineHeight: 1.2 }}>
               <div style={{ fontSize: 12.5, fontWeight: 600, color: "var(--sb-fg,#1B1A17)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                Dana Mercer
+                User
               </div>
               <div style={{ fontSize: 10.5, color: "var(--sb-muted,#7b756a)" }}>
-                Bid Manager · Northwind
+                Bid Manager
               </div>
             </div>
             <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#3FAE6E", boxShadow: "0 0 0 3px rgba(63,174,110,.18)", flexShrink: 0 }} />

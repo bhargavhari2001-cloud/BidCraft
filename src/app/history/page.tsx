@@ -67,7 +67,7 @@ export default function HistoryPage() {
   };
 
   return (
-    <div className="min-h-full bg-[#FAF9F6] text-[#1B1A17]">
+    <div className="h-full overflow-y-auto bg-[#FAF9F6] text-[#1B1A17]">
       {/* Nav */}
       <nav className="border-b border-[#E5E3DC] bg-[#FAF9F6]/90 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">

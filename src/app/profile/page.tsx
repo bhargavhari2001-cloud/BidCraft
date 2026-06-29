@@ -158,7 +158,7 @@ export default function ProfilePage() {
     "w-full px-4 py-3 rounded-xl bg-[#FAF9F6] border border-[#E5E3DC] text-sm text-[#1B1A17] placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-colors";
 
   return (
-    <div className="min-h-full bg-[#FAF9F6] text-[#1B1A17]">
+    <div className="h-full overflow-y-auto bg-[#FAF9F6] text-[#1B1A17]">
       {/* Nav */}
       <nav className="border-b border-[#E5E3DC] bg-[#FAF9F6]/90 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
