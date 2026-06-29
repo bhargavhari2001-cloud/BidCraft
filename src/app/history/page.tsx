@@ -57,23 +57,23 @@ export default function HistoryPage() {
   };
 
   const categoryColors: Record<string, string> = {
-    Technical: "text-violet-400",
+    Technical: "text-[#146C43]",
     "Security & Compliance": "text-red-400",
-    "Experience & References": "text-cyan-400",
+    "Experience & References": "text-[#2C5C8A]",
     Staffing: "text-amber-400",
     Methodology: "text-emerald-400",
     Pricing: "text-pink-400",
-    General: "text-white/40",
+    General: "text-[#8A867D]",
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F1A] text-white">
+    <div className="min-h-full bg-[#FAF9F6] text-[#1B1A17]">
       {/* Nav */}
-      <nav className="border-b border-white/[0.06] bg-[#0B0F1A]/80 backdrop-blur-xl sticky top-0 z-50">
+      <nav className="border-b border-[#E5E3DC] bg-[#FAF9F6]/90 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-2 text-sm text-white/40 hover:text-white/70 transition-colors"
+            className="flex items-center gap-2 text-sm text-[#8A867D] hover:text-[#3a382f] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to BidCraft
@@ -84,7 +84,7 @@ export default function HistoryPage() {
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-colors ${
                 confirmClearAll
                   ? "bg-red-500/20 border border-red-500/30 text-red-300"
-                  : "bg-white/[0.06] border border-white/[0.08] text-white/50 hover:text-white/70"
+                  : "bg-[#F6F4EF] border border-[#E5E3DC] text-[#6B6862] hover:text-[#3a382f]"
               }`}
             >
               {confirmClearAll ? (
@@ -114,21 +114,21 @@ export default function HistoryPage() {
       <div className="max-w-5xl mx-auto px-6 py-12">
         <div className="mb-10">
           <h1 className="text-3xl font-bold mb-2">RFP History</h1>
-          <p className="text-white/40 text-sm">
+          <p className="text-[#8A867D] text-sm">
             {sessions.length} {sessions.length === 1 ? "analysis" : "analyses"} saved
           </p>
         </div>
 
         {sessions.length === 0 ? (
           <div className="text-center py-20">
-            <FileText className="w-12 h-12 text-white/10 mx-auto mb-4" />
-            <h2 className="text-lg font-semibold text-white/30 mb-2">No history yet</h2>
-            <p className="text-sm text-white/20 mb-6">
+            <FileText className="w-12 h-12 text-[#bdb9ae] mx-auto mb-4" />
+            <h2 className="text-lg font-semibold text-[#9b978d] mb-2">No history yet</h2>
+            <p className="text-sm text-[#bdb9ae] mb-6">
               Upload and parse an RFP to see it here.
             </p>
             <button
               onClick={() => router.push("/")}
-              className="px-5 py-2.5 rounded-lg bg-violet-500 hover:bg-violet-600 text-sm font-medium transition-colors"
+              className="px-5 py-2.5 rounded-lg bg-[#146C43] hover:bg-[#0E5C38] text-sm font-medium transition-colors"
             >
               Upload RFP
             </button>
@@ -145,11 +145,11 @@ export default function HistoryPage() {
               return (
                 <div
                   key={session.id}
-                  className="group rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-200 p-5 animate-fade-in"
+                  className="group rounded-xl border border-[#E5E3DC] bg-transparent hover:bg-[#FAF9F6] hover:border-[#E5E3DC] transition-all duration-200 p-5 animate-fade-in"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-11 h-11 rounded-lg bg-violet-500/10 flex items-center justify-center shrink-0">
-                      <FileText className="w-5 h-5 text-violet-400" />
+                    <div className="w-11 h-11 rounded-lg bg-[#146C43]/10 flex items-center justify-center shrink-0">
+                      <FileText className="w-5 h-5 text-[#146C43]" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-3">
@@ -157,7 +157,7 @@ export default function HistoryPage() {
                           <h3 className="text-sm font-semibold truncate">
                             {session.rfpTitle || session.fileName}
                           </h3>
-                          <div className="flex items-center gap-3 mt-1 text-xs text-white/30">
+                          <div className="flex items-center gap-3 mt-1 text-xs text-[#9b978d]">
                             <span className="flex items-center gap-1">
                               <Clock className="w-3 h-3" />
                               {formatDistanceToNow(new Date(session.createdAt), { addSuffix: true })}
@@ -168,7 +168,7 @@ export default function HistoryPage() {
                         <div className="flex items-center gap-1.5 shrink-0">
                           <button
                             onClick={() => handleViewResponses(session)}
-                            className="p-2 rounded-lg hover:bg-violet-500/10 text-white/30 hover:text-violet-400 transition-colors"
+                            className="p-2 rounded-lg hover:bg-[#146C43]/10 text-[#9b978d] hover:text-[#146C43] transition-colors"
                             title="View responses"
                           >
                             <Sparkles className="w-4 h-4" />
@@ -178,7 +178,7 @@ export default function HistoryPage() {
                             className={`p-2 rounded-lg transition-colors ${
                               isDeleting
                                 ? "bg-red-500/20 text-red-400"
-                                : "hover:bg-red-500/10 text-white/30 hover:text-red-400"
+                                : "hover:bg-red-500/10 text-[#9b978d] hover:text-red-400"
                             }`}
                             title={isDeleting ? "Click again to confirm" : "Delete"}
                           >
@@ -189,16 +189,16 @@ export default function HistoryPage() {
 
                       {/* Stats row */}
                       <div className="flex items-center gap-4 mt-3 flex-wrap">
-                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] text-xs text-white/50">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#FAF9F6] text-xs text-[#6B6862]">
                           <Eye className="w-3 h-3" />
                           {session.questions.length} questions
                         </div>
-                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] text-xs text-white/50">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#FAF9F6] text-xs text-[#6B6862]">
                           <MessageSquare className="w-3 h-3" />
                           {answeredCount}/{session.questions.length} answered
                         </div>
                         {session.issuingOrganization && (
-                          <span className="text-xs text-white/20">
+                          <span className="text-xs text-[#bdb9ae]">
                             {session.issuingOrganization}
                           </span>
                         )}
@@ -209,13 +209,13 @@ export default function HistoryPage() {
                         {categories.slice(0, 4).map((cat) => (
                           <span
                             key={cat}
-                            className={`text-xs ${categoryColors[cat] || "text-white/30"}`}
+                            className={`text-xs ${categoryColors[cat] || "text-[#9b978d]"}`}
                           >
                             {cat}
                           </span>
                         ))}
                         {categories.length > 4 && (
-                          <span className="text-xs text-white/20">
+                          <span className="text-xs text-[#bdb9ae]">
                             +{categories.length - 4} more
                           </span>
                         )}
@@ -230,10 +230,10 @@ export default function HistoryPage() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-white/[0.04] py-8 mt-12">
+      <footer className="border-t border-[#F2F0E9] py-8 mt-12">
         <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
-          <span className="text-xs text-white/20">&copy; 2026 BidCraft. Built with AI.</span>
-          <span className="text-xs text-white/20">A portfolio project by Bhargav Hari</span>
+          <span className="text-xs text-[#bdb9ae]">&copy; 2026 BidCraft. Built with AI.</span>
+          <span className="text-xs text-[#bdb9ae]">A portfolio project by Bhargav Hari</span>
         </div>
       </footer>
     </div>

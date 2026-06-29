@@ -2,263 +2,267 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getRFPSessions } from "@/lib/storage";
 import { RFPSession } from "@/types";
-import { getRFPSessions, getCompanyProfile } from "@/lib/storage";
-import { formatDistanceToNow } from "date-fns";
-import {
-  ArrowLeft,
-  FileText,
-  MessageSquare,
-  Clock,
-  TrendingUp,
-  BarChart3,
-  Target,
-  Zap,
-} from "lucide-react";
 
-interface CategoryStat {
-  category: string;
-  count: number;
-  color: string;
+const ACCENT = "#146C43";
+
+// Design-file static data for fields not in the current data model
+// (monetary values, win rate, deadlines, activity feed)
+const STATIC_BIDS = [
+  { name: "Municipal Cloud Migration",     client: "City of Westbrook",     value: "$1.2M", pct: "67%", pctColor: "#3FAE6E", due: "Jul 3",  dueNote: "4 days",    dueColor: "#A23A2E" },
+  { name: "Data Platform Modernization",   client: "Coastal Health Network", value: "$880K", pct: "41%", pctColor: "#146C43", due: "Jul 9",  dueNote: "10 days",   dueColor: "#1B1A17" },
+  { name: "Managed Security Services",     client: "Atlas Logistics",        value: "$520K", pct: "88%", pctColor: "#3FAE6E", due: "Jul 2",  dueNote: "3 days",    dueColor: "#A23A2E" },
+  { name: "DevOps Transformation",         client: "Pinnacle Retail Group",  value: "$1.05M",pct: "100%",pctColor: "#3FAE6E", due: "Jun 24", dueNote: "awaiting",  dueColor: "#1B1A17" },
+];
+
+const deadlines = [
+  { mon: "Jul", day: "02", title: "Atlas Logistics — final review",    note: "3 days · 88% complete",   color: "#A23A2E" },
+  { mon: "Jul", day: "03", title: "City of Westbrook — submission",    note: "4 days · 8 questions left", color: "#9A5B1E" },
+  { mon: "Jul", day: "09", title: "Coastal Health — draft due",        note: "10 days · on track",       color: "#2F7048" },
+];
+
+const activity = [
+  { text: "Claude drafted 3 responses for City of Westbrook",    who: "AI assistant", time: "12 min ago", iconBg: "#EAF1EC", iconFg: ACCENT },
+  { text: 'Ravi marked "Security certifications" as complete',  who: "Ravi Kapoor",  time: "48 min ago", iconBg: "#EAF2EC", iconFg: "#2F7048" },
+  { text: "New RFP uploaded — Coastal Health Network",           who: "Dana Mercer",  time: "2 hr ago",   iconBg: "#E8EFF6", iconFg: "#2C5C8A" },
+  { text: 'Knowledge base entry "SLA commitments" updated',     who: "Ravi Kapoor",  time: "5 hr ago",   iconBg: "#F0ECF6", iconFg: "#5B4A8A" },
+];
+
+const trendPts = [38,40,37,42,41,44,43,46,45,44,47,47];
+const W = 240, H = 56, MAX = 52, MIN = 34;
+const trendLine = trendPts.map((v,i) =>
+  `${(i/(trendPts.length-1)*W).toFixed(1)},${(H-((v-MIN)/(MAX-MIN))*(H-8)-4).toFixed(1)}`
+).join(" ");
+const trendArea = `0,${H} ${trendLine} ${W},${H}`;
+
+function greeting() {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 17) return "Good afternoon";
+  return "Good evening";
+}
+
+function sessionPct(s: RFPSession) {
+  if (s.questions.length === 0) return 0;
+  const answered = s.responses.filter(r => r.status === "generated" || r.status === "edited").length;
+  return Math.round((answered / s.questions.length) * 100);
 }
 
 export default function DashboardPage() {
   const router = useRouter();
   const [sessions, setSessions] = useState<RFPSession[]>([]);
-  const [hasProfile, setHasProfile] = useState(false);
 
   useEffect(() => {
     setSessions(getRFPSessions());
-    setHasProfile(!!getCompanyProfile());
   }, []);
 
-  // Compute stats
   const totalRFPs = sessions.length;
-  const totalQuestions = sessions.reduce((sum, s: RFPSession) => sum + s.questions.length, 0);
+  const totalQuestions = sessions.reduce((sum, s) => sum + s.questions.length, 0);
   const totalAnswered = sessions.reduce(
-    (sum, s: RFPSession) =>
-      sum + s.responses.filter((r) => r.status === "generated" || r.status === "edited").length,
+    (sum, s) => sum + s.responses.filter(r => r.status === "generated" || r.status === "edited").length,
     0
   );
-  const totalEdited = sessions.reduce(
-    (sum, s: RFPSession) => sum + s.responses.filter((r) => r.status === "edited").length,
-    0
-  );
+  const unanswered = Math.max(0, totalQuestions - totalAnswered);
+  const avgMinPerQ = totalAnswered > 0 ? (totalAnswered * 5 / totalAnswered).toFixed(1) : "—";
 
-  const allResponses = sessions.flatMap((s: RFPSession) => s.responses).filter((r) => r.status === "generated" || r.status === "edited");
-  const avgConfidence =
-    allResponses.length > 0
-      ? Math.round(allResponses.reduce((sum, r) => sum + r.confidence, 0) / allResponses.length)
-      : 0;
+  // Live bids table: real sessions if any, otherwise show design-file placeholders
+  const bidsRows = totalRFPs > 0
+    ? sessions.map(s => {
+        const pct = sessionPct(s);
+        const pctStr = `${pct}%`;
+        const pctColor = pct >= 80 ? "#3FAE6E" : pct >= 40 ? "#146C43" : "#9A5B1E";
+        const deadline = s.submissionDeadline
+          ? new Date(s.submissionDeadline).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+          : "—";
+        return { name: s.rfpTitle || s.fileName, client: s.issuingOrganization || "—", value: "—", pct: pctStr, pctColor, due: deadline, dueNote: "", dueColor: "#1B1A17" };
+      })
+    : STATIC_BIDS;
 
-  const timeSavedMinutes = totalAnswered * 5;
-  const timeSavedDisplay =
-    timeSavedMinutes >= 60
-      ? `${(timeSavedMinutes / 60).toFixed(1)} hrs`
-      : `${timeSavedMinutes} min`;
+  const kpis = [
+    { label: "Active bids",         value: totalRFPs > 0 ? String(totalRFPs) : "6",   unit: "",      delta: "+2",        deltaColor: "#2F7048", barPct: totalRFPs > 0 ? `${Math.min(totalRFPs * 10, 100)}%` : "60%" },
+    { label: "Open value",          value: "$5.0",                                      unit: "M",     delta: "+$1.2M",    deltaColor: "#2F7048", barPct: "74%" },
+    { label: "Questions to answer", value: totalRFPs > 0 ? String(unanswered) : "31",  unit: "left",  delta: "−12 today", deltaColor: "#8A867D", barPct: totalRFPs > 0 && totalQuestions > 0 ? `${Math.round((unanswered / totalQuestions) * 100)}%` : "44%" },
+    { label: "Avg draft time",      value: totalRFPs > 0 ? avgMinPerQ : "2.1",         unit: "min/Q", delta: "−68%",      deltaColor: "#2F7048", barPct: "30%" },
+  ];
 
-  // Category breakdown
-  const catCounts: Record<string, number> = {};
-  sessions.forEach((s) => {
-    s.questions.forEach((q) => {
-      catCounts[q.category] = (catCounts[q.category] || 0) + 1;
-    });
-  });
-
-  const catColors: Record<string, string> = {
-    Technical: "bg-violet-500",
-    "Security & Compliance": "bg-red-500",
-    "Experience & References": "bg-cyan-500",
-    Staffing: "bg-amber-500",
-    Methodology: "bg-emerald-500",
-    Pricing: "bg-pink-500",
-    General: "bg-white/40",
-  };
-
-  const categoryStats: CategoryStat[] = Object.entries(catCounts)
-    .map(([category, count]) => ({
-      category,
-      count,
-      color: catColors[category] || "bg-white/20",
-    }))
-    .sort((a, b) => b.count - a.count);
-
-  const maxCatCount = Math.max(...categoryStats.map((c) => c.count), 1);
+  const bidsSubtitle = totalRFPs > 0
+    ? `${totalRFPs} in progress · sorted by deadline`
+    : "6 in progress · sorted by deadline";
 
   return (
-    <div className="min-h-screen bg-[#0B0F1A] text-white">
-      <nav className="border-b border-white/[0.06] bg-[#0B0F1A]/80 backdrop-blur-xl sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      {/* Topbar */}
+      <header style={{
+        flexShrink: 0, height: 62,
+        display: "flex", alignItems: "center", gap: 18, padding: "0 28px",
+        background: "rgba(250,249,246,.85)", backdropFilter: "blur(8px)",
+        borderBottom: "1px solid var(--bd,#E5E3DC)",
+      }}>
+        <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15, flexShrink: 0 }}>
+          <h1 style={{ margin: 0, fontFamily: "'Newsreader',serif", fontWeight: 500, fontSize: 20, letterSpacing: "-0.01em", color: "var(--text,#1B1A17)", whiteSpace: "nowrap" }}>
+            Dashboard
+          </h1>
+          <span style={{ fontSize: 11.5, color: "var(--faint,#8A867D)", whiteSpace: "nowrap" }}>
+            {greeting()}, Dana — {totalRFPs > 0 ? totalRFPs : 6} bids in flight
+          </span>
+        </div>
+        <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          <div style={{
+            display: "flex", alignItems: "center", gap: 8,
+            width: "100%", maxWidth: 420, padding: "7px 12px",
+            background: "var(--surface,#fff)", border: "1px solid var(--bd,#E5E3DC)",
+            borderRadius: 9, color: "var(--placeholder,#9b978d)",
+          }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
+            <span style={{ fontSize: 13, color: "var(--faint2,#a8a499)" }}>Search questions, answers, bids…</span>
+            <span style={{ marginLeft: "auto", fontFamily: "'Geist Mono',monospace", fontSize: 10, color: "var(--faint3,#bdb9ae)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 4, padding: "1px 5px" }}>⌘K</span>
+          </div>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-2 text-sm text-white/40 hover:text-white/70 transition-colors"
+            style={{
+              display: "flex", alignItems: "center", gap: 7, height: 36, padding: "0 14px",
+              borderRadius: 9, border: `1px solid ${ACCENT}`, background: ACCENT,
+              color: "#fff", fontFamily: "'Geist',sans-serif", fontSize: 13, fontWeight: 600,
+              cursor: "pointer", boxShadow: "0 1px 2px rgba(22,167,92,.25)",
+            }}
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to BidCraft
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Upload RFP
           </button>
         </div>
-      </nav>
+      </header>
 
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="mb-10">
-          <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
-          <p className="text-white/40 text-sm">
-            Overview of your RFP automation activity
-          </p>
-        </div>
+      {/* Scroll area */}
+      <div id="main-content" style={{ flex: 1, overflowY: "auto" }}>
+        <div style={{ padding: "28px 28px 60px", maxWidth: 1180, margin: "0 auto" }}>
 
-        {/* Key Metrics */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
-          {[
-            { label: "RFPs Processed", value: totalRFPs, icon: FileText, gradient: "from-violet-400 to-violet-600" },
-            { label: "Questions Analyzed", value: totalQuestions, icon: MessageSquare, gradient: "from-cyan-400 to-cyan-600" },
-            { label: "Responses Generated", value: totalAnswered, icon: Zap, gradient: "from-emerald-400 to-emerald-600" },
-            { label: "Manually Edited", value: totalEdited, icon: Target, gradient: "from-amber-400 to-amber-600" },
-            { label: "Avg Confidence", value: `${avgConfidence}%`, icon: TrendingUp, gradient: "from-pink-400 to-pink-600" },
-            { label: "Time Saved", value: timeSavedDisplay, icon: Clock, gradient: "from-indigo-400 to-indigo-600" },
-          ].map((metric) => (
-            <div
-              key={metric.label}
-              className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 hover:bg-white/[0.05] transition-colors"
-            >
-              <metric.icon className="w-4 h-4 text-white/20 mb-3" />
-              <div
-                className={`text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-b ${metric.gradient}`}
-              >
-                {metric.value}
+          {/* KPI row */}
+          <div className="kpi-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 24 }}>
+            {kpis.map((k) => (
+              <div key={k.label} style={{ background: "var(--surface,#fff)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 12, padding: "16px 17px", display: "flex", flexDirection: "column", gap: 10 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10.5, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--faint,#8A867D)" }}>{k.label}</span>
+                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 11, fontWeight: 500, color: k.deltaColor }}>{k.delta}</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                  <span style={{ fontSize: 30, fontWeight: 600, letterSpacing: "-0.02em", color: "var(--text,#1B1A17)", lineHeight: 1 }}>{k.value}</span>
+                  <span style={{ fontSize: 13, color: "var(--faint,#8A867D)" }}>{k.unit}</span>
+                </div>
+                <div style={{ height: 3, borderRadius: 3, background: "var(--track,#EFEDE6)", overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: k.barPct, background: ACCENT, borderRadius: 3, transformOrigin: "left", animation: "barGrow .6s ease-out" }} />
+                </div>
               </div>
-              <div className="text-xs text-white/30 mt-1">{metric.label}</div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Category Breakdown */}
-          <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-6">
-            <div className="flex items-center gap-2 mb-6">
-              <BarChart3 className="w-4 h-4 text-white/30" />
-              <h2 className="text-sm font-semibold">Questions by Category</h2>
-            </div>
-            {categoryStats.length === 0 ? (
-              <p className="text-xs text-white/20 text-center py-8">
-                No data yet. Upload an RFP to see analytics.
-              </p>
-            ) : (
-              <div className="space-y-3">
-                {categoryStats.map((stat) => (
-                  <div key={stat.category}>
-                    <div className="flex items-center justify-between text-xs mb-1">
-                      <span className="text-white/50">{stat.category}</span>
-                      <span className="text-white/30">{stat.count}</span>
+          <div style={{ display: "grid", gridTemplateColumns: "1.55fr 1fr", gap: 18, alignItems: "start" }}>
+
+            {/* Active bids table */}
+            <section style={{ background: "var(--surface,#fff)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 12, overflow: "hidden" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 18px", borderBottom: "1px solid var(--bd2,#EEECE5)" }}>
+                <div>
+                  <h2 style={{ margin: 0, fontFamily: "'Newsreader',serif", fontSize: 17, fontWeight: 500, color: "var(--text,#1B1A17)" }}>Active bids</h2>
+                  <p style={{ margin: "2px 0 0", fontSize: 11.5, color: "var(--faint,#8A867D)" }}>{bidsSubtitle}</p>
+                </div>
+                <button onClick={() => router.push("/history")} style={{ fontFamily: "'Geist Mono',monospace", fontSize: 11, color: ACCENT, background: "none", border: "none", cursor: "pointer", fontWeight: 500 }}>VIEW ALL →</button>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.5fr) 58px 92px 56px", gap: 8, padding: "9px 18px", borderBottom: "1px solid var(--bd2,#EEECE5)", fontFamily: "'Geist Mono',monospace", fontSize: 10, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--faint2,#a8a499)" }}>
+                <span>Bid / Client</span><span>Value</span><span>Progress</span><span style={{ textAlign: "right" }}>Due</span>
+              </div>
+              {bidsRows.map((b, i) => (
+                <div
+                  key={i}
+                  onClick={() => router.push("/responses")}
+                  style={{ display: "grid", gridTemplateColumns: "minmax(0,1.5fr) 58px 92px 56px", gap: 8, padding: "13px 18px", borderBottom: "1px solid var(--bd3,#F2F0E9)", alignItems: "center", cursor: "pointer", transition: "background .12s" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--elev,#FBFAF7)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = ""; }}
+                >
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontSize: 13.5, fontWeight: 500, color: "var(--text,#1B1A17)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.name}</div>
+                    <div style={{ fontSize: 11.5, color: "var(--faint,#8A867D)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.client}</div>
+                  </div>
+                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 12.5, color: "var(--text2,#3a382f)" }}>{b.value}</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                    <div style={{ flex: 1, height: 5, borderRadius: 4, background: "var(--track,#EFEDE6)", overflow: "hidden" }}>
+                      <div style={{ height: "100%", width: b.pct, background: b.pctColor, borderRadius: 4 }} />
                     </div>
-                    <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
-                      <div
-                        className={`h-full rounded-full ${stat.color} transition-all duration-500`}
-                        style={{ width: `${(stat.count / maxCatCount) * 100}%`, opacity: 0.7 }}
-                      />
+                    <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10.5, color: "var(--faint,#8A867D)" }}>{b.pct}</span>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <div style={{ fontSize: 12.5, fontWeight: 500, color: b.dueColor }}>{b.due}</div>
+                    <div style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10, color: "var(--faint2,#a8a499)" }}>{b.dueNote}</div>
+                  </div>
+                </div>
+              ))}
+            </section>
+
+            {/* Right column */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+
+              {/* Win rate dark card */}
+              <section style={{ background: "#0A130E", border: "1px solid #1B3325", borderRadius: 12, padding: 18, color: "#EDEDE7", position: "relative", overflow: "hidden" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10.5, letterSpacing: "0.06em", textTransform: "uppercase", color: "#9aa39c" }}>Win rate · last 12 mo</span>
+                  <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 11, color: "#7fd1a3" }}>▲ 8 pts</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "flex-end", gap: 8, marginBottom: 14 }}>
+                  <span style={{ fontSize: 40, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1 }}>47%</span>
+                  <span style={{ fontSize: 13, color: "#9aa39c", marginBottom: 5 }}>22 of 47 won</span>
+                </div>
+                <svg viewBox="0 0 240 56" preserveAspectRatio="none" style={{ width: "100%", height: 48, display: "block" }}>
+                  <polyline points={trendArea} fill="rgba(127,209,163,.14)" stroke="none" />
+                  <polyline points={trendLine} fill="none" stroke="#7fd1a3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </section>
+
+              {/* Deadlines */}
+              <section style={{ background: "var(--surface,#fff)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 12, overflow: "hidden" }}>
+                <div style={{ padding: "13px 18px", borderBottom: "1px solid var(--bd2,#EEECE5)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <h2 style={{ margin: 0, fontFamily: "'Newsreader',serif", fontSize: 15, fontWeight: 500, color: "var(--text,#1B1A17)" }}>Upcoming deadlines</h2>
+                </div>
+                {deadlines.map((d) => (
+                  <div key={d.day} style={{ display: "flex", alignItems: "center", gap: 12, padding: "11px 18px", borderBottom: "1px solid var(--bd3,#F2F0E9)" }}>
+                    <div style={{ width: 36, textAlign: "center", flexShrink: 0 }}>
+                      <div style={{ fontFamily: "'Geist Mono',monospace", fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--faint2,#a8a499)" }}>{d.mon}</div>
+                      <div style={{ fontSize: 22, fontWeight: 600, color: "var(--text,#1B1A17)", lineHeight: 1.1 }}>{d.day}</div>
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 12.5, fontWeight: 500, color: "var(--text,#1B1A17)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{d.title}</div>
+                      <div style={{ fontSize: 11.5, color: d.color, marginTop: 1 }}>{d.note}</div>
                     </div>
                   </div>
                 ))}
-              </div>
-            )}
-          </div>
+              </section>
 
-          {/* Recent Activity */}
-          <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-6">
-            <div className="flex items-center gap-2 mb-6">
-              <Clock className="w-4 h-4 text-white/30" />
-              <h2 className="text-sm font-semibold">Recent Activity</h2>
-            </div>
-            {sessions.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-xs text-white/20 mb-4">No activity yet</p>
-                <button
-                  onClick={() => router.push("/")}
-                  className="px-4 py-2 rounded-lg bg-violet-500 hover:bg-violet-600 text-xs font-medium transition-colors"
-                >
-                  Upload Your First RFP
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {sessions.slice(0, 5).map((session) => {
-                  const answered = session.responses.filter(
-                    (r) => r.status === "generated" || r.status === "edited"
-                  ).length;
-                  return (
-                    <div
-                      key={session.id}
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/[0.03] transition-colors cursor-pointer"
-                      onClick={() => router.push("/history")}
-                    >
-                      <div className="w-8 h-8 rounded-lg bg-violet-500/10 flex items-center justify-center shrink-0">
-                        <FileText className="w-4 h-4 text-violet-400" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-medium truncate">
-                          {session.rfpTitle || session.fileName}
-                        </p>
-                        <p className="text-xs text-white/20">
-                          {answered}/{session.questions.length} answered &middot;{" "}
-                          {formatDistanceToNow(new Date(session.createdAt), {
-                            addSuffix: true,
-                          })}
-                        </p>
+              {/* Activity feed */}
+              <section style={{ background: "var(--surface,#fff)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 12, overflow: "hidden" }}>
+                <div style={{ padding: "13px 18px", borderBottom: "1px solid var(--bd2,#EEECE5)" }}>
+                  <h2 style={{ margin: 0, fontFamily: "'Newsreader',serif", fontSize: 15, fontWeight: 500, color: "var(--text,#1B1A17)" }}>Recent activity</h2>
+                </div>
+                {activity.map((a, i) => (
+                  <div key={i} style={{ display: "flex", gap: 11, padding: "11px 18px", borderBottom: "1px solid var(--bd3,#F2F0E9)" }}>
+                    <div style={{ width: 30, height: 30, borderRadius: 8, background: a.iconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={a.iconFg} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/>
+                      </svg>
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 12.5, color: "var(--text,#1B1A17)", lineHeight: 1.45 }}>{a.text}</div>
+                      <div style={{ display: "flex", gap: 6, marginTop: 2 }}>
+                        <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10.5, color: "var(--faint,#8A867D)" }}>{a.who}</span>
+                        <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10.5, color: "var(--faint2,#a8a499)" }}>· {a.time}</span>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="mt-10">
-          <h2 className="text-sm font-semibold mb-4 text-white/50">Quick Actions</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <button
-              onClick={() => router.push("/")}
-              className="flex items-center gap-3 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all text-left"
-            >
-              <FileText className="w-5 h-5 text-violet-400" />
-              <div>
-                <p className="text-sm font-medium">Upload RFP</p>
-                <p className="text-xs text-white/30">Parse a new document</p>
-              </div>
-            </button>
-            <button
-              onClick={() => router.push("/profile")}
-              className="flex items-center gap-3 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all text-left"
-            >
-              <Target className="w-5 h-5 text-cyan-400" />
-              <div>
-                <p className="text-sm font-medium">
-                  {hasProfile ? "Edit Profile" : "Set Up Profile"}
-                </p>
-                <p className="text-xs text-white/30">Company information</p>
-              </div>
-            </button>
-            <button
-              onClick={() => router.push("/knowledge-base")}
-              className="flex items-center gap-3 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all text-left"
-            >
-              <Zap className="w-5 h-5 text-amber-400" />
-              <div>
-                <p className="text-sm font-medium">Knowledge Base</p>
-                <p className="text-xs text-white/30">Manage response library</p>
-              </div>
-            </button>
+                  </div>
+                ))}
+              </section>
+            </div>
           </div>
         </div>
       </div>
-
-      <footer className="border-t border-white/[0.04] py-8 mt-12">
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-          <span className="text-xs text-white/20">&copy; 2026 BidCraft. Built with AI.</span>
-          <span className="text-xs text-white/20">A portfolio project by Bhargav Hari</span>
-        </div>
-      </footer>
     </div>
   );
 }

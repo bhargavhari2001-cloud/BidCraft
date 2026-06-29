@@ -1,148 +1,293 @@
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap");
 @import "tailwindcss";
 
+/* ── Design tokens ──────────────────────────────────────────── */
 :root {
-  --background: #0B0F1A;
-  --foreground: #ffffff;
+  --bg:       #FAF9F6;
+  --surface:  #FFFFFF;
+  --elev:     #FBFAF7;
+  --soft:     #F6F4EF;
+  --soft2:    #F4F3EF;
+  --bd:       #E5E3DC;
+  --bd2:      #EEECE5;
+  --bd3:      #F2F0E9;
+  --track:    #EFEDE6;
+  --dash:     #CFC8B8;
+
+  --text:        #1B1A17;
+  --text2:       #3a382f;
+  --text-edit:   #2a2922;
+  --muted:       #6B6862;
+  --faint:       #8A867D;
+  --faint2:      #a8a499;
+  --faint3:      #bdb9ae;
+  --placeholder: #9b978d;
+
+  --accent:      #146C43;
+  --accent-soft: #EAF1EC;
+  --accent-ink:  #0E5C38;
+
+  --pos:  #2F7048;
+  --warn: #9A5B1E;
+  --neg:  #A23A2E;
+  --info: #2C5C8A;
+  --purp: #5B4A8A;
+
+  /* Sidebar */
+  --sb-bg:     #F4F3EF;
+  --sb-fg:     #1B1A17;
+  --sb-muted:  #7b756a;
+  --sb-border: #E5E3DC;
+  --sb-active: #FFFFFF;
+
+  /* Legacy aliases kept for components not yet migrated */
+  --bg-base:      var(--bg);
+  --bg-surface-1: var(--surface);
+  --bg-surface-2: var(--soft);
+  --bg-surface-3: var(--soft2);
+  --brand-violet:       #146C43;
+  --brand-violet-dark:  #0E5C38;
+  --brand-violet-muted: rgba(20,108,67,.1);
+  --brand-cyan:         #17A95D;
+  --color-success: var(--pos);
+  --color-warning: var(--warn);
+  --color-error:   var(--neg);
+  --color-info:    var(--info);
+  --text-primary:   var(--text);
+  --text-secondary: var(--text2);
+  --text-muted:     var(--muted);
+  --border-subtle:  var(--bd3);
+  --border-default: var(--bd);
+  --border-strong:  var(--bd2);
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --transition-fast:     100ms ease-out;
+  --transition-standard: 200ms ease-out;
+  --transition-slow:     350ms cubic-bezier(0.4,0,0.2,1);
 }
 
+/* ── Base ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ── Skip to content ────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.5rem;
+  background: var(--accent);
+  color: white;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 9999;
+  text-decoration: none;
+  transition: top var(--transition-standard);
+}
+.skip-link:focus { top: 0; }
+
+/* ── Focus visible ──────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  scrollbar-color: rgba(130,140,132,.45) transparent;
 }
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(130,140,132,.45);
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(130,140,132,.65); background-clip: padding-box; }
 
+/* ── Selection ──────────────────────────────────────────────── */
 ::selection {
-  background: rgba(139, 92, 246, 0.3);
-  color: white;
+  background: rgba(20,108,67,0.18);
+  color: var(--text);
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+/* ── Skeleton shimmer ───────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(130,140,132,0.06) 25%,
+    rgba(130,140,132,0.14) 50%,
+    rgba(130,140,132,0.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: var(--radius-md);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ── Animations ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
 }
+@keyframes barGrow  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes softPulse { 0%,100% { opacity:1; } 50% { opacity:.35; } }
+@keyframes spin     { to { transform: rotate(360deg); } }
+@keyframes scaleIn  { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes slideIn  { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
 
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
+.animate-fade-up  { animation: fadeUp  0.3s ease-out; }
+.animate-scale-in { animation: scaleIn 0.2s ease-out; }
+
+/* ── Dialog (native modal) ──────────────────────────────────── */
+dialog {
+  border: none;
+  padding: 0;
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  color: var(--text);
+  max-width: 90vw;
+  max-height: 90vh;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.18), 0 0 0 1px var(--bd);
 }
+dialog::backdrop {
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+}
+dialog[open] { animation: scaleIn 0.2s ease-out; }
+[contenteditable]:focus { outline: none; }
 
-/* ── TipTap / ProseMirror editor styles ─────────────────── */
-
+/* ── TipTap / ProseMirror ───────────────────────────────────── */
 .tiptap-editor .ProseMirror {
   outline: none;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-edit);
   line-height: 1.7;
   word-break: break-word;
 }
-
-/* Placeholder */
 .tiptap-editor .ProseMirror p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
-  color: rgba(255, 255, 255, 0.18);
+  color: var(--placeholder);
   pointer-events: none;
   height: 0;
 }
-
-/* Headings */
-.tiptap-editor .ProseMirror h1 {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.92);
-  margin: 1rem 0 0.5rem;
-  line-height: 1.3;
-}
-.tiptap-editor .ProseMirror h2 {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.88);
-  margin: 0.85rem 0 0.4rem;
-  line-height: 1.3;
-}
-.tiptap-editor .ProseMirror h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.84);
-  margin: 0.75rem 0 0.35rem;
-  line-height: 1.3;
-}
-
-/* Paragraphs */
-.tiptap-editor .ProseMirror p {
-  margin: 0.45rem 0;
-}
-
-/* Lists */
-.tiptap-editor .ProseMirror ul {
-  list-style: disc;
-  padding-left: 1.4rem;
-  margin: 0.45rem 0;
-}
-.tiptap-editor .ProseMirror ol {
-  list-style: decimal;
-  padding-left: 1.4rem;
-  margin: 0.45rem 0;
-}
-.tiptap-editor .ProseMirror li {
-  margin: 0.2rem 0;
-  color: rgba(255, 255, 255, 0.75);
-}
-
-/* Inline formatting */
-.tiptap-editor .ProseMirror strong {
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.9);
-}
-.tiptap-editor .ProseMirror em {
-  font-style: italic;
-}
-.tiptap-editor .ProseMirror u {
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-/* Blockquote */
+.tiptap-editor .ProseMirror h1 { font-family: "Newsreader",serif; font-size: 1.35rem; font-weight: 500; color: var(--text); margin: 1rem 0 0.5rem; }
+.tiptap-editor .ProseMirror h2 { font-family: "Newsreader",serif; font-size: 1.15rem; font-weight: 500; color: var(--text); margin: 0.85rem 0 0.4rem; }
+.tiptap-editor .ProseMirror h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 0.75rem 0 0.35rem; }
+.tiptap-editor .ProseMirror p { margin: 0.45rem 0; }
+.tiptap-editor .ProseMirror ul { list-style: disc;    padding-left: 1.4rem; margin: 0.45rem 0; }
+.tiptap-editor .ProseMirror ol { list-style: decimal; padding-left: 1.4rem; margin: 0.45rem 0; }
+.tiptap-editor .ProseMirror li { margin: 0.2rem 0; color: var(--text2); }
+.tiptap-editor .ProseMirror strong { font-weight: 700; color: var(--text); }
+.tiptap-editor .ProseMirror em { font-style: italic; }
+.tiptap-editor .ProseMirror u  { text-decoration: underline; text-underline-offset: 2px; }
 .tiptap-editor .ProseMirror blockquote {
-  border-left: 3px solid rgba(139, 92, 246, 0.4);
+  border-left: 3px solid rgba(20,108,67,0.3);
   padding-left: 1rem;
   margin: 0.6rem 0;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--muted);
   font-style: italic;
 }
-
-/* Code */
 .tiptap-editor .ProseMirror code {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--soft2);
   border-radius: 4px;
   padding: 0.1em 0.35em;
-  font-family: "SF Mono", "Fira Code", monospace;
+  font-family: "Geist Mono", monospace;
   font-size: 0.85em;
-  color: rgba(139, 92, 246, 0.9);
+  color: var(--accent);
+}
+.tiptap-editor .ProseMirror > *:first-child { margin-top: 0; }
+.tiptap-editor .ProseMirror ::selection { background: rgba(20,108,67,0.15); }
+
+/* ── Mobile navigation ──────────────────────────────────────── */
+.mobile-nav-trigger {
+  display: none;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 60;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--bd);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.15s, border-color 0.15s;
+}
+.mobile-nav-trigger:hover { background: var(--soft2); }
+
+.mobile-nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 45;
+  animation: fadeIn 0.15s ease-out;
 }
 
-/* First child margin reset */
-.tiptap-editor .ProseMirror > *:first-child {
-  margin-top: 0;
+/* ── Responsive layout ──────────────────────────────────────── */
+.desktop-collapse-btn { display: flex; }
+
+@media (max-width: 768px) {
+  .mobile-nav-trigger { display: flex; }
+  .desktop-collapse-btn { display: none !important; }
+  .mobile-close-btn    { display: flex !important; }
+
+  .sidenav {
+    position: fixed !important;
+    top: 0; left: 0;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    width: 240px !important;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1) !important;
+  }
+  .sidenav.mobile-open {
+    transform: translateX(0);
+    box-shadow: 8px 0 48px rgba(0,0,0,0.15);
+  }
+
+  .page-content { padding-top: 56px; }
+  .hero-main { padding: 28px 16px 40px !important; }
+  .page-main { padding: 24px 16px 48px !important; }
+  .stats-strip { grid-template-columns: 1fr !important; }
+  .rfp-header { flex-direction: column !important; align-items: flex-start !important; }
+  .rfp-header-actions { width: 100%; flex-shrink: 0 !important; }
+  .rfp-header-actions button { flex: 1; }
+  .kpi-grid { grid-template-columns: repeat(3,1fr) !important; }
+  .toolbar-row { flex-wrap: wrap; }
+  .toolbar-row input { min-width: 100% !important; }
+  dialog { width: 92vw !important; max-width: 92vw !important; }
 }
 
-/* Selection */
-.tiptap-editor .ProseMirror ::selection {
-  background: rgba(139, 92, 246, 0.3);
+@media (max-width: 480px) {
+  .kpi-grid { grid-template-columns: repeat(2,1fr) !important; }
+  .q-actions { flex-wrap: wrap; }
 }
