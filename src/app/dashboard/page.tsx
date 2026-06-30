@@ -104,7 +104,7 @@ export default function DashboardPage() {
             Dashboard
           </h1>
           <span style={{ fontSize: 11.5, color: "var(--faint,#8A867D)", whiteSpace: "nowrap" }}>
-            {greeting()} — {totalRFPs > 0 ? totalRFPs : 6} bids in flight
+            {greeting()}, User — {totalRFPs > 0 ? totalRFPs : 6} bids in flight
           </span>
         </div>
         <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
