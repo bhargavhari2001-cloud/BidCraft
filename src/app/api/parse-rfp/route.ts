@@ -70,16 +70,21 @@ export async function POST(request: NextRequest) {
     let sheetText = "";
     if (isSheet) {
       try {
-        sheetText = workbookToText(buffer);
+        sheetText = await workbookToText(buffer, ext ?? "");
         if (!sheetText.trim()) {
           return NextResponse.json(
             { error: "Could not extract data from the spreadsheet. It may be empty." },
             { status: 400 }
           );
         }
-      } catch {
+      } catch (e) {
         return NextResponse.json(
-          { error: "Failed to read spreadsheet. It may be corrupted or password-protected." },
+          {
+            error:
+              e instanceof Error && e.message.includes(".xls")
+                ? e.message
+                : "Failed to read spreadsheet. It may be corrupted or password-protected.",
+          },
           { status: 400 }
         );
       }
