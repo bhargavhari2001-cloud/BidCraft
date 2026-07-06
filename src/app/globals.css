@@ -166,16 +166,18 @@ body {
 }
 
 /* ── Liquid glass (dark theme) ──────────────────────────────────
-   Card surfaces get a translucent-white + backdrop-blur treatment
-   instead of a flat color; the ambient glow layer behind them is what
-   the blur actually picks up. Both are no-ops in light theme. */
+   Card surfaces get a translucent-white treatment instead of a flat
+   color; the ambient glow layer behind them is what makes it read as
+   "glass" rather than just "dark." Both are no-ops in light theme.
+   NOTE: the actual backdrop-filter blur lives in inline styles on the
+   .glass-card / .sidenav elements, not here — Tailwind's CSS pipeline
+   silently drops backdrop-filter declarations from compiled stylesheets
+   in this project (confirmed: only the -webkit- prefixed one survives,
+   which modern Chrome doesn't honor on its own), so a stylesheet rule
+   here would compile but never actually blur anything. */
 .glass-card {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-}
-[data-theme="dark"] .glass-card {
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 }
 
 .sidenav {
@@ -185,8 +187,6 @@ body {
 [data-theme="dark"] .sidenav {
   background: var(--glass-bg);
   border-right-color: var(--glass-border);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
 }
 
 .ambient-bg {

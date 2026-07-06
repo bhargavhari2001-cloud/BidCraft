@@ -108,6 +108,12 @@ export default function SideNav() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
+          // Only visible in dark theme — light theme's --sb-bg is fully
+          // opaque, so backdrop-filter has nothing to blur and no effect.
+          // (Tailwind's CSS pipeline drops backdrop-filter from compiled
+          // stylesheets in some rule shapes, so this stays inline.)
+          backdropFilter: "blur(18px)",
+          WebkitBackdropFilter: "blur(18px)",
         }}
       >
         {/* Logo */}

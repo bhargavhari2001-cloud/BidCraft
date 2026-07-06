@@ -147,7 +147,7 @@ export default function DashboardPage() {
           {/* KPI row */}
           <div className="kpi-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 24 }}>
             {kpis.map((k) => (
-              <div key={k.label} className="glass-card" style={{ borderRadius: 12, padding: "16px 17px", display: "flex", flexDirection: "column", gap: 10 }}>
+              <div key={k.label} className="glass-card" style={{ backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", borderRadius: 12, padding: "16px 17px", display: "flex", flexDirection: "column", gap: 10 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10.5, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--faint,#8A867D)" }}>{k.label}</span>
                   <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 11, fontWeight: 500, color: k.deltaColor }}>{k.delta}</span>
@@ -166,7 +166,7 @@ export default function DashboardPage() {
           <div style={{ display: "grid", gridTemplateColumns: "1.55fr 1fr", gap: 18, alignItems: "start" }}>
 
             {/* Active bids table */}
-            <section className="glass-card" style={{ borderRadius: 12, overflow: "hidden" }}>
+            <section className="glass-card" style={{ backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", borderRadius: 12, overflow: "hidden" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 18px", borderBottom: "1px solid var(--bd2,#EEECE5)" }}>
                 <div>
                   <h2 style={{ margin: 0, fontFamily: "'Newsreader',serif", fontSize: 17, fontWeight: 500, color: "var(--text,#1B1A17)" }}>Active bids</h2>
@@ -224,7 +224,7 @@ export default function DashboardPage() {
               </section>
 
               {/* Deadlines */}
-              <section className="glass-card" style={{ borderRadius: 12, overflow: "hidden" }}>
+              <section className="glass-card" style={{ backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", borderRadius: 12, overflow: "hidden" }}>
                 <div style={{ padding: "13px 18px", borderBottom: "1px solid var(--bd2,#EEECE5)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <h2 style={{ margin: 0, fontFamily: "'Newsreader',serif", fontSize: 15, fontWeight: 500, color: "var(--text,#1B1A17)" }}>Upcoming deadlines</h2>
                 </div>
@@ -243,7 +243,7 @@ export default function DashboardPage() {
               </section>
 
               {/* Activity feed */}
-              <section className="glass-card" style={{ borderRadius: 12, overflow: "hidden" }}>
+              <section className="glass-card" style={{ backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", borderRadius: 12, overflow: "hidden" }}>
                 <div style={{ padding: "13px 18px", borderBottom: "1px solid var(--bd2,#EEECE5)" }}>
                   <h2 style={{ margin: 0, fontFamily: "'Newsreader',serif", fontSize: 15, fontWeight: 500, color: "var(--text,#1B1A17)" }}>Recent activity</h2>
                 </div>
