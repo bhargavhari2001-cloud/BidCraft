@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { generateEmbedding } from "@/lib/voyageai";
+import { generateEmbedding, rerankDocuments } from "@/lib/voyageai";
+import { extractJson } from "@/lib/extractJson";
 import { semanticSearch } from "@/lib/semanticSearch";
 import {
   buildSystemPrompt,
@@ -31,6 +32,7 @@ export async function POST(request: NextRequest) {
       companyName,
       tone = "professional" as ResponseTone,
       length = "standard" as ResponseLength,
+      debug = false,
     } = body;
 
     if (!questionText || typeof questionText !== "string") {
@@ -81,14 +83,33 @@ export async function POST(request: NextRequest) {
             : Promise.resolve([]),
         ]);
 
-        // Merge: category results first, fill gaps from broad search
+        // Merge: category results first, fill gaps from broad search.
+        // Cast a wider net (up to 10) than we'll ultimately use (5) so the
+        // reranker below has real candidates to discriminate between —
+        // reranking 5 embedding-search results down to 5 buys nothing.
         const seen = new Set(categoryResults.map((r) => r.title));
-        kbSources = [...categoryResults];
+        const candidates = [...categoryResults];
         for (const r of broadResults) {
-          if (!seen.has(r.title) && kbSources.length < 5) {
-            kbSources.push({ title: r.title, content: r.content, similarity: r.similarity });
+          if (!seen.has(r.title) && candidates.length < 10) {
+            seen.add(r.title);
+            candidates.push(r);
           }
         }
+
+        // ── Step 2b: Rerank candidates with a cross-encoder ──────────────────
+        // Embedding similarity ranks by topic overlap; rerank-2-lite reads
+        // query and document together and is much better at telling apart
+        // near-duplicate sections (e.g. the same section template repeated
+        // across many seeded proposals) than cosine distance alone.
+        const reranked = await rerankDocuments(
+          questionText,
+          candidates.map((c) => c.content),
+          5
+        );
+
+        kbSources = reranked
+          ? reranked.map((r) => candidates[r.index])
+          : candidates.slice(0, 5);
       } catch (err) {
         console.warn("Semantic search failed, proceeding without KB context:", err);
       }
@@ -116,7 +137,7 @@ export async function POST(request: NextRequest) {
     // cache_control: ephemeral caches the system prompt for 5 minutes.
     // On cache hit: ~60–80% latency reduction, ~90% cost reduction on cached tokens.
     const message = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-5",
       max_tokens: 2048,
       system: [
         {
@@ -128,17 +149,14 @@ export async function POST(request: NextRequest) {
       messages: [{ role: "user", content: userMessage }],
     });
 
+    // claude-sonnet-5 may emit a leading "thinking" block before the text
+    // block, so find the first text block rather than assuming index 0.
     const responseText =
-      message.content[0].type === "text" ? message.content[0].text : "";
+      message.content.find((block) => block.type === "text")?.text ?? "";
 
-    let parsed;
+    let parsed: { response: string; tone?: string; confidence?: number; reasoning?: string };
     try {
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        parsed = JSON.parse(jsonMatch[0]);
-      } else {
-        throw new Error("No JSON found in response");
-      }
+      parsed = extractJson(responseText);
     } catch {
       return NextResponse.json(
         { error: "Failed to parse AI response", raw: responseText },
@@ -157,6 +175,13 @@ export async function POST(request: NextRequest) {
         similarity: kb.similarity ? Math.round(kb.similarity * 100) : null,
       })),
       wordCount: (parsed.response || "").split(/\s+/).filter(Boolean).length,
+      // Only included when explicitly requested (e.g. by the eval harness),
+      // which needs the actual retrieved text to score faithfulness against.
+      // Gated to non-production so this endpoint — which has no auth — can
+      // never be used to exfiltrate raw KB content from a live deployment.
+      ...(debug && process.env.NODE_ENV !== "production"
+        ? { contextUsed: kbSources.map((kb) => kb.content) }
+        : {}),
     });
   } catch (error: unknown) {
     console.error("Response generation error:", error);

@@ -71,6 +71,71 @@
   --transition-slow:     350ms cubic-bezier(0.4,0,0.2,1);
 }
 
+/* ── Dark theme ─────────────────────────────────────────────────
+   Colors sourced from the BidCraft dark-mode design reference.
+   Only color tokens are redefined here — spacing/radius/transition
+   tokens are theme-invariant and inherit from :root above. */
+[data-theme="dark"] {
+  --bg:       #05070C;
+  --surface:  #10131A;
+  --elev:     #151822;
+  --soft:     #12151D;
+  --soft2:    #14171F;
+  --bd:       #23262F;
+  --bd2:      #1C1F27;
+  --bd3:      #171A22;
+  --track:    #1A1D26;
+  --dash:     #2A2E38;
+
+  --text:        #EEF1F6;
+  --text2:       #C7CCD6;
+  --text-edit:   #DDE1E8;
+  --muted:       #9AA1AE;
+  --faint:       #6B7280;
+  --faint2:      #565C68;
+  --faint3:      #454A54;
+  --placeholder: #6B7280;
+
+  --accent:      #4A9EFF;
+  --accent-soft: rgba(74,158,255,.12);
+  --accent-ink:  #1B4C82;
+
+  --pos:  #7FD1A3;
+  --warn: #F5B04D;
+  --neg:  #FF6B6B;
+  --info: #5EC8F0;
+  --purp: #A78BFA;
+
+  /* Sidebar */
+  --sb-bg:     #0A0D13;
+  --sb-fg:     #EEF1F6;
+  --sb-muted:  #8B92A0;
+  --sb-border: #1C1F27;
+  --sb-active: #1B1E26;
+
+  /* Legacy aliases: forward to the tokens above so anything still
+     reading these directly (rather than the modern names) tracks
+     the active theme instead of staying stuck on light-mode hex. */
+  --bg-base:      var(--bg);
+  --bg-surface-1: var(--surface);
+  --bg-surface-2: var(--soft);
+  --bg-surface-3: var(--soft2);
+  --brand-violet:       var(--accent);
+  --brand-violet-dark:  var(--accent-ink);
+  --brand-violet-muted: var(--accent-soft);
+  --brand-cyan:         var(--info);
+  --color-success: var(--pos);
+  --color-warning: var(--warn);
+  --color-error:   var(--neg);
+  --color-info:    var(--info);
+  --text-primary:   var(--text);
+  --text-secondary: var(--text2);
+  --text-muted:     var(--muted);
+  --border-subtle:  var(--bd3);
+  --border-default: var(--bd);
+  --border-strong:  var(--bd2);
+}
+
 /* ── Base ───────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 

@@ -55,8 +55,8 @@ import ExportModal from "@/components/ExportModal";
 const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
   ssr: false,
   loading: () => (
-    <div className="flex items-center justify-center h-[280px] rounded-xl border border-[#E5E3DC] bg-transparent">
-      <div className="text-sm text-[#9b978d]">Loading editor...</div>
+    <div className="flex items-center justify-center h-[280px] rounded-xl border border-[var(--bd)] bg-transparent">
+      <div className="text-sm text-[var(--placeholder)]">Loading editor...</div>
     </div>
   ),
 });
@@ -64,13 +64,13 @@ const RichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
 // ── Constants ──────────────────────────────────────────────────────────────
 
 const categoryColors: Record<string, { bg: string; text: string; dot: string }> = {
-  Technical: { bg: "bg-[#146C43]/10", text: "text-[#146C43]", dot: "bg-violet-400" },
+  Technical: { bg: "bg-[var(--accent)]/10", text: "text-[var(--accent)]", dot: "bg-violet-400" },
   "Security & Compliance": { bg: "bg-red-500/10", text: "text-red-400", dot: "bg-red-400" },
-  "Experience & References": { bg: "bg-[#DDEAF5]", text: "text-[#2C5C8A]", dot: "bg-cyan-400" },
+  "Experience & References": { bg: "bg-[var(--info)]/10", text: "text-[var(--info)]", dot: "bg-cyan-400" },
   Staffing: { bg: "bg-amber-500/10", text: "text-amber-400", dot: "bg-amber-400" },
   Methodology: { bg: "bg-emerald-500/10", text: "text-emerald-400", dot: "bg-emerald-400" },
   Pricing: { bg: "bg-pink-500/10", text: "text-pink-400", dot: "bg-pink-400" },
-  General: { bg: "bg-[#F6F4EF]", text: "text-[#6B6862]", dot: "bg-white/40" },
+  General: { bg: "bg-[var(--soft)]", text: "text-[var(--muted)]", dot: "bg-white/40" },
 };
 
 const reviewStatusConfig: Record<
@@ -79,9 +79,9 @@ const reviewStatusConfig: Record<
 > = {
   pending: {
     label: "Pending",
-    bg: "bg-[#F6F4EF]",
-    text: "text-[#8A867D]",
-    border: "border-[#E5E3DC]",
+    bg: "bg-[var(--soft)]",
+    text: "text-[var(--faint)]",
+    border: "border-[var(--bd)]",
   },
   "in-progress": {
     label: "In Progress",
@@ -195,6 +195,7 @@ export default function ReviewPage() {
     const session = getLatestRFPSession();
     if (!session) return;
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSessionId(session.id);
     setRfpTitle(session.rfpTitle);
     setIssuingOrg(session.issuingOrganization);
@@ -217,9 +218,12 @@ export default function ReviewPage() {
   }, []);
 
   // ── Load per-question feedback fields when selection changes ──
+  // Pre-existing pattern, out of scope for this pass — left as-is rather than
+  // risk a behavioral regression in unrelated feedback logic.
   useEffect(() => {
     if (!selectedQuestionId) return;
     const fb = feedbackMap[selectedQuestionId];
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPendingStarRating(fb?.starRating ?? null);
     setPendingHelpful(fb?.helpful ?? null);
     setPendingFeedbackText(fb?.feedbackText ?? "");
@@ -261,9 +265,11 @@ export default function ReviewPage() {
   }, [questions, filterStatus, sortBy, feedbackMap, responses]);
 
   // ── Auto-select first displayed question when filter empties out selection ──
+  // Pre-existing pattern, out of scope for this pass.
   useEffect(() => {
     if (!selectedQuestionId) return;
     if (!displayedQuestions.find((q) => q.id === selectedQuestionId)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedQuestionId(displayedQuestions[0]?.id ?? null);
     }
   }, [displayedQuestions, selectedQuestionId]);
@@ -498,14 +504,14 @@ export default function ReviewPage() {
   // ── Empty state ──
   if (questions.length === 0) {
     return (
-      <div className="h-full overflow-y-auto bg-[#FAF9F6] text-[#1B1A17] flex items-center justify-center">
+      <div className="h-full overflow-y-auto bg-[var(--bg)] text-[var(--text)] flex items-center justify-center">
         <div className="text-center">
-          <FileText className="w-12 h-12 text-[#bdb9ae] mx-auto mb-4" />
+          <FileText className="w-12 h-12 text-[var(--faint3)] mx-auto mb-4" />
           <h2 className="text-xl font-semibold mb-2">No RFP Data Found</h2>
-          <p className="text-sm text-[#8A867D] mb-6">Upload and parse an RFP first.</p>
+          <p className="text-sm text-[var(--faint)] mb-6">Upload and parse an RFP first.</p>
           <button
             onClick={() => router.push("/")}
-            className="px-5 py-2.5 rounded-lg bg-[#146C43] hover:bg-[#0E5C38] text-sm font-medium transition-colors"
+            className="px-5 py-2.5 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-ink)] text-sm font-medium transition-colors"
           >
             Upload RFP
           </button>
@@ -516,13 +522,13 @@ export default function ReviewPage() {
 
   // ── Render ──
   return (
-    <div className="h-full overflow-y-auto bg-[#FAF9F6] text-[#1B1A17] flex flex-col">
+    <div className="h-full overflow-y-auto bg-[var(--bg)] text-[var(--text)] flex flex-col">
       {/* ── Nav ── */}
-      <nav className="border-b border-[#E5E3DC] bg-[#FAF9F6]/90 backdrop-blur-xl sticky top-0 z-50 shrink-0">
+      <nav className="border-b border-[var(--bd)] bg-[var(--bg)]/90 backdrop-blur-xl sticky top-0 z-50 shrink-0">
         <div className="max-w-screen-2xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
           <button
             onClick={() => router.push("/responses")}
-            className="flex items-center gap-2 text-sm text-[#8A867D] hover:text-[#3a382f] transition-colors shrink-0"
+            className="flex items-center gap-2 text-sm text-[var(--faint)] hover:text-[var(--text2)] transition-colors shrink-0"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Responses
@@ -533,8 +539,8 @@ export default function ReviewPage() {
               onClick={() => setShowStatsPanel((v) => !v)}
               className={`p-2 rounded-lg border text-sm transition-colors shrink-0 ${
                 showStatsPanel
-                  ? "bg-[#146C43]/20 border-[#146C43]/30 text-[#146C43]"
-                  : "bg-[#F6F4EF] border-[#E5E3DC] text-[#6B6862] hover:text-[#3a382f]"
+                  ? "bg-[var(--accent)]/20 border-[var(--accent)]/30 text-[var(--accent)]"
+                  : "bg-[var(--soft)] border-[var(--bd)] text-[var(--muted)] hover:text-[var(--text2)]"
               }`}
               title="Category stats"
               aria-label="Toggle category stats"
@@ -545,8 +551,8 @@ export default function ReviewPage() {
               onClick={() => setShowKeyboardHelp((v) => !v)}
               className={`p-2 rounded-lg border text-sm transition-colors shrink-0 ${
                 showKeyboardHelp
-                  ? "bg-[#146C43]/20 border-[#146C43]/30 text-[#146C43]"
-                  : "bg-[#F6F4EF] border-[#E5E3DC] text-[#6B6862] hover:text-[#3a382f]"
+                  ? "bg-[var(--accent)]/20 border-[var(--accent)]/30 text-[var(--accent)]"
+                  : "bg-[var(--soft)] border-[var(--bd)] text-[var(--muted)] hover:text-[var(--text2)]"
               }`}
               title="Keyboard shortcuts"
               aria-label="Show keyboard shortcuts"
@@ -555,7 +561,7 @@ export default function ReviewPage() {
             </button>
             <button
               onClick={() => setShowExportModal(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F6F4EF] border border-[#E5E3DC] text-sm hover:bg-[#EEECE5] transition-colors shrink-0"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--soft)] border border-[var(--bd)] text-sm hover:bg-[var(--bd2)] transition-colors shrink-0"
               aria-label="Export DOCX"
             >
               <Download className="w-4 h-4" />
@@ -564,7 +570,7 @@ export default function ReviewPage() {
             <button
               onClick={() => saveDraft(false)}
               disabled={isSaving}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#146C43] hover:bg-[#0E5C38] text-sm font-medium transition-colors disabled:opacity-50 shrink-0"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-ink)] text-sm font-medium transition-colors disabled:opacity-50 shrink-0"
               aria-label="Save draft"
             >
               <Save className="w-4 h-4" />
@@ -575,20 +581,20 @@ export default function ReviewPage() {
       </nav>
 
       {/* ── Progress Header ── */}
-      <div className="border-b border-[#F2F0E9] bg-white/[0.01] shrink-0">
+      <div className="border-b border-[var(--bd3)] bg-white/[0.01] shrink-0">
         <div className="max-w-screen-2xl mx-auto px-4 py-4">
           <div className="flex items-start justify-between gap-4 mb-3">
             <div>
               <h1 className="text-lg font-semibold truncate">
                 Review & Edit — {rfpTitle || "RFP Responses"}
               </h1>
-              <p className="text-xs text-[#9b978d] mt-0.5">
+              <p className="text-xs text-[var(--placeholder)] mt-0.5">
                 {statusCounts.complete} of {questions.length} complete ({completionPct}%)
               </p>
             </div>
 
             {lastSaved && (
-              <div className="flex items-center gap-1.5 text-xs text-[#9b978d] shrink-0 mt-1">
+              <div className="flex items-center gap-1.5 text-xs text-[var(--placeholder)] shrink-0 mt-1">
                 <Clock className="w-3 h-3" />
                 Saved {lastSaved.toLocaleTimeString()}
               </div>
@@ -596,9 +602,9 @@ export default function ReviewPage() {
           </div>
 
           {/* Overall progress bar */}
-          <div className="h-1.5 rounded-full bg-[#F6F4EF] overflow-hidden mb-3">
+          <div className="h-1.5 rounded-full bg-[var(--soft)] overflow-hidden mb-3">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#146C43] to-[#2C5C8A] transition-all duration-700"
+              className="h-full rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--info)] transition-all duration-700"
               style={{ width: `${completionPct}%` }}
             />
           </div>
@@ -635,7 +641,7 @@ export default function ReviewPage() {
             {filterStatus !== "all" && (
               <button
                 onClick={() => setFilterStatus("all")}
-                className="text-xs text-[#9b978d] hover:text-[#6B6862] px-2 transition-colors"
+                className="text-xs text-[var(--placeholder)] hover:text-[var(--muted)] px-2 transition-colors"
               >
                 Clear filter
               </button>
@@ -646,9 +652,9 @@ export default function ReviewPage() {
 
       {/* ── Stats Panel (collapsible) ── */}
       {showStatsPanel && (
-        <div className="border-b border-[#F2F0E9] bg-white/[0.01] shrink-0 animate-fade-in">
+        <div className="border-b border-[var(--bd3)] bg-white/[0.01] shrink-0 animate-fade-in">
           <div className="max-w-screen-2xl mx-auto px-4 py-4">
-            <h3 className="text-xs font-medium text-[#8A867D] mb-3 uppercase tracking-wide">
+            <h3 className="text-xs font-medium text-[var(--faint)] mb-3 uppercase tracking-wide">
               Category Completion
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -658,17 +664,17 @@ export default function ReviewPage() {
                 return (
                   <div
                     key={cat}
-                    className="p-3 rounded-xl bg-[#FAF9F6] border border-[#E5E3DC]"
+                    className="p-3 rounded-xl bg-[var(--bg)] border border-[var(--bd)]"
                   >
                     <div className="flex items-center gap-1.5 mb-2">
                       <span className={`w-1.5 h-1.5 rounded-full ${colors.dot}`} />
-                      <span className="text-xs text-[#6B6862] truncate">{cat}</span>
+                      <span className="text-xs text-[var(--muted)] truncate">{cat}</span>
                     </div>
                     <div className="flex items-end justify-between mb-1.5">
-                      <span className="text-lg font-bold text-[#3a382f]">{pct}%</span>
-                      <span className="text-xs text-[#9b978d]">{stat.complete}/{stat.total}</span>
+                      <span className="text-lg font-bold text-[var(--text2)]">{pct}%</span>
+                      <span className="text-xs text-[var(--placeholder)]">{stat.complete}/{stat.total}</span>
                     </div>
-                    <div className="h-1 rounded-full bg-[#F6F4EF]">
+                    <div className="h-1 rounded-full bg-[var(--soft)]">
                       <div
                         className={`h-full rounded-full ${colors.dot} opacity-70 transition-all`}
                         style={{ width: `${pct}%` }}
@@ -684,9 +690,9 @@ export default function ReviewPage() {
 
       {/* ── Keyboard Help (collapsible) ── */}
       {showKeyboardHelp && (
-        <div className="border-b border-[#F2F0E9] bg-white/[0.01] shrink-0 animate-fade-in">
+        <div className="border-b border-[var(--bd3)] bg-white/[0.01] shrink-0 animate-fade-in">
           <div className="max-w-screen-2xl mx-auto px-4 py-4">
-            <div className="flex flex-wrap gap-4 text-xs text-[#8A867D]">
+            <div className="flex flex-wrap gap-4 text-xs text-[var(--faint)]">
               {[
                 ["Ctrl + S", "Save draft"],
                 ["Ctrl + →", "Next question"],
@@ -697,7 +703,7 @@ export default function ReviewPage() {
                 ["Ctrl + Z", "Undo"],
               ].map(([keys, desc]) => (
                 <div key={keys} className="flex items-center gap-1.5">
-                  <kbd className="px-1.5 py-0.5 rounded bg-[#F4F3EF] font-mono text-[#6B6862]">
+                  <kbd className="px-1.5 py-0.5 rounded bg-[var(--soft2)] font-mono text-[var(--muted)]">
                     {keys}
                   </kbd>
                   <span>{desc}</span>
@@ -712,19 +718,19 @@ export default function ReviewPage() {
       <div className="flex flex-1 overflow-hidden max-w-screen-2xl mx-auto w-full">
         {/* ── LEFT SIDEBAR: Question List ── */}
         <aside
-          className="w-[260px] xl:w-[300px] shrink-0 border-r border-[#E5E3DC] flex flex-col overflow-hidden hidden md:flex"
+          className="w-[260px] xl:w-[300px] shrink-0 border-r border-[var(--bd)] flex flex-col overflow-hidden hidden md:flex"
           aria-label="Question list"
         >
           {/* Sidebar controls */}
-          <div className="p-3 border-b border-[#E5E3DC] space-y-2 shrink-0">
+          <div className="p-3 border-b border-[var(--bd)] space-y-2 shrink-0">
             {/* Filter + Sort row */}
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 flex-1 min-w-0 px-2.5 py-1.5 rounded-lg bg-[#FAF9F6] border border-[#E5E3DC]">
-                <Filter className="w-3 h-3 text-[#9b978d] shrink-0" />
+              <div className="flex items-center gap-1.5 flex-1 min-w-0 px-2.5 py-1.5 rounded-lg bg-[var(--bg)] border border-[var(--bd)]">
+                <Filter className="w-3 h-3 text-[var(--placeholder)] shrink-0" />
                 <select
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value as ReviewStatus | "all")}
-                  className="bg-transparent text-xs text-[#6B6862] flex-1 outline-none cursor-pointer"
+                  className="bg-transparent text-xs text-[var(--muted)] flex-1 outline-none cursor-pointer"
                   aria-label="Filter by status"
                 >
                   <option value="all">All Questions</option>
@@ -738,7 +744,7 @@ export default function ReviewPage() {
               <div className="relative">
                 <button
                   onClick={() => setShowSortMenu((v) => !v)}
-                  className="flex items-center gap-1 p-1.5 rounded-lg bg-[#FAF9F6] border border-[#E5E3DC] text-[#8A867D] hover:text-[#6B6862] transition-colors"
+                  className="flex items-center gap-1 p-1.5 rounded-lg bg-[var(--bg)] border border-[var(--bd)] text-[var(--faint)] hover:text-[var(--muted)] transition-colors"
                   title="Sort"
                   aria-label="Sort questions"
                   aria-expanded={showSortMenu}
@@ -746,7 +752,7 @@ export default function ReviewPage() {
                   <SortAsc className="w-3.5 h-3.5" />
                 </button>
                 {showSortMenu && (
-                  <div className="absolute right-0 top-full mt-1 w-44 rounded-xl border border-[#E5E3DC] bg-[#131827] shadow-2xl z-20 py-1 animate-fade-in">
+                  <div className="absolute right-0 top-full mt-1 w-44 rounded-xl border border-[var(--bd)] bg-[#131827] shadow-2xl z-20 py-1 animate-fade-in">
                     {(
                       [
                         ["number", "Question Number"],
@@ -760,8 +766,8 @@ export default function ReviewPage() {
                         onClick={() => { setSortBy(val); setShowSortMenu(false); }}
                         className={`w-full text-left px-3 py-2 text-xs transition-colors ${
                           sortBy === val
-                            ? "text-[#146C43] bg-[#146C43]/10"
-                            : "text-[#6B6862] hover:text-[#3a382f] hover:bg-[#FAF9F6]"
+                            ? "text-[var(--accent)] bg-[var(--accent)]/10"
+                            : "text-[var(--muted)] hover:text-[var(--text2)] hover:bg-[var(--bg)]"
                         }`}
                       >
                         {label}
@@ -776,7 +782,7 @@ export default function ReviewPage() {
             <div className="flex items-center gap-1.5">
               <button
                 onClick={markAllComplete}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs text-emerald-400/70 hover:text-emerald-400 hover:bg-emerald-500/10 border border-[#E5E3DC] hover:border-emerald-500/20 transition-all flex-1 justify-center"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs text-emerald-400/70 hover:text-emerald-400 hover:bg-emerald-500/10 border border-[var(--bd)] hover:border-emerald-500/20 transition-all flex-1 justify-center"
                 aria-label="Mark all questions as complete"
               >
                 <CheckSquare className="w-3 h-3" />
@@ -784,7 +790,7 @@ export default function ReviewPage() {
               </button>
               <button
                 onClick={resetAllStatuses}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs text-[#9b978d] hover:text-[#6B6862] hover:bg-[#FAF9F6] border border-[#E5E3DC] transition-all flex-1 justify-center"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs text-[var(--placeholder)] hover:text-[var(--muted)] hover:bg-[var(--bg)] border border-[var(--bd)] transition-all flex-1 justify-center"
                 aria-label="Reset all question statuses to pending"
               >
                 <RotateCcw className="w-3 h-3" />
@@ -796,7 +802,7 @@ export default function ReviewPage() {
           {/* Question list */}
           <div className="flex-1 overflow-y-auto py-1" role="listbox" aria-label="Questions">
             {displayedQuestions.length === 0 ? (
-              <div className="py-8 text-center text-xs text-[#bdb9ae]">
+              <div className="py-8 text-center text-xs text-[var(--faint3)]">
                 No questions match the filter.
               </div>
             ) : (
@@ -814,18 +820,18 @@ export default function ReviewPage() {
                     role="option"
                     aria-selected={isSelected}
                     onClick={() => navigateTo(q.id)}
-                    className={`w-full text-left px-3 py-2.5 border-b border-[#F2F0E9] transition-all ${
+                    className={`w-full text-left px-3 py-2.5 border-b border-[var(--bd3)] transition-all ${
                       isSelected
-                        ? "bg-[#146C43]/10 border-l-2 border-l-violet-500"
-                        : "hover:bg-[#FAF9F6]"
+                        ? "bg-[var(--accent)]/10 border-l-2 border-l-violet-500"
+                        : "hover:bg-[var(--bg)]"
                     }`}
                   >
                     <div className="flex items-start gap-2">
-                      <span className="text-[10px] font-mono text-[#bdb9ae] shrink-0 mt-0.5">
+                      <span className="text-[10px] font-mono text-[var(--faint3)] shrink-0 mt-0.5">
                         {String(idx + 1).padStart(2, "0")}
                       </span>
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs text-[#3a382f] leading-snug line-clamp-2 mb-1.5">
+                        <p className="text-xs text-[var(--text2)] leading-snug line-clamp-2 mb-1.5">
                           {q.text}
                         </p>
                         <div className="flex items-center gap-1.5 flex-wrap">
@@ -862,24 +868,24 @@ export default function ReviewPage() {
           {selectedQuestion ? (
             <>
               {/* Question navigation bar */}
-              <div className="px-4 py-3 border-b border-[#E5E3DC] flex items-center gap-3 shrink-0">
+              <div className="px-4 py-3 border-b border-[var(--bd)] flex items-center gap-3 shrink-0">
                 <button
                   onClick={goPrev}
                   disabled={selectedIdx <= 0}
-                  className="p-1.5 rounded-lg hover:bg-[#F6F4EF] text-[#8A867D] hover:text-[#3a382f] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-[var(--soft)] text-[var(--faint)] hover:text-[var(--text2)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                   aria-label="Previous question"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
 
                 <div className="flex items-center gap-2 flex-1 min-w-0">
-                  <span className="text-xs text-[#9b978d] shrink-0">
+                  <span className="text-xs text-[var(--placeholder)] shrink-0">
                     Q {selectedIdx + 1} of {displayedQuestions.length}
                   </span>
                   <select
                     value={selectedQuestionId ?? ""}
                     onChange={(e) => navigateTo(e.target.value)}
-                    className="bg-transparent text-xs text-[#6B6862] outline-none cursor-pointer flex-1 min-w-0"
+                    className="bg-transparent text-xs text-[var(--muted)] outline-none cursor-pointer flex-1 min-w-0"
                     aria-label="Jump to question"
                   >
                     {displayedQuestions.map((q, i) => (
@@ -893,7 +899,7 @@ export default function ReviewPage() {
                 <button
                   onClick={goNext}
                   disabled={selectedIdx >= displayedQuestions.length - 1}
-                  className="p-1.5 rounded-lg hover:bg-[#F6F4EF] text-[#8A867D] hover:text-[#3a382f] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-[var(--soft)] text-[var(--faint)] hover:text-[var(--text2)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                   aria-label="Next question"
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -906,7 +912,7 @@ export default function ReviewPage() {
 
                   {/* ── Panel 1: Question Info ── */}
                   <div className="space-y-3">
-                    <div className="p-4 rounded-xl bg-transparent border border-[#E5E3DC]">
+                    <div className="p-4 rounded-xl bg-transparent border border-[var(--bd)]">
                       <div className="flex items-center gap-2 mb-3 flex-wrap">
                         {/* Category */}
                         {(() => {
@@ -930,28 +936,28 @@ export default function ReviewPage() {
                         )}
                       </div>
 
-                      <p className="text-sm text-[#3a382f] leading-relaxed">
+                      <p className="text-sm text-[var(--text2)] leading-relaxed">
                         {selectedQuestion.text}
                       </p>
                     </div>
 
                     {/* Confidence */}
                     {selectedResponse && (
-                      <div className="p-3 rounded-xl bg-transparent border border-[#E5E3DC]">
+                      <div className="p-3 rounded-xl bg-transparent border border-[var(--bd)]">
                         <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-xs text-[#9b978d]">AI Confidence</span>
+                          <span className="text-xs text-[var(--placeholder)]">AI Confidence</span>
                           <span className={`text-base font-bold ${confidenceColor(selectedResponse.confidence)}`}>
                             {selectedResponse.confidence}%
                           </span>
                         </div>
-                        <div className="h-1.5 rounded-full bg-[#F6F4EF] overflow-hidden">
+                        <div className="h-1.5 rounded-full bg-[var(--soft)] overflow-hidden">
                           <div
                             className={`h-full rounded-full transition-all ${confidenceBarColor(selectedResponse.confidence)}`}
                             style={{ width: `${selectedResponse.confidence}%` }}
                           />
                         </div>
                         {selectedResponse.reasoning && (
-                          <p className="text-[10px] text-[#8A867D] mt-2 leading-relaxed">
+                          <p className="text-[10px] text-[var(--faint)] mt-2 leading-relaxed">
                             {selectedResponse.reasoning}
                           </p>
                         )}
@@ -959,8 +965,8 @@ export default function ReviewPage() {
                     )}
 
                     {/* Review Status Selector */}
-                    <div className="p-3 rounded-xl bg-transparent border border-[#E5E3DC]">
-                      <p className="text-xs text-[#9b978d] mb-2">Review Status</p>
+                    <div className="p-3 rounded-xl bg-transparent border border-[var(--bd)]">
+                      <p className="text-xs text-[var(--placeholder)] mb-2">Review Status</p>
                       <div className="space-y-1.5">
                         {(
                           [
@@ -978,7 +984,7 @@ export default function ReviewPage() {
                               className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs border transition-all ${
                                 selectedStatus === s
                                   ? `${cfg.bg} ${cfg.text} ${cfg.border} ring-1 ring-current`
-                                  : "bg-transparent text-[#8A867D] border-[#E5E3DC] hover:bg-[#F6F4EF]"
+                                  : "bg-transparent text-[var(--faint)] border-[var(--bd)] hover:bg-[var(--soft)]"
                               }`}
                               aria-pressed={selectedStatus === s}
                             >
@@ -1011,7 +1017,7 @@ export default function ReviewPage() {
                           minHeight="320px"
                         />
 
-                        <div className="flex items-center justify-between text-xs text-[#9b978d]">
+                        <div className="flex items-center justify-between text-xs text-[var(--placeholder)]">
                           <span>{editorWordCount} words</span>
                           {lastSaved && (
                             <span>
@@ -1025,12 +1031,12 @@ export default function ReviewPage() {
                           <button
                             onClick={() => saveDraft(false)}
                             disabled={isSaving}
-                            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#F6F4EF] border border-[#E5E3DC] text-sm hover:bg-[#EEECE5] transition-colors disabled:opacity-50"
+                            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[var(--soft)] border border-[var(--bd)] text-sm hover:bg-[var(--bd2)] transition-colors disabled:opacity-50"
                             aria-label="Save draft (Ctrl+S)"
                           >
                             <Save className="w-4 h-4" />
                             Save Draft
-                            <kbd className="ml-1 px-1 py-0.5 rounded text-[9px] bg-[#F4F3EF] font-mono text-[#9b978d]">
+                            <kbd className="ml-1 px-1 py-0.5 rounded text-[9px] bg-[var(--soft2)] font-mono text-[var(--placeholder)]">
                               ⌘S
                             </kbd>
                           </button>
@@ -1053,13 +1059,13 @@ export default function ReviewPage() {
                         </div>
                       </>
                     ) : (
-                      <div className="flex flex-col items-center justify-center h-48 rounded-xl border border-[#E5E3DC] bg-transparent">
-                        <p className="text-sm text-[#9b978d] mb-4">
+                      <div className="flex flex-col items-center justify-center h-48 rounded-xl border border-[var(--bd)] bg-transparent">
+                        <p className="text-sm text-[var(--placeholder)] mb-4">
                           No AI response generated yet for this question.
                         </p>
                         <button
                           onClick={() => router.push("/responses")}
-                          className="px-4 py-2 rounded-lg bg-[#146C43] hover:bg-[#0E5C38] text-sm font-medium transition-colors"
+                          className="px-4 py-2 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-ink)] text-sm font-medium transition-colors"
                         >
                           Generate Response
                         </button>
@@ -1071,18 +1077,18 @@ export default function ReviewPage() {
                   <div className="space-y-3">
                     {/* KB Sources */}
                     {selectedResponse?.sourcesUsed && selectedResponse.sourcesUsed.length > 0 && (
-                      <div className="p-3 rounded-xl bg-transparent border border-[#E5E3DC]">
+                      <div className="p-3 rounded-xl bg-transparent border border-[var(--bd)]">
                         <div className="flex items-center gap-2 mb-2">
-                          <BookOpen className="w-3.5 h-3.5 text-[#146C43]" />
-                          <span className="text-xs font-medium text-[#6B6862]">KB Sources</span>
+                          <BookOpen className="w-3.5 h-3.5 text-[var(--accent)]" />
+                          <span className="text-xs font-medium text-[var(--muted)]">KB Sources</span>
                         </div>
                         <div className="space-y-1.5">
                           {selectedResponse.sourcesUsed.map((src, i) => (
                             <div
                               key={i}
-                              className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-[#FAF9F6] border border-[#F2F0E9]"
+                              className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-[var(--bg)] border border-[var(--bd3)]"
                             >
-                              <span className="text-[10px] text-[#8A867D] truncate flex-1 mr-2">
+                              <span className="text-[10px] text-[var(--faint)] truncate flex-1 mr-2">
                                 {src.title}
                               </span>
                               {src.similarity != null && (
@@ -1092,7 +1098,7 @@ export default function ReviewPage() {
                                       ? "text-emerald-400"
                                       : src.similarity >= 40
                                       ? "text-amber-400"
-                                      : "text-[#9b978d]"
+                                      : "text-[var(--placeholder)]"
                                   }`}
                                 >
                                   {src.similarity}%
@@ -1106,14 +1112,14 @@ export default function ReviewPage() {
 
                     {/* Edit Distance */}
                     {selectedFeedback && selectedFeedback.editDistance > 0 && (
-                      <div className="p-3 rounded-xl bg-transparent border border-[#E5E3DC]">
+                      <div className="p-3 rounded-xl bg-transparent border border-[var(--bd)]">
                         <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-xs text-[#9b978d]">Edits from AI draft</span>
-                          <span className="text-xs font-mono text-[#6B6862]">
+                          <span className="text-xs text-[var(--placeholder)]">Edits from AI draft</span>
+                          <span className="text-xs font-mono text-[var(--muted)]">
                             {selectedFeedback.editDistance}% changed
                           </span>
                         </div>
-                        <div className="h-1.5 rounded-full bg-[#F6F4EF] overflow-hidden">
+                        <div className="h-1.5 rounded-full bg-[var(--soft)] overflow-hidden">
                           <div
                             className={`h-full rounded-full transition-all ${
                               selectedFeedback.editDistance > 50
@@ -1129,12 +1135,12 @@ export default function ReviewPage() {
                     )}
 
                     {/* Feedback Collection */}
-                    <div className="p-3 rounded-xl bg-transparent border border-[#E5E3DC] space-y-4">
-                      <p className="text-xs font-medium text-[#6B6862]">Your Feedback</p>
+                    <div className="p-3 rounded-xl bg-transparent border border-[var(--bd)] space-y-4">
+                      <p className="text-xs font-medium text-[var(--muted)]">Your Feedback</p>
 
                       {/* 5-Star Rating */}
                       <div>
-                        <p className="text-[10px] text-[#9b978d] mb-1.5">
+                        <p className="text-[10px] text-[var(--placeholder)] mb-1.5">
                           Rate this response
                         </p>
                         <div
@@ -1155,7 +1161,7 @@ export default function ReviewPage() {
                           {pendingStarRating && (
                             <button
                               onClick={() => setPendingStarRating(null)}
-                              className="ml-1 text-[10px] text-[#bdb9ae] hover:text-[#8A867D] transition-colors"
+                              className="ml-1 text-[10px] text-[var(--faint3)] hover:text-[var(--faint)] transition-colors"
                               aria-label="Clear rating"
                             >
                               Clear
@@ -1166,7 +1172,7 @@ export default function ReviewPage() {
 
                       {/* Helpful / Not Helpful */}
                       <div>
-                        <p className="text-[10px] text-[#9b978d] mb-1.5">Was this helpful?</p>
+                        <p className="text-[10px] text-[var(--placeholder)] mb-1.5">Was this helpful?</p>
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() =>
@@ -1176,7 +1182,7 @@ export default function ReviewPage() {
                             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs border transition-all ${
                               pendingHelpful === true
                                 ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
-                                : "bg-[#FAF9F6] text-[#8A867D] border-[#E5E3DC] hover:border-emerald-500/20 hover:text-emerald-400"
+                                : "bg-[var(--bg)] text-[var(--faint)] border-[var(--bd)] hover:border-emerald-500/20 hover:text-emerald-400"
                             }`}
                             aria-label="Mark as helpful"
                           >
@@ -1191,7 +1197,7 @@ export default function ReviewPage() {
                             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs border transition-all ${
                               pendingHelpful === false
                                 ? "bg-red-500/20 text-red-400 border-red-500/30"
-                                : "bg-[#FAF9F6] text-[#8A867D] border-[#E5E3DC] hover:border-red-500/20 hover:text-red-400"
+                                : "bg-[var(--bg)] text-[var(--faint)] border-[var(--bd)] hover:border-red-500/20 hover:text-red-400"
                             }`}
                             aria-label="Mark as not helpful"
                           >
@@ -1205,7 +1211,7 @@ export default function ReviewPage() {
                       <div>
                         <label
                           htmlFor="feedback-text"
-                          className="text-[10px] text-[#9b978d] mb-1.5 block"
+                          className="text-[10px] text-[var(--placeholder)] mb-1.5 block"
                         >
                           What could be improved?
                         </label>
@@ -1215,13 +1221,13 @@ export default function ReviewPage() {
                           onChange={(e) => setPendingFeedbackText(e.target.value)}
                           placeholder="Optional comments..."
                           rows={3}
-                          className="w-full px-2.5 py-2 rounded-lg bg-[#FAF9F6] border border-[#E5E3DC] text-xs text-[#3a382f] placeholder-white/20 resize-none focus:outline-none focus:border-violet-500/40 focus:ring-1 focus:ring-violet-500/20 transition-colors"
+                          className="w-full px-2.5 py-2 rounded-lg bg-[var(--bg)] border border-[var(--bd)] text-xs text-[var(--text2)] placeholder-white/20 resize-none focus:outline-none focus:border-violet-500/40 focus:ring-1 focus:ring-violet-500/20 transition-colors"
                         />
                       </div>
 
                       <button
                         onClick={() => saveDraft(false)}
-                        className="w-full py-2 rounded-lg text-xs font-medium bg-[#146C43]/20 border border-[#146C43]/30 text-[#146C43] hover:bg-[#146C43]/30 transition-colors"
+                        className="w-full py-2 rounded-lg text-xs font-medium bg-[var(--accent)]/20 border border-[var(--accent)]/30 text-[var(--accent)] hover:bg-[var(--accent)]/30 transition-colors"
                         aria-label="Save feedback"
                       >
                         Save Feedback
@@ -1230,27 +1236,27 @@ export default function ReviewPage() {
 
                     {/* Tone / word count meta */}
                     {selectedResponse && (
-                      <div className="p-3 rounded-xl bg-transparent border border-[#E5E3DC] space-y-2 text-xs">
-                        <div className="flex items-center justify-between text-[#9b978d]">
+                      <div className="p-3 rounded-xl bg-transparent border border-[var(--bd)] space-y-2 text-xs">
+                        <div className="flex items-center justify-between text-[var(--placeholder)]">
                           <span>Tone</span>
-                          <span className="text-[#6B6862] capitalize">
+                          <span className="text-[var(--muted)] capitalize">
                             {selectedResponse.tone}
                           </span>
                         </div>
                         {selectedResponse.wordCount && (
-                          <div className="flex items-center justify-between text-[#9b978d]">
+                          <div className="flex items-center justify-between text-[var(--placeholder)]">
                             <span>AI word count</span>
-                            <span className="text-[#6B6862]">{selectedResponse.wordCount}</span>
+                            <span className="text-[var(--muted)]">{selectedResponse.wordCount}</span>
                           </div>
                         )}
-                        <div className="flex items-center justify-between text-[#9b978d]">
+                        <div className="flex items-center justify-between text-[var(--placeholder)]">
                           <span>Your word count</span>
-                          <span className="text-[#6B6862]">{editorWordCount}</span>
+                          <span className="text-[var(--muted)]">{editorWordCount}</span>
                         </div>
                         {selectedResponse.generatedAt && (
-                          <div className="flex items-center justify-between text-[#9b978d]">
+                          <div className="flex items-center justify-between text-[var(--placeholder)]">
                             <span>Generated</span>
-                            <span className="text-[#6B6862]">
+                            <span className="text-[var(--muted)]">
                               {new Date(selectedResponse.generatedAt).toLocaleTimeString()}
                             </span>
                           </div>
@@ -1262,7 +1268,7 @@ export default function ReviewPage() {
               </div>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center text-[#9b978d] text-sm">
+            <div className="flex-1 flex items-center justify-center text-[var(--placeholder)] text-sm">
               Select a question from the list to start reviewing.
             </div>
           )}
@@ -1270,10 +1276,10 @@ export default function ReviewPage() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-[#F2F0E9] py-4 shrink-0">
+      <footer className="border-t border-[var(--bd3)] py-4 shrink-0">
         <div className="max-w-screen-2xl mx-auto px-4 flex items-center justify-between">
-          <span className="text-xs text-[#bdb9ae]">&copy; 2026 BidCraft. Built with AI.</span>
-          <span className="text-xs text-[#bdb9ae]">A portfolio project by Bhargav Hari</span>
+          <span className="text-xs text-[var(--faint3)]">&copy; 2026 BidCraft. Built with AI.</span>
+          <span className="text-xs text-[var(--faint3)]">A portfolio project by Bhargav Hari</span>
         </div>
       </footer>
 
@@ -1318,7 +1324,7 @@ function StarButton({
       aria-checked={current === star}
       aria-label={`${star} star${star !== 1 ? "s" : ""}`}
       className={`text-xl transition-colors leading-none ${
-        star <= (current ?? 0) ? "text-amber-400" : "text-[#bdb9ae] hover:text-amber-400/50"
+        star <= (current ?? 0) ? "text-amber-400" : "text-[var(--faint3)] hover:text-amber-400/50"
       }`}
     >
       ★

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { semanticSearch } from "@/lib/semanticSearch";
+import { rerankDocuments, VoyageRateLimitError } from "@/lib/voyageai";
 import { checkRateLimit, getClientIP, rateLimitError } from "@/lib/rateLimit";
 
 const MAX_QUERY_LENGTH = 500;
@@ -11,7 +12,7 @@ export async function POST(request: NextRequest) {
   if (!rl.allowed) return rateLimitError(rl.resetAt);
 
   try {
-    const { query, category, matchCount } = await request.json();
+    const { query, category, matchCount, rerank } = await request.json();
 
     if (!query || typeof query !== "string") {
       return NextResponse.json(
@@ -26,19 +27,43 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const finalCount = Math.min(matchCount || 5, 20);
+
+    // Reranking is opt-in: it costs an extra Voyage call, so callers that
+    // just want fast plain vector search (e.g. autocomplete-style UI) aren't
+    // slowed down by default.
     const results = await semanticSearch(query, {
-      matchCount: Math.min(matchCount || 5, 20),
+      matchCount: rerank ? Math.min(finalCount * 2, 20) : finalCount,
       category: category === "All" ? null : category || null,
     });
 
-    return NextResponse.json({ success: true, results });
+    if (!rerank || results.length === 0) {
+      return NextResponse.json({ success: true, results: results.slice(0, finalCount) });
+    }
+
+    const reranked = await rerankDocuments(
+      query,
+      results.map((r) => r.content),
+      finalCount
+    );
+
+    const finalResults = reranked
+      ? reranked.map((r) => results[r.index])
+      : results.slice(0, finalCount);
+
+    return NextResponse.json({ success: true, results: finalResults });
   } catch (error: unknown) {
     console.error("Semantic search error:", error);
-    const message =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    return NextResponse.json(
-      { error: "Search failed", details: message },
-      { status: 500 }
-    );
+
+    // Voyage's raw error body includes their billing/upsell copy — never
+    // forward it to the client. Surface a clean, actionable message instead.
+    if (error instanceof VoyageRateLimitError) {
+      return NextResponse.json(
+        { error: "Search is temporarily rate-limited upstream. Please try again shortly." },
+        { status: 503, headers: { "Retry-After": "20" } }
+      );
+    }
+
+    return NextResponse.json({ error: "Search failed. Please try again." }, { status: 500 });
   }
 }

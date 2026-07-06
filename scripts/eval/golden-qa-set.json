@@ -1,0 +1,602 @@
+[
+  {
+    "id": "0016f7df-af62-4a8e-a80d-1e578e8d2d7f",
+    "question": "What is your proposed approach for ai/ml & generative ai solutions?",
+    "answer": "Northbridge Technology Partners proposes a use-case-first approach with production discipline from day one. We run a structured value-and-feasibility assessment to select use cases with real ROI and acceptable risk, then build them on a proper MLOps foundation: versioned data and models, reproducible pipelines, automated evaluation, and monitoring for drift, quality, and cost. For generative-AI use cases we favor retrieval-augmented generation (RAG) over fine-tuning where it fits, grounding outputs in the client's trusted content with citations, guardrails, and human-in-the-loop review for high-stakes decisions. Responsible-AI controls \u2014 evaluation for bias and accuracy, documented model cards, and an approval workflow \u2014 are built in, not bolted on. The result is AI that is measurable, monitored, and governable in production.\n\n**Indicative technology and tooling**\n- MLOps platform (managed ML services / MLflow / Vertex / SageMaker)\n- RAG stack: vector store, embedding pipeline, orchestration, evaluation harness\n- Model monitoring for drift, quality, latency, and cost; automated retraining triggers\n- Responsible-AI tooling: bias/accuracy evaluation, model cards, approval workflow\n- Feature store and reproducible, versioned data/model pipelines\n\nAll technology choices are confirmed with Westmere University during discovery and aligned to your existing standards and strategic platform decisions; nothing above is imposed.",
+    "category": "AI/ML & Generative AI Solutions",
+    "vertical": "Higher Education",
+    "proposal_id": "BC-IT-0010"
+  },
+  {
+    "id": "08a4cd2b-fcbb-476b-ae7e-b14db84f7c11",
+    "question": "What measurable outcomes / KPIs will you be accountable for?",
+    "answer": "Key outcomes we commit to and report against:\n- At least one AI use case in monitored production within the first quarter\n- Documented, agreed success metric met or exceeded per use case\n- Continuous evaluation in place; drift and quality regressions caught automatically\n- Responsible-AI review and model cards completed for every production model",
+    "category": "AI/ML & Generative AI Solutions",
+    "vertical": "Retail & e-Commerce",
+    "proposal_id": "BC-IT-0100"
+  },
+  {
+    "id": "0e602b62-497d-4b4f-a820-2734dea832b1",
+    "question": "What service levels (SLAs) do you commit to?",
+    "answer": "We commit to measurable service levels, reported transparently and reviewed with you on a regular cadence:\n\n| Measure | Commitment |\n|---|---|\n| Critical (P1) incident response | Within 15 minutes, 24x7 |\n| P1 resolution / workaround | Target within 4 hours |\n| Standard request turnaround | Within agreed catalog SLAs |\n| Delivery cadence | Working software / progress every 2-week iteration |\n| Reporting | Weekly delivery report; monthly service/steering review |\n| Replacement of a departing team member | Within agreed SLA (typically 5\u201310 business days) with handover |\n\nService credits apply against agreed critical SLAs, defined in the contract schedule. We treat SLAs as a floor for accountability, not a ceiling for effort.",
+    "category": "AI/ML & Generative AI Solutions",
+    "vertical": "Retail & e-Commerce",
+    "proposal_id": "BC-IT-0040"
+  },
+  {
+    "id": "115e70d7-0757-4e63-ac96-d29497174037",
+    "question": "What measurable outcomes / KPIs will you be accountable for?",
+    "answer": "Key outcomes we commit to and report against:\n- At least one AI use case in monitored production within the first quarter\n- Documented, agreed success metric met or exceeded per use case\n- Continuous evaluation in place; drift and quality regressions caught automatically\n- Responsible-AI review and model cards completed for every production model",
+    "category": "AI/ML & Generative AI Solutions",
+    "vertical": "Higher Education",
+    "proposal_id": "BC-IT-0010"
+  },
+  {
+    "id": "123afd6d-cb3b-4398-a64e-7f1d7c9d432b",
+    "question": "How do you ensure security and compliance during the engagement?",
+    "answer": "Security and compliance are built into delivery, not inspected at the end. Northbridge Technology Partners operates an information-security management system aligned to ISO 27001 and SOC 2 Type II, and this engagement will be delivered to the controls relevant to Cascade Capital Group's obligations: SOC 2 Type II, PCI-DSS v4.0, ISO 27001, GLBA, SOX ITGC.\n\nConcretely, that means: least-privilege access to Cascade Capital Group systems with just-in-time elevation and full audit logging; encryption of data in transit and at rest; secrets managed in a vault, never in code; secure SDLC with dependency, static, and (where relevant) dynamic scanning in the pipeline; and security-relevant changes captured as evidence for your auditors as we go. All Northbridge Technology Partners personnel on the engagement are background-checked and complete security and (where applicable) data-privacy training before access is granted. We will sign your security schedule and DPA, and we are happy to complete your vendor security-assessment questionnaire as part of due diligence.",
+    "category": "AI/ML & Generative AI Solutions",
+    "vertical": "Banking & Financial Services",
+    "proposal_id": "BC-IT-0085"
+  },
+  {
+    "id": "00fe65e4-e087-4c72-afed-fb5df3896f40",
+    "question": "How will you handle our regulatory and data-protection obligations as a retail & e-commerce organization?",
+    "answer": "Data handling follows data-minimization and purpose-limitation principles. We will process only the Tindle & Co. data necessary for the engagement, in the agreed jurisdiction(s) consistent with United Kingdom, Germany, and the Nordics, under a signed data-processing agreement. Personal or regulated data is masked or synthesized in non-production environments wherever feasible. We maintain a record of processing activities for this engagement and support your data-subject-request and breach-notification obligations. On exit, Northbridge Technology Partners returns or securely destroys Tindle & Co. data per your instruction, with a certificate of destruction provided.",
+    "category": "Cloud Migration & Modernization",
+    "vertical": "Retail & e-Commerce",
+    "proposal_id": "BC-IT-0076"
+  },
+  {
+    "id": "02187ad8-df0d-4419-ad76-f06ca654b7e9",
+    "question": "How do you ensure security and compliance during the engagement?",
+    "answer": "Security and compliance are built into delivery, not inspected at the end. Northbridge Technology Partners operates an information-security management system aligned to ISO 27001 and SOC 2 Type II, and this engagement will be delivered to the controls relevant to Polaris Supply Network's obligations: ISO 27001, SOC 2 Type II, C-TPAT data handling.\n\nConcretely, that means: least-privilege access to Polaris Supply Network systems with just-in-time elevation and full audit logging; encryption of data in transit and at rest; secrets managed in a vault, never in code; secure SDLC with dependency, static, and (where relevant) dynamic scanning in the pipeline; and security-relevant changes captured as evidence for your auditors as we go. All Northbridge Technology Partners personnel on the engagement are background-checked and complete security and (where applicable) data-privacy training before access is granted. We will sign your security schedule and DPA, and we are happy to complete your vendor security-assessment questionnaire as part of due diligence.",
+    "category": "Cloud Migration & Modernization",
+    "vertical": "Logistics & Supply Chain",
+    "proposal_id": "BC-IT-0091"
+  },
+  {
+    "id": "02306f34-4fed-47f8-a825-258d6367f0dc",
+    "question": "What assumptions and dependencies does this proposal rest on?",
+    "answer": "This proposal is made on the following key assumptions, which we will confirm in discovery:\n\n- Brightwater Credit Union provides timely access to the relevant systems, environments, and subject-matter experts.\n- A single empowered product owner / sponsor is available on the Brightwater Credit Union side for decisions.\n- Existing documentation and access are provided at mobilization; gaps are surfaced early, not late.\n- Third-party vendors and licenses required for the solution are available or procurable within the timeline.\n- Scope is as described in this response; changes follow the agreed change-control process.\n\nWhere any assumption proves untrue, we will flag it immediately with the impact and options, rather than silently absorbing risk into the timeline.",
+    "category": "Cloud Migration & Modernization",
+    "vertical": "Banking & Financial Services",
+    "proposal_id": "BC-IT-0061"
+  },
+  {
+    "id": "055a1559-cdca-4f0e-a1d5-2bba65632766",
+    "question": "Who is on the proposed team and how do you guarantee continuity?",
+    "answer": "We propose a named, retained team. Continuity is a core commitment: planned rotation is minimized, and any unavoidable change is covered by a 48-hour notification and a replacement-within-SLA guarantee with full handover. The core roles are:\n\n| Role | Responsibility |\n|---|---|\n| Cloud Migration Lead | owns the wave plan, cutover governance, and the migration factory |\n| Landing Zone Architect | designs the secure multi-account foundation and guardrails |\n| Application Modernization Lead | drives the re-platform/re-factor candidates |\n| FinOps Specialist | models target-state economics and tracks realized savings |\n| Site Reliability Engineers (2) | build observability and operational runbooks |\n\nAll team members are pre-vetted, references are available on request, and CVs of the proposed individuals are provided in the appendix. We will not substitute a strong proposed individual for a weaker available one \u2014 the people in this proposal are the people who will do the work.",
+    "category": "Cloud Migration & Modernization",
+    "vertical": "Banking & Financial Services",
+    "proposal_id": "BC-IT-0061"
+  },
+  {
+    "id": "0869f8ec-f317-4d6d-adce-5db193e99ae5",
+    "question": "How do you ensure security and compliance during the engagement?",
+    "answer": "Security and compliance are built into delivery, not inspected at the end. Northbridge Technology Partners operates an information-security management system aligned to ISO 27001 and SOC 2 Type II, and this engagement will be delivered to the controls relevant to Tindle & Co.'s obligations: PCI-DSS v4.0, SOC 2 Type II, ISO 27001, CCPA/CPRA.\n\nConcretely, that means: least-privilege access to Tindle & Co. systems with just-in-time elevation and full audit logging; encryption of data in transit and at rest; secrets managed in a vault, never in code; secure SDLC with dependency, static, and (where relevant) dynamic scanning in the pipeline; and security-relevant changes captured as evidence for your auditors as we go. All Northbridge Technology Partners personnel on the engagement are background-checked and complete security and (where applicable) data-privacy training before access is granted. We will sign your security schedule and DPA, and we are happy to complete your vendor security-assessment questionnaire as part of due diligence.",
+    "category": "Cloud Migration & Modernization",
+    "vertical": "Retail & e-Commerce",
+    "proposal_id": "BC-IT-0016"
+  },
+  {
+    "id": "004f7ff4-a0fa-4c0f-af47-22650ff888bd",
+    "question": "How do you handle knowledge transfer, exit, and avoiding vendor lock-in?",
+    "answer": "We plan for the end of the engagement from the beginning. Documentation, runbooks, and decisions are produced as we go and kept current \u2014 not assembled in a rush at handover. Knowledge transfer to Riverlight Utilities's team is structured (pairing, shadowing, and recorded walkthroughs) and scheduled across the engagement so your people can own and extend the work confidently. Should Riverlight Utilities ever choose to move the work elsewhere, contracted exit assistance, a clean handover pack, and cooperative transition are guaranteed. We earn renewal by being good to work with, not by making it hard to leave.",
+    "category": "Custom Application Development",
+    "vertical": "Energy & Utilities",
+    "proposal_id": "BC-IT-0092"
+  },
+  {
+    "id": "00d13a7c-ec31-4593-aa66-1bd5f56a6a9b",
+    "question": "What is your proposed approach for custom application development?",
+    "answer": "Northbridge Technology Partners proposes a domain-driven, API-first build on a cloud-native stack. We start by mapping the value stream and decomposing the monolith conceptually into bounded contexts, then expose a clean API layer that the new front-end and any downstream integrations consume. The front-end is a component-based SPA with an accessibility baseline (WCAG 2.2 AA) treated as a requirement, not a nice-to-have. We adopt the strangler-fig pattern: new capabilities are built alongside the legacy system, traffic is routed incrementally, and the old system is decommissioned workflow-by-workflow once its replacement is proven in production. Automated test coverage, feature flags, and trunk-based development let us ship small and often, so the business sees working software every sprint rather than waiting for a distant release.\n\n**Indicative technology and tooling**\n- TypeScript front-end (React) with a design-system component library\n- API layer in a typed backend language (Node/TypeScript, Java/Kotlin, or .NET) \u2014 selected with the client\n- PostgreSQL with managed hosting; event streaming where async workflows warrant it\n- Containerized services on Kubernetes with blue/green or canary deploys\n- CI/CD with automated unit, integration, contract, and accessibility tests\n\nAll technology choices are confirmed with Pemberton Industrial during discovery and aligned to your existing standards and strategic platform decisions; nothing above is imposed.",
+    "category": "Custom Application Development",
+    "vertical": "Manufacturing & Industrial",
+    "proposal_id": "BC-IT-0077"
+  },
+  {
+    "id": "00d632dd-b6a5-4d41-acf1-45d0f4cafe2b",
+    "question": "How do you ensure security and compliance during the engagement?",
+    "answer": "Security and compliance are built into delivery, not inspected at the end. Northbridge Technology Partners operates an information-security management system aligned to ISO 27001 and SOC 2 Type II, and this engagement will be delivered to the controls relevant to Coastline Assurance's obligations: SOC 2 Type II, ISO 27001, NAIC Model Law, HIPAA (where applicable).\n\nConcretely, that means: least-privilege access to Coastline Assurance systems with just-in-time elevation and full audit logging; encryption of data in transit and at rest; secrets managed in a vault, never in code; secure SDLC with dependency, static, and (where relevant) dynamic scanning in the pipeline; and security-relevant changes captured as evidence for your auditors as we go. All Northbridge Technology Partners personnel on the engagement are background-checked and complete security and (where applicable) data-privacy training before access is granted. We will sign your security schedule and DPA, and we are happy to complete your vendor security-assessment questionnaire as part of due diligence.",
+    "category": "Custom Application Development",
+    "vertical": "Insurance",
+    "proposal_id": "BC-IT-0062"
+  },
+  {
+    "id": "067e32b6-3fbe-45bf-acfd-27e2bfbfa5bd",
+    "question": "What service levels (SLAs) do you commit to?",
+    "answer": "We commit to measurable service levels, reported transparently and reviewed with you on a regular cadence:\n\n| Measure | Commitment |\n|---|---|\n| Critical (P1) incident response | Within 15 minutes, 24x7 |\n| P1 resolution / workaround | Target within 4 hours |\n| Standard request turnaround | Within agreed catalog SLAs |\n| Delivery cadence | Working software / progress every 2-week iteration |\n| Reporting | Weekly delivery report; monthly service/steering review |\n| Replacement of a departing team member | Within agreed SLA (typically 5\u201310 business days) with handover |\n\nService credits apply against agreed critical SLAs, defined in the contract schedule. We treat SLAs as a floor for accountability, not a ceiling for effort.",
+    "category": "Custom Application Development",
+    "vertical": "Energy & Utilities",
+    "proposal_id": "BC-IT-0092"
+  },
+  {
+    "id": "070e324e-7e2c-41db-a7e3-5daddc13f80d",
+    "question": "What is your proposed approach for custom application development?",
+    "answer": "Northbridge Technology Partners proposes a domain-driven, API-first build on a cloud-native stack. We start by mapping the value stream and decomposing the monolith conceptually into bounded contexts, then expose a clean API layer that the new front-end and any downstream integrations consume. The front-end is a component-based SPA with an accessibility baseline (WCAG 2.2 AA) treated as a requirement, not a nice-to-have. We adopt the strangler-fig pattern: new capabilities are built alongside the legacy system, traffic is routed incrementally, and the old system is decommissioned workflow-by-workflow once its replacement is proven in production. Automated test coverage, feature flags, and trunk-based development let us ship small and often, so the business sees working software every sprint rather than waiting for a distant release.\n\n**Indicative technology and tooling**\n- TypeScript front-end (React) with a design-system component library\n- API layer in a typed backend language (Node/TypeScript, Java/Kotlin, or .NET) \u2014 selected with the client\n- PostgreSQL with managed hosting; event streaming where async workflows warrant it\n- Containerized services on Kubernetes with blue/green or canary deploys\n- CI/CD with automated unit, integration, contract, and accessibility tests\n\nAll technology choices are confirmed with Greenfield Mutual Insurance during discovery and aligned to your existing standards and strategic platform decisions; nothing above is imposed.",
+    "category": "Custom Application Development",
+    "vertical": "Insurance",
+    "proposal_id": "BC-IT-0002"
+  },
+  {
+    "id": "02fb40ed-fa4c-400e-a1d7-253cfc4bf23f",
+    "question": "How do you ensure security and compliance during the engagement?",
+    "answer": "Security and compliance are built into delivery, not inspected at the end. Northbridge Technology Partners operates an information-security management system aligned to ISO 27001 and SOC 2 Type II, and this engagement will be delivered to the controls relevant to Cargo Cove Distribution's obligations: ISO 27001, SOC 2 Type II, C-TPAT data handling.\n\nConcretely, that means: least-privilege access to Cargo Cove Distribution systems with just-in-time elevation and full audit logging; encryption of data in transit and at rest; secrets managed in a vault, never in code; secure SDLC with dependency, static, and (where relevant) dynamic scanning in the pipeline; and security-relevant changes captured as evidence for your auditors as we go. All Northbridge Technology Partners personnel on the engagement are background-checked and complete security and (where applicable) data-privacy training before access is granted. We will sign your security schedule and DPA, and we are happy to complete your vendor security-assessment questionnaire as part of due diligence.",
+    "category": "Cybersecurity Services",
+    "vertical": "Logistics & Supply Chain",
+    "proposal_id": "BC-IT-0079"
+  },
+  {
+    "id": "0bf0b11e-6990-4c4f-a38d-971c4fe40d12",
+    "question": "How do you manage delivery risk on an engagement like this?",
+    "answer": "We manage risk actively through a shared, living risk register reviewed every steering checkpoint. The most material risks specific to this engagement, and how we mitigate them:\n\n| Risk | Mitigation |\n|---|---|\n| Remediation fatigue and competing IT priorities | Risk-ranked backlog with executive sponsorship and per-finding ownership and due dates. |\n| Alert fatigue degrading SOC effectiveness | Use-case tuning, suppression of known-good noise, and SOAR automation for repetitive triage. |\n| Incident occurring during transition | Day-one EDR deployment and an interim IR retainer active from contract signature. |\n| Key-person dependency | Named team with documented work, pairing, and a warm bench so no single individual is a single point of failure. |\n| Stakeholder availability slowing decisions | A lightweight RACI and a single empowered product owner on the client side, agreed at kickoff, with decisions logged. |\n",
+    "category": "Cybersecurity Services",
+    "vertical": "Logistics & Supply Chain",
+    "proposal_id": "BC-IT-0019"
+  },
+  {
+    "id": "117f59b9-8580-4379-a735-38b575a05daa",
+    "question": "Can you describe relevant past performance or a comparable reference?",
+    "answer": "Northbridge Technology Partners delivered a security uplift for a higher education client that had failed a prior audit. Within 8 months we raised MFA coverage from 41% to 99.6%, stood up 24x7 MDR, and closed every high and critical finding, enabling a clean attestation and a materially improved cyber-insurance renewal.\n\nThis is one of several directly relevant references Northbridge Technology Partners can provide. We are happy to arrange a reference call with a comparable client, and selected anonymized case studies and outcome data are included in the appendix. We deliberately offer references from engagements of similar scope, vertical, and complexity rather than our most flattering unrelated wins.",
+    "category": "Cybersecurity Services",
+    "vertical": "Higher Education",
+    "proposal_id": "BC-IT-0034"
+  },
+  {
+    "id": "1b6e6619-fbca-4b78-a613-4eef57de007b",
+    "question": "How do you handle knowledge transfer, exit, and avoiding vendor lock-in?",
+    "answer": "We plan for the end of the engagement from the beginning. Documentation, runbooks, and decisions are produced as we go and kept current \u2014 not assembled in a rush at handover. Knowledge transfer to Beacon Logistics's team is structured (pairing, shadowing, and recorded walkthroughs) and scheduled across the engagement so your people can own and extend the work confidently. Should Beacon Logistics ever choose to move the work elsewhere, contracted exit assistance, a clean handover pack, and cooperative transition are guaranteed. We earn renewal by being good to work with, not by making it hard to leave.",
+    "category": "Cybersecurity Services",
+    "vertical": "Logistics & Supply Chain",
+    "proposal_id": "BC-IT-0019"
+  },
+  {
+    "id": "1d4833e3-bb93-46e2-afbf-a94880ea0699",
+    "question": "How do you handle knowledge transfer, exit, and avoiding vendor lock-in?",
+    "answer": "We plan for the end of the engagement from the beginning. Documentation, runbooks, and decisions are produced as we go and kept current \u2014 not assembled in a rush at handover. Knowledge transfer to Caldera State College's team is structured (pairing, shadowing, and recorded walkthroughs) and scheduled across the engagement so your people can own and extend the work confidently. Should Caldera State College ever choose to move the work elsewhere, contracted exit assistance, a clean handover pack, and cooperative transition are guaranteed. We earn renewal by being good to work with, not by making it hard to leave.",
+    "category": "Cybersecurity Services",
+    "vertical": "Higher Education",
+    "proposal_id": "BC-IT-0094"
+  },
+  {
+    "id": "060dcb51-654b-4a3c-ad79-2133a27be2e8",
+    "question": "How do you handle knowledge transfer, exit, and avoiding vendor lock-in?",
+    "answer": "We plan for the end of the engagement from the beginning. Documentation, runbooks, and decisions are produced as we go and kept current \u2014 not assembled in a rush at handover. Knowledge transfer to Riverton County Services's team is structured (pairing, shadowing, and recorded walkthroughs) and scheduled across the engagement so your people can own and extend the work confidently. Should Riverton County Services ever choose to move the work elsewhere, contracted exit assistance, a clean handover pack, and cooperative transition are guaranteed. We earn renewal by being good to work with, not by making it hard to leave.",
+    "category": "Data Engineering & Analytics",
+    "vertical": "Public Sector & Government",
+    "proposal_id": "BC-IT-0018"
+  },
+  {
+    "id": "0a88f3b5-653b-41db-ad4c-498c5d35b058",
+    "question": "What measurable outcomes / KPIs will you be accountable for?",
+    "answer": "Key outcomes we commit to and report against:\n- Single certified definition for all board-level metrics\n- Automated data-quality and freshness tests on 100% of certified datasets\n- Self-service adoption: \u226560% of routine reports served without analyst intervention\n- First certified data product delivered within the first month",
+    "category": "Data Engineering & Analytics",
+    "vertical": "Travel & Hospitality",
+    "proposal_id": "BC-IT-0048"
+  },
+  {
+    "id": "11fa03ef-eae8-44a9-a81e-52f81ccb189c",
+    "question": "How do you handle knowledge transfer, exit, and avoiding vendor lock-in?",
+    "answer": "We plan for the end of the engagement from the beginning. Documentation, runbooks, and decisions are produced as we go and kept current \u2014 not assembled in a rush at handover. Knowledge transfer to Skyreach Airlines's team is structured (pairing, shadowing, and recorded walkthroughs) and scheduled across the engagement so your people can own and extend the work confidently. Should Skyreach Airlines ever choose to move the work elsewhere, contracted exit assistance, a clean handover pack, and cooperative transition are guaranteed. We earn renewal by being good to work with, not by making it hard to leave.",
+    "category": "Data Engineering & Analytics",
+    "vertical": "Travel & Hospitality",
+    "proposal_id": "BC-IT-0048"
+  },
+  {
+    "id": "12f572d9-ed4d-4f39-aa98-8fdf787fc36e",
+    "question": "How do you manage delivery risk on an engagement like this?",
+    "answer": "We manage risk actively through a shared, living risk register reviewed every steering checkpoint. The most material risks specific to this engagement, and how we mitigate them:\n\n| Risk | Mitigation |\n|---|---|\n| Source data quality worse than assumed | Early profiling spike per source and explicit data-quality SLAs with source-system owners. |\n| Self-service turning into dashboard sprawl | Certified-dataset model with a clear promotion path and decommissioning of stale reports. |\n| Governance perceived as bureaucracy | Governance embedded in the platform (lineage, ownership) rather than imposed as manual review. |\n| Key-person dependency | Named team with documented work, pairing, and a warm bench so no single individual is a single point of failure. |\n| Stakeholder availability slowing decisions | A lightweight RACI and a single empowered product owner on the client side, agreed at kickoff, with decisions logged. |\n",
+    "category": "Data Engineering & Analytics",
+    "vertical": "Public Sector & Government",
+    "proposal_id": "BC-IT-0078"
+  },
+  {
+    "id": "15800f69-38bb-434e-a678-43ae49a84d71",
+    "question": "How do you handle knowledge transfer, exit, and avoiding vendor lock-in?",
+    "answer": "We plan for the end of the engagement from the beginning. Documentation, runbooks, and decisions are produced as we go and kept current \u2014 not assembled in a rush at handover. Knowledge transfer to Lakeshore Health System's team is structured (pairing, shadowing, and recorded walkthroughs) and scheduled across the engagement so your people can own and extend the work confidently. Should Lakeshore Health System ever choose to move the work elsewhere, contracted exit assistance, a clean handover pack, and cooperative transition are guaranteed. We earn renewal by being good to work with, not by making it hard to leave.",
+    "category": "Data Engineering & Analytics",
+    "vertical": "Healthcare & Life Sciences",
+    "proposal_id": "BC-IT-0003"
+  },
+  {
+    "id": "00ba1c4e-7e2c-4113-a842-0c67ce745d76",
+    "question": "Why should we select you for this devops & platform engineering engagement?",
+    "answer": "Why Northbridge Technology Partners is the right partner for Skyreach Airlines:\n\n- Co-investment in a no-cost discovery sprint to de-risk the program before commit: Co-investment in a no-cost discovery sprint to de-risk the program before commit\n- Knowledge-transfer and exit assistance baked into the contract, not bolted on: Knowledge-transfer and exit assistance baked into the contract, not bolted on\n- Local delivery presence paired: Local delivery presence paired with a follow-the-sun support model\n\nBeyond the specifics above, what distinguishes this proposal is honesty about risk and a commercial model that puts our incentives alongside yours. We have stated our assumptions, offered a stop-gate at every phase, and linked our success to outcomes you can measure. We would welcome the opportunity to prove this in a no-cost discovery sprint before Skyreach Airlines commits to the full engagement.",
+    "category": "DevOps & Platform Engineering",
+    "vertical": "Travel & Hospitality",
+    "proposal_id": "BC-IT-0096"
+  },
+  {
+    "id": "074271a2-456c-468d-ac67-567c9694868e",
+    "question": "What assumptions and dependencies does this proposal rest on?",
+    "answer": "This proposal is made on the following key assumptions, which we will confirm in discovery:\n\n- Northwind Telecom provides timely access to the relevant systems, environments, and subject-matter experts.\n- A single empowered product owner / sponsor is available on the Northwind Telecom side for decisions.\n- Existing documentation and access are provided at mobilization; gaps are surfaced early, not late.\n- Third-party vendors and licenses required for the solution are available or procurable within the timeline.\n- Scope is as described in this response; changes follow the agreed change-control process.\n\nWhere any assumption proves untrue, we will flag it immediately with the impact and options, rather than silently absorbing risk into the timeline.",
+    "category": "DevOps & Platform Engineering",
+    "vertical": "Telecommunications",
+    "proposal_id": "BC-IT-0081"
+  },
+  {
+    "id": "078d92c6-8c4d-4d98-a768-f3777de38511",
+    "question": "What service levels (SLAs) do you commit to?",
+    "answer": "We commit to measurable service levels, reported transparently and reviewed with you on a regular cadence:\n\n| Measure | Commitment |\n|---|---|\n| Critical (P1) incident response | Within 15 minutes, 24x7 |\n| P1 resolution / workaround | Target within 4 hours |\n| Standard request turnaround | Within agreed catalog SLAs |\n| Delivery cadence | Working software / progress every 2-week iteration |\n| Reporting | Weekly delivery report; monthly service/steering review |\n| Replacement of a departing team member | Within agreed SLA (typically 5\u201310 business days) with handover |\n\nService credits apply against agreed critical SLAs, defined in the contract schedule. We treat SLAs as a floor for accountability, not a ceiling for effort.",
+    "category": "DevOps & Platform Engineering",
+    "vertical": "Travel & Hospitality",
+    "proposal_id": "BC-IT-0036"
+  },
+  {
+    "id": "122cc7fa-5453-4a79-a949-13972a611f81",
+    "question": "How will you handle our regulatory and data-protection obligations as a public sector & government organization?",
+    "answer": "Data handling follows data-minimization and purpose-limitation principles. We will process only the State of Calderon Dept. of Revenue data necessary for the engagement, in the agreed jurisdiction(s) consistent with United States and Canada, under a signed data-processing agreement. Personal or regulated data is masked or synthesized in non-production environments wherever feasible. We maintain a record of processing activities for this engagement and support your data-subject-request and breach-notification obligations. On exit, Northbridge Technology Partners returns or securely destroys State of Calderon Dept. of Revenue data per your instruction, with a certificate of destruction provided.",
+    "category": "DevOps & Platform Engineering",
+    "vertical": "Public Sector & Government",
+    "proposal_id": "BC-IT-0006"
+  },
+  {
+    "id": "12dde007-2ebb-4a0a-a254-01597d3847ec",
+    "question": "Who is on the proposed team and how do you guarantee continuity?",
+    "answer": "We propose a named, retained team. Continuity is a core commitment: planned rotation is minimized, and any unavoidable change is covered by a 48-hour notification and a replacement-within-SLA guarantee with full handover. The core roles are:\n\n| Role | Responsibility |\n|---|---|\n| Platform Engineering Lead | owns the platform roadmap and developer-experience outcomes |\n| Senior Platform Engineers (2) | build IaC modules, pipelines, and GitOps workflows |\n| Site Reliability Engineer | implements SLOs, error budgets, and observability |\n| Developer Experience Engineer | builds the portal and golden-path templates |\n\nAll team members are pre-vetted, references are available on request, and CVs of the proposed individuals are provided in the appendix. We will not substitute a strong proposed individual for a weaker available one \u2014 the people in this proposal are the people who will do the work.",
+    "category": "DevOps & Platform Engineering",
+    "vertical": "Public Sector & Government",
+    "proposal_id": "BC-IT-0006"
+  },
+  {
+    "id": "01745448-b006-47d9-a010-d9b6518a6345",
+    "question": "What is your proposed approach for digital transformation advisory?",
+    "answer": "Northbridge Technology Partners proposes a strategy-through-execution engagement. We run a rapid but rigorous current-state assessment across technology, operating model, data, and ways of working, benchmarked against the client's ambition and peers. From that we build a prioritized, value-sequenced roadmap \u2014 not a wish list \u2014 where each initiative has a business case, dependencies, and a clear owner. Crucially, we sequence for early, visible wins to build momentum and fund the journey, while laying the foundations (data, platform, talent model) that later phases depend on. We then help stand up the delivery operating model and governance to execute, and remain engaged through the first wave so the strategy survives contact with reality.\n\n**Indicative technology and tooling**\n- Capability and architecture maturity assessment frameworks\n- Value-stream mapping and prioritization models (cost/value/risk)\n- Target operating model and governance design\n- Roadmap and benefits-realization tracking\n- Vendor/platform selection support where relevant\n\nAll technology choices are confirmed with Maplewood Marketplace during discovery and aligned to your existing standards and strategic platform decisions; nothing above is imposed.",
+    "category": "Digital Transformation Advisory",
+    "vertical": "Retail & e-Commerce",
+    "proposal_id": "BC-IT-0028"
+  },
+  {
+    "id": "02dc39bc-7d09-4e89-ab99-43de82b1dda2",
+    "question": "What measurable outcomes / KPIs will you be accountable for?",
+    "answer": "Key outcomes we commit to and report against:\n- Prioritized, value-sequenced roadmap with a business case per initiative\n- Early-win initiatives delivering measurable value within the first phase\n- Target operating model and governance stood up and adopted\n- Benefits-realization tracking established and reported to leadership",
+    "category": "Digital Transformation Advisory",
+    "vertical": "Retail & e-Commerce",
+    "proposal_id": "BC-IT-0028"
+  },
+  {
+    "id": "03842a4a-ea09-4004-af85-7a5efcf3ae91",
+    "question": "Can you describe relevant past performance or a comparable reference?",
+    "answer": "Northbridge Technology Partners built and helped execute a transformation roadmap for a logistics & supply chain organization, sequencing 20+ competing initiatives into three value-driven waves. Two early-win initiatives delivered measurable savings within 4 months that part-funded the wider program, and the client adopted the governance model as its permanent delivery operating system.\n\nThis is one of several directly relevant references Northbridge Technology Partners can provide. We are happy to arrange a reference call with a comparable client, and selected anonymized case studies and outcome data are included in the appendix. We deliberately offer references from engagements of similar scope, vertical, and complexity rather than our most flattering unrelated wins.",
+    "category": "Digital Transformation Advisory",
+    "vertical": "Logistics & Supply Chain",
+    "proposal_id": "BC-IT-0043"
+  },
+  {
+    "id": "062a7ec0-aac4-4365-a5d0-d992e07bc839",
+    "question": "How do you handle knowledge transfer, exit, and avoiding vendor lock-in?",
+    "answer": "We plan for the end of the engagement from the beginning. Documentation, runbooks, and decisions are produced as we go and kept current \u2014 not assembled in a rush at handover. Knowledge transfer to Polaris Supply Network's team is structured (pairing, shadowing, and recorded walkthroughs) and scheduled across the engagement so your people can own and extend the work confidently. Should Polaris Supply Network ever choose to move the work elsewhere, contracted exit assistance, a clean handover pack, and cooperative transition are guaranteed. We earn renewal by being good to work with, not by making it hard to leave.",
+    "category": "Digital Transformation Advisory",
+    "vertical": "Logistics & Supply Chain",
+    "proposal_id": "BC-IT-0043"
+  },
+  {
+    "id": "063604c7-d4bf-464b-a519-9d345d4aa556",
+    "question": "How do you ensure security and compliance during the engagement?",
+    "answer": "Security and compliance are built into delivery, not inspected at the end. Northbridge Technology Partners operates an information-security management system aligned to ISO 27001 and SOC 2 Type II, and this engagement will be delivered to the controls relevant to Caldera State College's obligations: FERPA, SOC 2 Type II, ISO 27001, GLBA (financial aid).\n\nConcretely, that means: least-privilege access to Caldera State College systems with just-in-time elevation and full audit logging; encryption of data in transit and at rest; secrets managed in a vault, never in code; secure SDLC with dependency, static, and (where relevant) dynamic scanning in the pipeline; and security-relevant changes captured as evidence for your auditors as we go. All Northbridge Technology Partners personnel on the engagement are background-checked and complete security and (where applicable) data-privacy training before access is granted. We will sign your security schedule and DPA, and we are happy to complete your vendor security-assessment questionnaire as part of due diligence.",
+    "category": "Digital Transformation Advisory",
+    "vertical": "Higher Education",
+    "proposal_id": "BC-IT-0058"
+  },
+  {
+    "id": "00f3e503-0b0a-41b1-aa42-6766f3ca95d5",
+    "question": "What is your delivery methodology and how do you govern the engagement?",
+    "answer": "Delivery follows an Activate-style phased method: Prepare, Explore (fit-to-standard workshops and a conference-room pilot), Realize (iterative configuration in sprints with regular playbacks), Deploy (data migration rehearsals, cutover, and hypercare), and Run. We rehearse data migration and cutover repeatedly \u2014 at least three full mock cutovers \u2014 so go-live day holds no surprises. Organizational change management runs throughout, because an ERP program succeeds or fails on adoption as much as configuration.\n\nGovernance is lightweight but real: a weekly delivery cadence with Beacon Logistics, a fortnightly steering checkpoint, and transparent reporting on progress, risks, and budget burn. Decisions, assumptions, and changes are logged and visible. We work in your tooling and to your standards so the work is maintainable by your team from day one.",
+    "category": "ERP Implementation",
+    "vertical": "Logistics & Supply Chain",
+    "proposal_id": "BC-IT-0067"
+  },
+  {
+    "id": "03ac0899-2484-46ce-a109-8a33cf64dc30",
+    "question": "How do you ensure security and compliance during the engagement?",
+    "answer": "Security and compliance are built into delivery, not inspected at the end. Northbridge Technology Partners operates an information-security management system aligned to ISO 27001 and SOC 2 Type II, and this engagement will be delivered to the controls relevant to Saffron Home Goods's obligations: PCI-DSS v4.0, SOC 2 Type II, ISO 27001, CCPA/CPRA.\n\nConcretely, that means: least-privilege access to Saffron Home Goods systems with just-in-time elevation and full audit logging; encryption of data in transit and at rest; secrets managed in a vault, never in code; secure SDLC with dependency, static, and (where relevant) dynamic scanning in the pipeline; and security-relevant changes captured as evidence for your auditors as we go. All Northbridge Technology Partners personnel on the engagement are background-checked and complete security and (where applicable) data-privacy training before access is granted. We will sign your security schedule and DPA, and we are happy to complete your vendor security-assessment questionnaire as part of due diligence.",
+    "category": "ERP Implementation",
+    "vertical": "Retail & e-Commerce",
+    "proposal_id": "BC-IT-0052"
+  },
+  {
+    "id": "09256920-3454-4026-abd4-8bcc30c1acd6",
+    "question": "What service levels (SLAs) do you commit to?",
+    "answer": "We commit to measurable service levels, reported transparently and reviewed with you on a regular cadence:\n\n| Measure | Commitment |\n|---|---|\n| Critical (P1) incident response | Within 15 minutes, 24x7 |\n| P1 resolution / workaround | Target within 4 hours |\n| Standard request turnaround | Within agreed catalog SLAs |\n| Delivery cadence | Working software / progress every 2-week iteration |\n| Reporting | Weekly delivery report; monthly service/steering review |\n| Replacement of a departing team member | Within agreed SLA (typically 5\u201310 business days) with handover |\n\nService credits apply against agreed critical SLAs, defined in the contract schedule. We treat SLAs as a floor for accountability, not a ceiling for effort.",
+    "category": "ERP Implementation",
+    "vertical": "Logistics & Supply Chain",
+    "proposal_id": "BC-IT-0007"
+  },
+  {
+    "id": "0a76be91-b082-40aa-ab5b-928773b73170",
+    "question": "How will you handle our regulatory and data-protection obligations as a banking & financial services organization?",
+    "answer": "Data handling follows data-minimization and purpose-limitation principles. We will process only the Sterling Mutual Savings data necessary for the engagement, in the agreed jurisdiction(s) consistent with India, Singapore, and Australia, under a signed data-processing agreement. Personal or regulated data is masked or synthesized in non-production environments wherever feasible. We maintain a record of processing activities for this engagement and support your data-subject-request and breach-notification obligations. On exit, Northbridge Technology Partners returns or securely destroys Sterling Mutual Savings data per your instruction, with a certificate of destruction provided.",
+    "category": "ERP Implementation",
+    "vertical": "Banking & Financial Services",
+    "proposal_id": "BC-IT-0037"
+  },
+  {
+    "id": "0da09267-78e3-4342-a762-025fa2ea737b",
+    "question": "How do you ensure security and compliance during the engagement?",
+    "answer": "Security and compliance are built into delivery, not inspected at the end. Northbridge Technology Partners operates an information-security management system aligned to ISO 27001 and SOC 2 Type II, and this engagement will be delivered to the controls relevant to Westmere University's obligations: FERPA, SOC 2 Type II, ISO 27001, GLBA (financial aid).\n\nConcretely, that means: least-privilege access to Westmere University systems with just-in-time elevation and full audit logging; encryption of data in transit and at rest; secrets managed in a vault, never in code; secure SDLC with dependency, static, and (where relevant) dynamic scanning in the pipeline; and security-relevant changes captured as evidence for your auditors as we go. All Northbridge Technology Partners personnel on the engagement are background-checked and complete security and (where applicable) data-privacy training before access is granted. We will sign your security schedule and DPA, and we are happy to complete your vendor security-assessment questionnaire as part of due diligence.",
+    "category": "ERP Implementation",
+    "vertical": "Higher Education",
+    "proposal_id": "BC-IT-0082"
+  },
+  {
+    "id": "003127a7-1dd3-4a1e-a13f-7ef4d346a0ca",
+    "question": "What measurable outcomes / KPIs will you be accountable for?",
+    "answer": "Key outcomes we commit to and report against:\n- Time-to-fill under 3 weeks for standard profiles\n- Named, pre-vetted candidates \u2014 no anonymous CV churn\n- Guaranteed replacement SLA (typically 5\u201310 business days)\n- Planned attrition held low through retention investment",
+    "category": "IT Staff Augmentation",
+    "vertical": "Telecommunications",
+    "proposal_id": "BC-IT-0057"
+  },
+  {
+    "id": "045453a6-5611-4016-ad98-28300b231c75",
+    "question": "What is your commercial / pricing model and how is change controlled?",
+    "answer": "**Commercial model: Fixed-price, phased.** Each phase is fixed-price against a defined scope and acceptance criteria, with a formal change-control process for in-flight scope changes. This places delivery risk with Northbridge Technology Partners and gives Department of Public Works (City of Aldermere) budget certainty per phase.\n\nThe indicative total engagement value is $850,000 over 14 months, confirmed against final scope at the end of discovery. Pricing is transparent and broken down by phase and role in the commercial appendix \u2014 there are no hidden uplifts, and rate cards for any change requests are published up front. Invoiced monthly in arrears, net-30, against delivered milestones and a transparent burn-down.\n\nChange control is explicit: any change to agreed scope is estimated, priced against the published rate card, and approved by Department of Public Works (City of Aldermere) before work proceeds. We would rather have a transparent conversation about scope than absorb ambiguity and surface it as a surprise later.",
+    "category": "IT Staff Augmentation",
+    "vertical": "Public Sector & Government",
+    "proposal_id": "BC-IT-0042"
+  },
+  {
+    "id": "04fbd801-1b6b-4ac2-a19c-6d9ebe1da1bb",
+    "question": "What is your proposed approach for it staff augmentation?",
+    "answer": "Northbridge Technology Partners provides a vetted, retained talent model designed for fast integration and low churn. Every candidate passes a rigorous technical and behavioral screen, and we propose named profiles \u2014 not anonymous CVs \u2014 so the client knows exactly who they are getting. We match for both skills and team fit, and our people embed within the client's processes, tools, and standards rather than imposing their own. A bench and a guaranteed replacement SLA protect continuity if priorities or people change. We invest in retention so engagements don't suffer the constant re-onboarding tax of typical contracting, and we provide light-touch delivery oversight to ensure quality and unblock issues without adding bureaucracy.\n\n**Indicative technology and tooling**\n- Roles spanning full-stack, cloud, data, DevOps, QA, and analytics\n- Integration into the client's existing toolchain and standards (no tooling lock-in)\n- Vetting pipeline: technical assessment + behavioral screen + reference checks\n- Warm bench for scaling and rapid replacement\n- Light delivery oversight and quality assurance\n\nAll technology choices are confirmed with Claritel Communications during discovery and aligned to your existing standards and strategic platform decisions; nothing above is imposed.",
+    "category": "IT Staff Augmentation",
+    "vertical": "Telecommunications",
+    "proposal_id": "BC-IT-0057"
+  },
+  {
+    "id": "063f44be-b161-45a4-a3be-a2854b17dfad",
+    "question": "What is your delivery methodology and how do you govern the engagement?",
+    "answer": "We run a structured intake to understand the team's stack, standards, and culture, then present pre-vetted, named candidates with a fast interview loop. Onboarding is supported with a 30-day ramp plan and pairing so new team members are productive quickly. We hold regular check-ins on performance and fit, maintain a warm bench for scaling and continuity, and honor a defined replacement SLA so the client never carries the risk of a poor match or sudden departure.\n\nGovernance is lightweight but real: a weekly delivery cadence with Summit Regional Medical Center, a fortnightly steering checkpoint, and transparent reporting on progress, risks, and budget burn. Decisions, assumptions, and changes are logged and visible. We work in your tooling and to your standards so the work is maintainable by your team from day one.",
+    "category": "IT Staff Augmentation",
+    "vertical": "Healthcare & Life Sciences",
+    "proposal_id": "BC-IT-0027"
+  },
+  {
+    "id": "0720e6c3-d2cb-4ac0-a870-2c2ede044575",
+    "question": "What is your proposed approach for it staff augmentation?",
+    "answer": "Northbridge Technology Partners provides a vetted, retained talent model designed for fast integration and low churn. Every candidate passes a rigorous technical and behavioral screen, and we propose named profiles \u2014 not anonymous CVs \u2014 so the client knows exactly who they are getting. We match for both skills and team fit, and our people embed within the client's processes, tools, and standards rather than imposing their own. A bench and a guaranteed replacement SLA protect continuity if priorities or people change. We invest in retention so engagements don't suffer the constant re-onboarding tax of typical contracting, and we provide light-touch delivery oversight to ensure quality and unblock issues without adding bureaucracy.\n\n**Indicative technology and tooling**\n- Roles spanning full-stack, cloud, data, DevOps, QA, and analytics\n- Integration into the client's existing toolchain and standards (no tooling lock-in)\n- Vetting pipeline: technical assessment + behavioral screen + reference checks\n- Warm bench for scaling and rapid replacement\n- Light delivery oversight and quality assurance\n\nAll technology choices are confirmed with Summit Regional Medical Center during discovery and aligned to your existing standards and strategic platform decisions; nothing above is imposed.",
+    "category": "IT Staff Augmentation",
+    "vertical": "Healthcare & Life Sciences",
+    "proposal_id": "BC-IT-0087"
+  },
+  {
+    "id": "0148aee4-9683-4549-a185-ee3f5b63fcbf",
+    "question": "How do you handle knowledge transfer, exit, and avoiding vendor lock-in?",
+    "answer": "We plan for the end of the engagement from the beginning. Documentation, runbooks, and decisions are produced as we go and kept current \u2014 not assembled in a rush at handover. Knowledge transfer to Foxglove Studios's team is structured (pairing, shadowing, and recorded walkthroughs) and scheduled across the engagement so your people can own and extend the work confidently. Should Foxglove Studios ever choose to move the work elsewhere, contracted exit assistance, a clean handover pack, and cooperative transition are guaranteed. We earn renewal by being good to work with, not by making it hard to leave.",
+    "category": "Managed IT Services (MSP)",
+    "vertical": "Media & Entertainment",
+    "proposal_id": "BC-IT-0095"
+  },
+  {
+    "id": "01554e5c-7b2a-42f2-a049-9c2dd05435fd",
+    "question": "How do you handle knowledge transfer, exit, and avoiding vendor lock-in?",
+    "answer": "We plan for the end of the engagement from the beginning. Documentation, runbooks, and decisions are produced as we go and kept current \u2014 not assembled in a rush at handover. Knowledge transfer to Lumen Media Group's team is structured (pairing, shadowing, and recorded walkthroughs) and scheduled across the engagement so your people can own and extend the work confidently. Should Lumen Media Group ever choose to move the work elsewhere, contracted exit assistance, a clean handover pack, and cooperative transition are guaranteed. We earn renewal by being good to work with, not by making it hard to leave.",
+    "category": "Managed IT Services (MSP)",
+    "vertical": "Media & Entertainment",
+    "proposal_id": "BC-IT-0035"
+  },
+  {
+    "id": "03896b3e-966f-4da8-a079-3e1480b3bbc5",
+    "question": "What is your proposed approach for managed it services (msp)?",
+    "answer": "Northbridge Technology Partners proposes a fully managed operations model built on ITIL-aligned service management. We provide a single, accountable service desk as the front door, backed by tiered support, proactive monitoring, and a continuous-improvement engine. Rather than simply absorbing the existing mess, we run a structured transition and stabilization phase: document the estate, eliminate the top recurring ticket drivers, and automate the repetitive work that consumes the most analyst hours. Service levels are defined, measured, and reported transparently, with a named service-delivery manager who owns the relationship and a published continuous service-improvement plan. The model is designed to free the client's retained team for higher-value work, not to lock them out of their own environment.\n\n**Indicative technology and tooling**\n- ITSM platform (ServiceNow / equivalent) with self-service portal and knowledge base\n- RMM and proactive monitoring across endpoints, servers, and network\n- Automation/orchestration for routine requests and patch management\n- Identity & endpoint management (MDM/UEM) for secure end-user computing\n- Reporting & analytics on SLA performance and ticket-driver trends\n\nAll technology choices are confirmed with Riverlight Utilities during discovery and aligned to your existing standards and strategic platform decisions; nothing above is imposed.",
+    "category": "Managed IT Services (MSP)",
+    "vertical": "Energy & Utilities",
+    "proposal_id": "BC-IT-0020"
+  },
+  {
+    "id": "05f4cefd-8211-4a39-a0ac-257d415a39d1",
+    "question": "What is your proposed approach for managed it services (msp)?",
+    "answer": "Northbridge Technology Partners proposes a fully managed operations model built on ITIL-aligned service management. We provide a single, accountable service desk as the front door, backed by tiered support, proactive monitoring, and a continuous-improvement engine. Rather than simply absorbing the existing mess, we run a structured transition and stabilization phase: document the estate, eliminate the top recurring ticket drivers, and automate the repetitive work that consumes the most analyst hours. Service levels are defined, measured, and reported transparently, with a named service-delivery manager who owns the relationship and a published continuous service-improvement plan. The model is designed to free the client's retained team for higher-value work, not to lock them out of their own environment.\n\n**Indicative technology and tooling**\n- ITSM platform (ServiceNow / equivalent) with self-service portal and knowledge base\n- RMM and proactive monitoring across endpoints, servers, and network\n- Automation/orchestration for routine requests and patch management\n- Identity & endpoint management (MDM/UEM) for secure end-user computing\n- Reporting & analytics on SLA performance and ticket-driver trends\n\nAll technology choices are confirmed with Irongate Manufacturing during discovery and aligned to your existing standards and strategic platform decisions; nothing above is imposed.",
+    "category": "Managed IT Services (MSP)",
+    "vertical": "Manufacturing & Industrial",
+    "proposal_id": "BC-IT-0065"
+  },
+  {
+    "id": "08544899-9416-4ba9-ade7-04ece91aeae2",
+    "question": "How do you manage delivery risk on an engagement like this?",
+    "answer": "We manage risk actively through a shared, living risk register reviewed every steering checkpoint. The most material risks specific to this engagement, and how we mitigate them:\n\n| Risk | Mitigation |\n|---|---|\n| Knowledge loss during transition | Structured knowledge capture plus shadow/reverse-shadow before primary support transfers. |\n| SLA disputes over scope boundaries | A clear, signed service catalog and responsibility (RACI) matrix agreed at onboarding. |\n| Automation displacing without documentation | All automation versioned, documented, and owned, with rollback and human-in-the-loop fallbacks. |\n| Key-person dependency | Named team with documented work, pairing, and a warm bench so no single individual is a single point of failure. |\n| Stakeholder availability slowing decisions | A lightweight RACI and a single empowered product owner on the client side, agreed at kickoff, with decisions logged. |\n",
+    "category": "Managed IT Services (MSP)",
+    "vertical": "Manufacturing & Industrial",
+    "proposal_id": "BC-IT-0065"
+  },
+  {
+    "id": "00660ded-42be-40a5-aafb-1925fe7fbdf5",
+    "question": "What measurable outcomes / KPIs will you be accountable for?",
+    "answer": "Key outcomes we commit to and report against:\n- Crash-free session rate \u226599.5%\n- App-store rating improved to \u22654.5 within two release cycles post-launch\n- Release cadence of at least biweekly with staged rollout\n- Single codebase serving both platforms, reducing maintenance cost",
+    "category": "Mobile Application Development",
+    "vertical": "Healthcare & Life Sciences",
+    "proposal_id": "BC-IT-0099"
+  },
+  {
+    "id": "032c0915-c4a3-4066-a988-2a1c5ea47f25",
+    "question": "How do you ensure security and compliance during the engagement?",
+    "answer": "Security and compliance are built into delivery, not inspected at the end. Northbridge Technology Partners operates an information-security management system aligned to ISO 27001 and SOC 2 Type II, and this engagement will be delivered to the controls relevant to Orbit Mobile's obligations: ISO 27001, SOC 2 Type II, TL 9000, CPNI controls.\n\nConcretely, that means: least-privilege access to Orbit Mobile systems with just-in-time elevation and full audit logging; encryption of data in transit and at rest; secrets managed in a vault, never in code; secure SDLC with dependency, static, and (where relevant) dynamic scanning in the pipeline; and security-relevant changes captured as evidence for your auditors as we go. All Northbridge Technology Partners personnel on the engagement are background-checked and complete security and (where applicable) data-privacy training before access is granted. We will sign your security schedule and DPA, and we are happy to complete your vendor security-assessment questionnaire as part of due diligence.",
+    "category": "Mobile Application Development",
+    "vertical": "Telecommunications",
+    "proposal_id": "BC-IT-0069"
+  },
+  {
+    "id": "08c71eef-515d-4c7c-a19b-538230722110",
+    "question": "How will you handle our regulatory and data-protection obligations as a healthcare & life sciences organization?",
+    "answer": "Data handling follows data-minimization and purpose-limitation principles. We will process only the Helix Diagnostics data necessary for the engagement, in the agreed jurisdiction(s) consistent with across 14 countries and 4 regions, under a signed data-processing agreement. Personal or regulated data is masked or synthesized in non-production environments wherever feasible. We maintain a record of processing activities for this engagement and support your data-subject-request and breach-notification obligations. On exit, Northbridge Technology Partners returns or securely destroys Helix Diagnostics data per your instruction, with a certificate of destruction provided.",
+    "category": "Mobile Application Development",
+    "vertical": "Healthcare & Life Sciences",
+    "proposal_id": "BC-IT-0039"
+  },
+  {
+    "id": "0c88ac66-6330-4b6b-a54a-ade5646cefac",
+    "question": "What assumptions and dependencies does this proposal rest on?",
+    "answer": "This proposal is made on the following key assumptions, which we will confirm in discovery:\n\n- Northwind Telecom provides timely access to the relevant systems, environments, and subject-matter experts.\n- A single empowered product owner / sponsor is available on the Northwind Telecom side for decisions.\n- Existing documentation and access are provided at mobilization; gaps are surfaced early, not late.\n- Third-party vendors and licenses required for the solution are available or procurable within the timeline.\n- Scope is as described in this response; changes follow the agreed change-control process.\n\nWhere any assumption proves untrue, we will flag it immediately with the impact and options, rather than silently absorbing risk into the timeline.",
+    "category": "Mobile Application Development",
+    "vertical": "Telecommunications",
+    "proposal_id": "BC-IT-0009"
+  },
+  {
+    "id": "0eb37075-4a08-480a-a5aa-7b05f6fc7718",
+    "question": "How do you manage delivery risk on an engagement like this?",
+    "answer": "We manage risk actively through a shared, living risk register reviewed every steering checkpoint. The most material risks specific to this engagement, and how we mitigate them:\n\n| Risk | Mitigation |\n|---|---|\n| Platform-specific performance issues | Native modules for hot paths and performance budgets enforced in the pipeline. |\n| App-store rejection delaying launch | Store-readiness treated as delivery scope, with a pre-submission compliance checklist. |\n| Poor adoption of the new app | User research up front, beta cohorts, and analytics-driven iteration post-launch. |\n| Key-person dependency | Named team with documented work, pairing, and a warm bench so no single individual is a single point of failure. |\n| Stakeholder availability slowing decisions | A lightweight RACI and a single empowered product owner on the client side, agreed at kickoff, with decisions logged. |\n",
+    "category": "Mobile Application Development",
+    "vertical": "Telecommunications",
+    "proposal_id": "BC-IT-0009"
+  },
+  {
+    "id": "0e499670-80f3-4c85-a374-74f60dc0dbcb",
+    "question": "What measurable outcomes / KPIs will you be accountable for?",
+    "answer": "Key outcomes we commit to and report against:\n- Site-impacting incidents reduced \u226540%\n- Connectivity cost reduced through SD-WAN versus legacy MPLS\n- Tested failover meeting agreed recovery-time objectives\n- Zero unplanned business outage attributable to migration activity",
+    "category": "Network & Infrastructure Services",
+    "vertical": "Media & Entertainment",
+    "proposal_id": "BC-IT-0059"
+  },
+  {
+    "id": "0f9038c2-182d-41b1-add8-cd62988d4fcb",
+    "question": "What service levels (SLAs) do you commit to?",
+    "answer": "We commit to measurable service levels, reported transparently and reviewed with you on a regular cadence:\n\n| Measure | Commitment |\n|---|---|\n| Critical (P1) incident response | Within 15 minutes, 24x7 |\n| P1 resolution / workaround | Target within 4 hours |\n| Standard request turnaround | Within agreed catalog SLAs |\n| Delivery cadence | Working software / progress every 2-week iteration |\n| Reporting | Weekly delivery report; monthly service/steering review |\n| Replacement of a departing team member | Within agreed SLA (typically 5\u201310 business days) with handover |\n\nService credits apply against agreed critical SLAs, defined in the contract schedule. We treat SLAs as a floor for accountability, not a ceiling for effort.",
+    "category": "Network & Infrastructure Services",
+    "vertical": "Manufacturing & Industrial",
+    "proposal_id": "BC-IT-0089"
+  },
+  {
+    "id": "116a1a52-41d1-4c3d-a74d-bf3d0900efae",
+    "question": "Who is on the proposed team and how do you guarantee continuity?",
+    "answer": "We propose a named, retained team. Continuity is a core commitment: planned rotation is minimized, and any unavoidable change is covered by a 48-hour notification and a replacement-within-SLA guarantee with full handover. The core roles are:\n\n| Role | Responsibility |\n|---|---|\n| Infrastructure Lead | owns the target design, migration plan, and cutover governance |\n| Network Architect | owns SD-WAN, segmentation, and resilience design |\n| Infrastructure Engineers (2) | execute site migrations and hardware refresh |\n| Monitoring/Operations Engineer | builds observability and recovery runbooks |\n\nAll team members are pre-vetted, references are available on request, and CVs of the proposed individuals are provided in the appendix. We will not substitute a strong proposed individual for a weaker available one \u2014 the people in this proposal are the people who will do the work.",
+    "category": "Network & Infrastructure Services",
+    "vertical": "Manufacturing & Industrial",
+    "proposal_id": "BC-IT-0089"
+  },
+  {
+    "id": "152bf95b-1e8b-4c25-aeb8-d57cf7c0ce25",
+    "question": "What is your commercial / pricing model and how is change controlled?",
+    "answer": "**Commercial model: Outcome-based (value-linked).** A base fee plus an outcome component tied to agreed, measurable KPIs. This aligns Northbridge Technology Partners's economics directly with the results Cinder Peak Energy cares about, and signals our confidence in the plan.\n\nThe indicative total engagement value is $920,000 over 8 months, confirmed against final scope at the end of discovery. Pricing is transparent and broken down by phase and role in the commercial appendix \u2014 there are no hidden uplifts, and rate cards for any change requests are published up front. Milestone-based invoicing tied to accepted deliverables, net-30, with no payment due on unaccepted work.\n\nChange control is explicit: any change to agreed scope is estimated, priced against the published rate card, and approved by Cinder Peak Energy before work proceeds. We would rather have a transparent conversation about scope than absorb ambiguity and surface it as a surprise later.",
+    "category": "Network & Infrastructure Services",
+    "vertical": "Energy & Utilities",
+    "proposal_id": "BC-IT-0044"
+  },
+  {
+    "id": "15a21dab-f5f5-418c-ace4-6a5290c86115",
+    "question": "What assumptions and dependencies does this proposal rest on?",
+    "answer": "This proposal is made on the following key assumptions, which we will confirm in discovery:\n\n- Lumen Media Group provides timely access to the relevant systems, environments, and subject-matter experts.\n- A single empowered product owner / sponsor is available on the Lumen Media Group side for decisions.\n- Existing documentation and access are provided at mobilization; gaps are surfaced early, not late.\n- Third-party vendors and licenses required for the solution are available or procurable within the timeline.\n- Scope is as described in this response; changes follow the agreed change-control process.\n\nWhere any assumption proves untrue, we will flag it immediately with the impact and options, rather than silently absorbing risk into the timeline.",
+    "category": "Network & Infrastructure Services",
+    "vertical": "Media & Entertainment",
+    "proposal_id": "BC-IT-0059"
+  },
+  {
+    "id": "04484ff3-12f1-4aa4-af08-b3e6510ca5e6",
+    "question": "Who is on the proposed team and how do you guarantee continuity?",
+    "answer": "We propose a named, retained team. Continuity is a core commitment: planned rotation is minimized, and any unavoidable change is covered by a 48-hour notification and a replacement-within-SLA guarantee with full handover. The core roles are:\n\n| Role | Responsibility |\n|---|---|\n| Quality Engineering Lead | owns the test strategy and the quality metrics that govern it |\n| Automation Engineers (2) | build the framework and high-value automated suites |\n| SDET / Performance Engineer | owns non-functional and performance testing |\n| CI/CD Integration Engineer | wires quality gates into the delivery pipeline |\n\nAll team members are pre-vetted, references are available on request, and CVs of the proposed individuals are provided in the appendix. We will not substitute a strong proposed individual for a weaker available one \u2014 the people in this proposal are the people who will do the work.",
+    "category": "QA & Test Automation",
+    "vertical": "Insurance",
+    "proposal_id": "BC-IT-0026"
+  },
+  {
+    "id": "06246bde-70cd-4df8-a37e-85a7ad3ac4bb",
+    "question": "How will you handle our regulatory and data-protection obligations as a manufacturing & industrial organization?",
+    "answer": "Data handling follows data-minimization and purpose-limitation principles. We will process only the Caldwell Precision Works data necessary for the engagement, in the agreed jurisdiction(s) consistent with across the EU under GDPR jurisdiction, under a signed data-processing agreement. Personal or regulated data is masked or synthesized in non-production environments wherever feasible. We maintain a record of processing activities for this engagement and support your data-subject-request and breach-notification obligations. On exit, Northbridge Technology Partners returns or securely destroys Caldwell Precision Works data per your instruction, with a certificate of destruction provided.",
+    "category": "QA & Test Automation",
+    "vertical": "Manufacturing & Industrial",
+    "proposal_id": "BC-IT-0041"
+  },
+  {
+    "id": "0b5da5f5-3a7a-43f8-a899-038c30990f2b",
+    "question": "What assumptions and dependencies does this proposal rest on?",
+    "answer": "This proposal is made on the following key assumptions, which we will confirm in discovery:\n\n- Caldwell Precision Works provides timely access to the relevant systems, environments, and subject-matter experts.\n- A single empowered product owner / sponsor is available on the Caldwell Precision Works side for decisions.\n- Existing documentation and access are provided at mobilization; gaps are surfaced early, not late.\n- Third-party vendors and licenses required for the solution are available or procurable within the timeline.\n- Scope is as described in this response; changes follow the agreed change-control process.\n\nWhere any assumption proves untrue, we will flag it immediately with the impact and options, rather than silently absorbing risk into the timeline.",
+    "category": "QA & Test Automation",
+    "vertical": "Manufacturing & Industrial",
+    "proposal_id": "BC-IT-0041"
+  },
+  {
+    "id": "0be3e774-f2a7-41c5-a920-3a0d43c61bc9",
+    "question": "Why should we select you for this qa & test automation engagement?",
+    "answer": "Why Northbridge Technology Partners is the right partner for Pinnacle Life & Health:\n\n- Knowledge-transfer and exit assistance baked into the contract, not bolted on: Knowledge-transfer and exit assistance baked into the contract, not bolted on\n- A measurable, phased value-realization roadmap: A measurable, phased value-realization roadmap with go/no-go gates\n- Co-investment in a no-cost discovery sprint to de-risk the program before commit: Co-investment in a no-cost discovery sprint to de-risk the program before commit\n\nBeyond the specifics above, what distinguishes this proposal is honesty about risk and a commercial model that puts our incentives alongside yours. We have stated our assumptions, offered a stop-gate at every phase, and linked our success to outcomes you can measure. We would welcome the opportunity to prove this in a no-cost discovery sprint before Pinnacle Life & Health commits to the full engagement.",
+    "category": "QA & Test Automation",
+    "vertical": "Insurance",
+    "proposal_id": "BC-IT-0086"
+  },
+  {
+    "id": "0ee97fce-3d63-492b-ac63-2cd1bfe2d2bc",
+    "question": "Can you describe relevant past performance or a comparable reference?",
+    "answer": "Northbridge Technology Partners stood up a test-automation practice for a insurance client whose regression cycle took 9 days manually. Within 3 months automated regression ran in under 40 minutes in CI, defect escape rate fell by 63%, and the client moved from monthly to weekly releases.\n\nThis is one of several directly relevant references Northbridge Technology Partners can provide. We are happy to arrange a reference call with a comparable client, and selected anonymized case studies and outcome data are included in the appendix. We deliberately offer references from engagements of similar scope, vertical, and complexity rather than our most flattering unrelated wins.",
+    "category": "QA & Test Automation",
+    "vertical": "Insurance",
+    "proposal_id": "BC-IT-0086"
+  },
+  {
+    "id": "01f90322-d8c8-4af1-a2b9-908bf7a33492",
+    "question": "How will you handle our regulatory and data-protection obligations as a travel & hospitality organization?",
+    "answer": "Data handling follows data-minimization and purpose-limitation principles. We will process only the Wayfarer Hotels Group data necessary for the engagement, in the agreed jurisdiction(s) consistent with United States and Canada, under a signed data-processing agreement. Personal or regulated data is masked or synthesized in non-production environments wherever feasible. We maintain a record of processing activities for this engagement and support your data-subject-request and breach-notification obligations. On exit, Northbridge Technology Partners returns or securely destroys Wayfarer Hotels Group data per your instruction, with a certificate of destruction provided.",
+    "category": "RPA & Intelligent Automation",
+    "vertical": "Travel & Hospitality",
+    "proposal_id": "BC-IT-0060"
+  },
+  {
+    "id": "02ca4243-5792-4771-a482-67b4d77ac570",
+    "question": "What is your delivery methodology and how do you govern the engagement?",
+    "answer": "We run a discovery to build and prioritize the automation pipeline, then deliver in short cycles: each cycle ships one or more production automations with monitoring and exception handling. We design for resilience and reuse from the start, building a shared component library that accelerates each subsequent automation. In parallel we establish the Center of Excellence \u2014 standards, governance, and the support model \u2014 and transfer capability so the client owns and grows the program. Benefits are measured per automation against an agreed baseline.\n\nGovernance is lightweight but real: a weekly delivery cadence with Wayfarer Hotels Group, a fortnightly steering checkpoint, and transparent reporting on progress, risks, and budget burn. Decisions, assumptions, and changes are logged and visible. We work in your tooling and to your standards so the work is maintainable by your team from day one.",
+    "category": "RPA & Intelligent Automation",
+    "vertical": "Travel & Hospitality",
+    "proposal_id": "BC-IT-0060"
+  },
+  {
+    "id": "031ee94f-7ece-4670-a7ac-13905a742717",
+    "question": "Can you describe relevant past performance or a comparable reference?",
+    "answer": "Northbridge Technology Partners delivered an intelligent-automation program for a public sector & government client, automating 14 high-volume processes in 5 months and standing up a Center of Excellence. The program returned over 22,000 staff-hours annually, cut processing errors by 71%, and the resilient design meant zero of the bots broke during a major upstream system upgrade.\n\nThis is one of several directly relevant references Northbridge Technology Partners can provide. We are happy to arrange a reference call with a comparable client, and selected anonymized case studies and outcome data are included in the appendix. We deliberately offer references from engagements of similar scope, vertical, and complexity rather than our most flattering unrelated wins.",
+    "category": "RPA & Intelligent Automation",
+    "vertical": "Public Sector & Government",
+    "proposal_id": "BC-IT-0090"
+  },
+  {
+    "id": "03c78ea5-e0a8-4f0d-a8b1-f29e1346274f",
+    "question": "What measurable outcomes / KPIs will you be accountable for?",
+    "answer": "Key outcomes we commit to and report against:\n- Measurable hours returned to the business per automated process\n- Processing error rate reduced \u226550% on automated workflows\n- Bot resilience: automations survive upstream system changes\n- Center of Excellence and reusable component library established",
+    "category": "RPA & Intelligent Automation",
+    "vertical": "Travel & Hospitality",
+    "proposal_id": "BC-IT-0060"
+  },
+  {
+    "id": "09951361-688c-4eb2-a9c7-b42bff7b3c69",
+    "question": "How will you handle our regulatory and data-protection obligations as a public sector & government organization?",
+    "answer": "Data handling follows data-minimization and purpose-limitation principles. We will process only the Metro Transit Authority data necessary for the engagement, in the agreed jurisdiction(s) consistent with United Kingdom, Germany, and the Nordics, under a signed data-processing agreement. Personal or regulated data is masked or synthesized in non-production environments wherever feasible. We maintain a record of processing activities for this engagement and support your data-subject-request and breach-notification obligations. On exit, Northbridge Technology Partners returns or securely destroys Metro Transit Authority data per your instruction, with a certificate of destruction provided.",
+    "category": "RPA & Intelligent Automation",
+    "vertical": "Public Sector & Government",
+    "proposal_id": "BC-IT-0030"
+  },
+  {
+    "id": "037f9f90-e6d7-4402-ae0f-bc4184420e84",
+    "question": "Can you describe relevant past performance or a comparable reference?",
+    "answer": "Northbridge Technology Partners unified sales and service onto a single CRM for a media & entertainment client, consolidating four disconnected systems. Within 7 months pipeline-reporting accuracy became trusted by leadership for the first time, average case-resolution time fell 31%, and active CRM usage reached 92% of the sales team.\n\nThis is one of several directly relevant references Northbridge Technology Partners can provide. We are happy to arrange a reference call with a comparable client, and selected anonymized case studies and outcome data are included in the appendix. We deliberately offer references from engagements of similar scope, vertical, and complexity rather than our most flattering unrelated wins.",
+    "category": "Salesforce / CRM Implementation",
+    "vertical": "Media & Entertainment",
+    "proposal_id": "BC-IT-0023"
+  },
+  {
+    "id": "055bb6fe-d3bf-4a61-a522-ed73602a3ca6",
+    "question": "What measurable outcomes / KPIs will you be accountable for?",
+    "answer": "Key outcomes we commit to and report against:\n- Single, deduplicated customer view across sales, service, and marketing\n- Active user adoption \u226590% within 90 days of go-live\n- Case-resolution time reduced \u226525%; pipeline-reporting accuracy trusted by leadership\n- Upgrade-safe org: custom code limited to genuinely necessary cases",
+    "category": "Salesforce / CRM Implementation",
+    "vertical": "Energy & Utilities",
+    "proposal_id": "BC-IT-0008"
+  },
+  {
+    "id": "096de3fe-ee62-4e90-a7ec-da701bf115d6",
+    "question": "What is your proposed approach for salesforce / crm implementation?",
+    "answer": "Northbridge Technology Partners proposes a phased CRM implementation grounded in the client's real revenue and service processes. We begin with a discovery that maps the lead-to-cash and case-to-resolution journeys, then configure the platform to those journeys rather than forcing the business into a generic template. A unified data model and deduplicated, governed customer records give every team one trusted view. We automate the high-friction handoffs, build the reports leadership actually needs, and integrate the surrounding stack (marketing automation, ERP/billing, telephony) through supported, upgrade-safe patterns. Adoption is engineered in from the start through role-based training, in-app guidance, and a deliberate change-management effort, because a CRM only delivers value if people use it.\n\n**Indicative technology and tooling**\n- Salesforce (Sales/Service/Marketing Cloud) or equivalent CRM platform\n- Declarative configuration (Flow) favored over custom code; managed package discipline\n- Integration via supported APIs/middleware to ERP, billing, marketing, and telephony\n- Data quality & dedup tooling; governed customer master\n- Reporting & dashboards plus in-app guidance for adoption\n\nAll technology choices are confirmed with Vertex Materials during discovery and aligned to your existing standards and strategic platform decisions; nothing above is imposed.",
+    "category": "Salesforce / CRM Implementation",
+    "vertical": "Manufacturing & Industrial",
+    "proposal_id": "BC-IT-0053"
+  },
+  {
+    "id": "0970b827-6f39-4cf6-a808-d9011fa2f620",
+    "question": "How do you ensure security and compliance during the engagement?",
+    "answer": "Security and compliance are built into delivery, not inspected at the end. Northbridge Technology Partners operates an information-security management system aligned to ISO 27001 and SOC 2 Type II, and this engagement will be delivered to the controls relevant to Lumen Media Group's obligations: SOC 2 Type II, ISO 27001, MPA Content Security (TPN).\n\nConcretely, that means: least-privilege access to Lumen Media Group systems with just-in-time elevation and full audit logging; encryption of data in transit and at rest; secrets managed in a vault, never in code; secure SDLC with dependency, static, and (where relevant) dynamic scanning in the pipeline; and security-relevant changes captured as evidence for your auditors as we go. All Northbridge Technology Partners personnel on the engagement are background-checked and complete security and (where applicable) data-privacy training before access is granted. We will sign your security schedule and DPA, and we are happy to complete your vendor security-assessment questionnaire as part of due diligence.",
+    "category": "Salesforce / CRM Implementation",
+    "vertical": "Media & Entertainment",
+    "proposal_id": "BC-IT-0083"
+  },
+  {
+    "id": "0c0fdb51-368e-409f-aa46-2056b6ea8718",
+    "question": "Can you describe relevant past performance or a comparable reference?",
+    "answer": "Northbridge Technology Partners unified sales and service onto a single CRM for a manufacturing & industrial client, consolidating four disconnected systems. Within 6 months pipeline-reporting accuracy became trusted by leadership for the first time, average case-resolution time fell 31%, and active CRM usage reached 92% of the sales team.\n\nThis is one of several directly relevant references Northbridge Technology Partners can provide. We are happy to arrange a reference call with a comparable client, and selected anonymized case studies and outcome data are included in the appendix. We deliberately offer references from engagements of similar scope, vertical, and complexity rather than our most flattering unrelated wins.",
+    "category": "Salesforce / CRM Implementation",
+    "vertical": "Manufacturing & Industrial",
+    "proposal_id": "BC-IT-0053"
+  }
+]

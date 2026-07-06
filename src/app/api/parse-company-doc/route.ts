@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { checkRateLimit, getClientIP, rateLimitError } from "@/lib/rateLimit";
+import { extractJson } from "@/lib/extractJson";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -86,17 +87,15 @@ Be thorough but only include information explicitly stated in the document. Resp
       messages: [{ role: "user", content: userContent }],
     });
 
+    // Defensive: find the first text block rather than assuming index 0,
+    // in case a future model version emits a leading non-text block.
     const responseText =
-      message.content[0].type === "text" ? message.content[0].text : "";
+      message.content.find((block) => block.type === "text")?.text ?? "";
 
-    let parsed;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- spread verbatim into the response below
+    let parsed: any;
     try {
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        parsed = JSON.parse(jsonMatch[0]);
-      } else {
-        throw new Error("No JSON found in response");
-      }
+      parsed = extractJson(responseText);
     } catch {
       return NextResponse.json(
         { error: "Failed to parse AI response", raw: responseText },

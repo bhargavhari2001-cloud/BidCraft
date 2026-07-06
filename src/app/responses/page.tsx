@@ -41,13 +41,13 @@ import {
 } from "lucide-react";
 
 const categoryColors: Record<string, { bg: string; text: string; dot: string }> = {
-  Technical: { bg: "bg-[#146C43]/10", text: "text-[#146C43]", dot: "bg-[#146C43]" },
+  Technical: { bg: "bg-[var(--accent)]/10", text: "text-[var(--accent)]", dot: "bg-[var(--accent)]" },
   "Security & Compliance": { bg: "bg-red-500/10", text: "text-red-400", dot: "bg-red-400" },
-  "Experience & References": { bg: "bg-[#DDEAF5]", text: "text-[#2C5C8A]", dot: "bg-cyan-400" },
+  "Experience & References": { bg: "bg-[var(--info)]/10", text: "text-[var(--info)]", dot: "bg-cyan-400" },
   Staffing: { bg: "bg-amber-500/10", text: "text-amber-400", dot: "bg-amber-400" },
   Methodology: { bg: "bg-emerald-500/10", text: "text-emerald-400", dot: "bg-emerald-400" },
   Pricing: { bg: "bg-pink-500/10", text: "text-pink-400", dot: "bg-pink-400" },
-  General: { bg: "bg-[#F6F4EF]", text: "text-[#6B6862]", dot: "bg-[#9b978d]" },
+  General: { bg: "bg-[var(--soft)]", text: "text-[var(--muted)]", dot: "bg-[var(--placeholder)]" },
 };
 
 function confidenceColor(c: number): string {
@@ -305,16 +305,16 @@ export default function ResponsesPage() {
 
   if (questions.length === 0) {
     return (
-      <div className="h-full overflow-y-auto bg-[#FAF9F6] text-[#1B1A17] flex items-center justify-center">
+      <div className="h-full overflow-y-auto bg-[var(--bg)] text-[var(--text)] flex items-center justify-center">
         <div className="text-center">
-          <FileText className="w-12 h-12 text-[#bdb9ae] mx-auto mb-4" />
+          <FileText className="w-12 h-12 text-[var(--faint3)] mx-auto mb-4" />
           <h2 className="text-xl font-semibold mb-2">No RFP Data Found</h2>
-          <p className="text-sm text-[#8A867D] mb-6">
+          <p className="text-sm text-[var(--faint)] mb-6">
             Upload and parse an RFP document first to generate responses.
           </p>
           <button
             onClick={() => router.push("/")}
-            className="px-5 py-2.5 rounded-lg bg-[#146C43] hover:bg-[#0E5C38] text-sm font-medium transition-colors"
+            className="px-5 py-2.5 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-ink)] text-sm font-medium transition-colors"
           >
             Upload RFP
           </button>
@@ -324,13 +324,13 @@ export default function ResponsesPage() {
   }
 
   return (
-    <div className="h-full overflow-y-auto bg-[#FAF9F6] text-[#1B1A17]">
+    <div className="h-full overflow-y-auto bg-[var(--bg)] text-[var(--text)]">
       {/* Nav */}
-      <nav className="border-b border-[#E5E3DC] bg-[#FAF9F6]/90 backdrop-blur-xl sticky top-0 z-50">
+      <nav className="border-b border-[var(--bd)] bg-[var(--bg)]/90 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-2 text-sm text-[#8A867D] hover:text-[#3a382f] transition-colors"
+            className="flex items-center gap-2 text-sm text-[var(--faint)] hover:text-[var(--text2)] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back
@@ -340,8 +340,8 @@ export default function ResponsesPage() {
               onClick={() => setShowControls((v) => !v)}
               className={`p-2 rounded-lg border text-sm transition-colors ${
                 showControls
-                  ? "bg-[#146C43]/20 border-[#146C43]/30 text-[#146C43]"
-                  : "bg-[#F6F4EF] border-[#E5E3DC] text-[#6B6862] hover:text-[#3a382f]"
+                  ? "bg-[var(--accent)]/20 border-[var(--accent)]/30 text-[var(--accent)]"
+                  : "bg-[var(--soft)] border-[var(--bd)] text-[var(--muted)] hover:text-[var(--text2)]"
               }`}
               title="Response controls"
             >
@@ -351,8 +351,8 @@ export default function ResponsesPage() {
               onClick={() => setShowStats((v) => !v)}
               className={`p-2 rounded-lg border text-sm transition-colors ${
                 showStats
-                  ? "bg-[#146C43]/20 border-[#146C43]/30 text-[#146C43]"
-                  : "bg-[#F6F4EF] border-[#E5E3DC] text-[#6B6862] hover:text-[#3a382f]"
+                  ? "bg-[var(--accent)]/20 border-[var(--accent)]/30 text-[var(--accent)]"
+                  : "bg-[var(--soft)] border-[var(--bd)] text-[var(--muted)] hover:text-[var(--text2)]"
               }`}
               title="Toggle stats"
             >
@@ -361,7 +361,7 @@ export default function ResponsesPage() {
             <button
               onClick={() => router.push("/review")}
               disabled={answeredCount === 0}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#F6F4EF] border border-[#E5E3DC] text-sm hover:bg-[#EEECE5] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--soft)] border border-[var(--bd)] text-sm hover:bg-[var(--bd2)] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               title="Review & edit generated responses"
             >
               <PenLine className="w-4 h-4" />
@@ -370,7 +370,7 @@ export default function ResponsesPage() {
             <button
               onClick={() => setShowExportModal(true)}
               disabled={answeredCount === 0}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#F6F4EF] border border-[#E5E3DC] text-sm hover:bg-[#EEECE5] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--soft)] border border-[var(--bd)] text-sm hover:bg-[var(--bd2)] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <Download className="w-4 h-4" />
               Export DOCX
@@ -387,7 +387,7 @@ export default function ResponsesPage() {
               <button
                 onClick={generateAll}
                 disabled={answeredCount === questions.length}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#146C43] hover:bg-[#0E5C38] text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-ink)] text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Sparkles className="w-4 h-4" />
                 Generate All
@@ -401,7 +401,7 @@ export default function ResponsesPage() {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold mb-1">{rfpTitle || "RFP Responses"}</h1>
-          <p className="text-sm text-[#8A867D]">
+          <p className="text-sm text-[var(--faint)]">
             {answeredCount} of {questions.length} questions answered
             {editedCount > 0 && ` · ${editedCount} edited`}
             {avgConfidence > 0 && ` · Avg confidence: ${avgConfidence}%`}
@@ -420,9 +420,9 @@ export default function ResponsesPage() {
           </p>
 
           {/* Overall progress bar */}
-          <div className="mt-3 h-1.5 rounded-full bg-[#F6F4EF] overflow-hidden">
+          <div className="mt-3 h-1.5 rounded-full bg-[var(--soft)] overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#146C43] to-[#2C5C8A] transition-all duration-500"
+              className="h-full rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--info)] transition-all duration-500"
               style={{
                 width: `${questions.length > 0 ? (answeredCount / questions.length) * 100 : 0}%`,
               }}
@@ -432,13 +432,13 @@ export default function ResponsesPage() {
           {/* Batch progress bar */}
           {batchProgress && (
             <div className="mt-2">
-              <div className="flex items-center justify-between text-xs text-[#8A867D] mb-1">
+              <div className="flex items-center justify-between text-xs text-[var(--faint)] mb-1">
                 <span>
                   Generating response {batchProgress.current} of {batchProgress.total}...
                 </span>
                 <span>{Math.round((batchProgress.current / batchProgress.total) * 100)}%</span>
               </div>
-              <div className="h-1 rounded-full bg-[#F6F4EF] overflow-hidden">
+              <div className="h-1 rounded-full bg-[var(--soft)] overflow-hidden">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-violet-400 to-cyan-400 transition-all duration-300"
                   style={{
@@ -452,15 +452,15 @@ export default function ResponsesPage() {
 
         {/* Response Controls Panel */}
         {showControls && (
-          <div className="mb-6 p-5 rounded-xl bg-transparent border border-[#E5E3DC] animate-fade-in">
+          <div className="mb-6 p-5 rounded-xl bg-transparent border border-[var(--bd)] animate-fade-in">
             <div className="flex items-center gap-2 mb-4">
-              <Settings2 className="w-4 h-4 text-[#146C43]" />
+              <Settings2 className="w-4 h-4 text-[var(--accent)]" />
               <h3 className="text-sm font-medium">Response Controls</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {/* Tone selector */}
               <div>
-                <label className="text-xs text-[#8A867D] mb-2 block">Tone</label>
+                <label className="text-xs text-[var(--faint)] mb-2 block">Tone</label>
                 <div className="space-y-1.5">
                   {TONE_OPTIONS.map((opt) => (
                     <button
@@ -468,8 +468,8 @@ export default function ResponsesPage() {
                       onClick={() => setTone(opt.value)}
                       className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${
                         tone === opt.value
-                          ? "bg-[#146C43]/20 border border-[#146C43]/30 text-[#146C43]"
-                          : "bg-[#FAF9F6] border border-[#E5E3DC] text-[#6B6862] hover:text-[#3a382f] hover:bg-[#F6F4EF]"
+                          ? "bg-[var(--accent)]/20 border border-[var(--accent)]/30 text-[var(--accent)]"
+                          : "bg-[var(--bg)] border border-[var(--bd)] text-[var(--muted)] hover:text-[var(--text2)] hover:bg-[var(--soft)]"
                       }`}
                     >
                       <div className="font-medium text-xs">{opt.label}</div>
@@ -481,7 +481,7 @@ export default function ResponsesPage() {
 
               {/* Length selector */}
               <div>
-                <label className="text-xs text-[#8A867D] mb-2 block">Length</label>
+                <label className="text-xs text-[var(--faint)] mb-2 block">Length</label>
                 <div className="space-y-1.5">
                   {LENGTH_OPTIONS.map((opt) => (
                     <button
@@ -489,8 +489,8 @@ export default function ResponsesPage() {
                       onClick={() => setLength(opt.value)}
                       className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${
                         length === opt.value
-                          ? "bg-[#DDEAF5] border border-[#2C5C8A]/30 text-[#2C5C8A]"
-                          : "bg-[#FAF9F6] border border-[#E5E3DC] text-[#6B6862] hover:text-[#3a382f] hover:bg-[#F6F4EF]"
+                          ? "bg-[var(--info)]/10 border border-[var(--info)]/30 text-[var(--info)]"
+                          : "bg-[var(--bg)] border border-[var(--bd)] text-[var(--muted)] hover:text-[var(--text2)] hover:bg-[var(--soft)]"
                       }`}
                     >
                       <div className="font-medium text-xs">{opt.label}</div>
@@ -502,18 +502,18 @@ export default function ResponsesPage() {
 
               {/* Company name */}
               <div>
-                <label className="text-xs text-[#8A867D] mb-2 block">Company Name</label>
+                <label className="text-xs text-[var(--faint)] mb-2 block">Company Name</label>
                 <div className="relative">
-                  <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#bdb9ae]" />
+                  <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--faint3)]" />
                   <input
                     type="text"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                     placeholder="Enter company name..."
-                    className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-[#FAF9F6] border border-[#E5E3DC] text-sm text-[#3a382f] placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-colors"
+                    className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-[var(--bg)] border border-[var(--bd)] text-sm text-[var(--text2)] placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-colors"
                   />
                 </div>
-                <p className="text-[10px] text-[#9b978d] mt-2">
+                <p className="text-[10px] text-[var(--placeholder)] mt-2">
                   This name will be used in all generated responses instead of the profile company name.
                 </p>
               </div>
@@ -524,55 +524,55 @@ export default function ResponsesPage() {
         {/* Stats Panel */}
         {showStats && (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 animate-fade-in">
-            <div className="rounded-xl bg-[#FAF9F6] border border-[#E5E3DC] p-4">
+            <div className="rounded-xl bg-[var(--bg)] border border-[var(--bd)] p-4">
               <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-violet-400 to-violet-600">
                 {questions.length}
               </div>
-              <div className="text-xs text-[#9b978d] mt-1">Total Questions</div>
+              <div className="text-xs text-[var(--placeholder)] mt-1">Total Questions</div>
             </div>
-            <div className="rounded-xl bg-[#FAF9F6] border border-[#E5E3DC] p-4">
+            <div className="rounded-xl bg-[var(--bg)] border border-[var(--bd)] p-4">
               <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-emerald-400 to-emerald-600">
                 {answeredCount}
               </div>
-              <div className="text-xs text-[#9b978d] mt-1">Answered</div>
+              <div className="text-xs text-[var(--placeholder)] mt-1">Answered</div>
             </div>
-            <div className="rounded-xl bg-[#FAF9F6] border border-[#E5E3DC] p-4">
+            <div className="rounded-xl bg-[var(--bg)] border border-[var(--bd)] p-4">
               <div className={`text-2xl font-bold ${confidenceColor(avgConfidence)}`}>
                 {avgConfidence}%
               </div>
-              <div className="text-xs text-[#9b978d] mt-1">Avg Confidence</div>
+              <div className="text-xs text-[var(--placeholder)] mt-1">Avg Confidence</div>
             </div>
-            <div className="rounded-xl bg-[#FAF9F6] border border-[#E5E3DC] p-4">
+            <div className="rounded-xl bg-[var(--bg)] border border-[var(--bd)] p-4">
               <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-amber-400 to-amber-600">
                 {new Set(questions.map((q) => q.category)).size}
               </div>
-              <div className="text-xs text-[#9b978d] mt-1">Categories</div>
+              <div className="text-xs text-[var(--placeholder)] mt-1">Categories</div>
             </div>
           </div>
         )}
 
         {/* Confidence Filter */}
         {answeredCount > 0 && (
-          <div className="flex items-center gap-4 mb-6 p-4 rounded-xl bg-transparent border border-[#E5E3DC]">
-            <Filter className="w-4 h-4 text-[#9b978d] shrink-0" />
+          <div className="flex items-center gap-4 mb-6 p-4 rounded-xl bg-transparent border border-[var(--bd)]">
+            <Filter className="w-4 h-4 text-[var(--placeholder)] shrink-0" />
             <div className="flex-1 flex items-center gap-3">
-              <label className="text-xs text-[#8A867D] shrink-0">Confidence threshold:</label>
+              <label className="text-xs text-[var(--faint)] shrink-0">Confidence threshold:</label>
               <input
                 type="range"
                 min={0}
                 max={100}
                 value={confidenceThreshold}
                 onChange={(e) => setConfidenceThreshold(Number(e.target.value))}
-                className="flex-1 h-1.5 bg-[#F4F3EF] rounded-full appearance-none cursor-pointer accent-violet-500"
+                className="flex-1 h-1.5 bg-[var(--soft2)] rounded-full appearance-none cursor-pointer accent-violet-500"
               />
-              <span className="text-xs text-[#6B6862] w-10 text-right">{confidenceThreshold}%</span>
+              <span className="text-xs text-[var(--muted)] w-10 text-right">{confidenceThreshold}%</span>
             </div>
             <button
               onClick={() => setShowLowConfidenceOnly((v) => !v)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all shrink-0 ${
                 showLowConfidenceOnly
                   ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                  : "bg-[#FAF9F6] text-[#8A867D] border border-[#E5E3DC] hover:text-[#6B6862]"
+                  : "bg-[var(--bg)] text-[var(--faint)] border border-[var(--bd)] hover:text-[var(--muted)]"
               }`}
             >
               <AlertTriangle className="w-3 h-3" />
@@ -595,8 +595,8 @@ export default function ResponsesPage() {
             return (
               <div
                 key={question.id}
-                className={`rounded-xl border bg-transparent hover:border-[#E5E3DC] transition-all duration-200 overflow-hidden ${
-                  isLowConfidence ? "border-amber-500/30" : "border-[#E5E3DC]"
+                className={`rounded-xl border bg-transparent hover:border-[var(--bd)] transition-all duration-200 overflow-hidden ${
+                  isLowConfidence ? "border-amber-500/30" : "border-[var(--bd)]"
                 }`}
               >
                 {/* Question Header */}
@@ -610,7 +610,7 @@ export default function ResponsesPage() {
                         ? "bg-amber-500/10 text-amber-400"
                         : hasResponse
                         ? `${confidenceBg(response.confidence)} ${confidenceColor(response.confidence)}`
-                        : "bg-[#FAF9F6] text-[#9b978d]"
+                        : "bg-[var(--bg)] text-[var(--placeholder)]"
                     }`}
                   >
                     {hasResponse ? `${response.confidence}%` : question.id}
@@ -635,7 +635,7 @@ export default function ResponsesPage() {
                         </span>
                       )}
                       {hasResponse && response.wordCount && (
-                        <span className="px-2 py-0.5 rounded-md text-xs font-medium bg-[#FAF9F6] text-[#8A867D]">
+                        <span className="px-2 py-0.5 rounded-md text-xs font-medium bg-[var(--bg)] text-[var(--faint)]">
                           {response.wordCount} words
                         </span>
                       )}
@@ -646,30 +646,30 @@ export default function ResponsesPage() {
                         </span>
                       )}
                       {isGenerating && (
-                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-medium bg-[#146C43]/10 text-[#146C43]">
+                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-medium bg-[var(--accent)]/10 text-[var(--accent)]">
                           <Loader2 className="w-3 h-3 animate-spin" />
                           Generating
                         </span>
                       )}
                       {response?.status === "edited" && (
-                        <span className="px-2 py-0.5 rounded-md text-xs font-medium bg-[#DDEAF5] text-[#2C5C8A]">
+                        <span className="px-2 py-0.5 rounded-md text-xs font-medium bg-[var(--info)]/10 text-[var(--info)]">
                           Edited
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className="shrink-0 text-[#bdb9ae]">
+                  <div className="shrink-0 text-[var(--faint3)]">
                     {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
                   </div>
                 </button>
 
                 {/* Expanded Response Area — side-by-side layout */}
                 {isExpanded && (
-                  <div className="px-5 pb-5 border-t border-[#F2F0E9] animate-fade-in">
+                  <div className="px-5 pb-5 border-t border-[var(--bd3)] animate-fade-in">
                     {isGenerating && (
                       <div className="py-8 flex flex-col items-center gap-3">
-                        <Loader2 className="w-6 h-6 text-[#146C43] animate-spin" />
-                        <p className="text-sm text-[#8A867D]">
+                        <Loader2 className="w-6 h-6 text-[var(--accent)] animate-spin" />
+                        <p className="text-sm text-[var(--faint)]">
                           Generating response with AI + Knowledge Base...
                         </p>
                       </div>
@@ -684,12 +684,12 @@ export default function ResponsesPage() {
                             {/* Confidence badge */}
                             <div className={`p-3 rounded-lg ${confidenceBg(response.confidence)}`}>
                               <div className="flex items-center justify-between mb-1">
-                                <span className="text-xs text-[#8A867D]">Confidence</span>
+                                <span className="text-xs text-[var(--faint)]">Confidence</span>
                                 <span className={`text-lg font-bold ${confidenceColor(response.confidence)}`}>
                                   {response.confidence}%
                                 </span>
                               </div>
-                              <div className="h-1.5 rounded-full bg-[#F4F3EF] overflow-hidden">
+                              <div className="h-1.5 rounded-full bg-[var(--soft2)] overflow-hidden">
                                 <div
                                   className={`h-full rounded-full transition-all ${
                                     response.confidence >= 85
@@ -702,7 +702,7 @@ export default function ResponsesPage() {
                                 />
                               </div>
                               {response.reasoning && (
-                                <p className="text-[10px] text-[#9b978d] mt-2 leading-relaxed">
+                                <p className="text-[10px] text-[var(--placeholder)] mt-2 leading-relaxed">
                                   {response.reasoning}
                                 </p>
                               )}
@@ -710,28 +710,28 @@ export default function ResponsesPage() {
 
                             {/* Metadata */}
                             <div className="space-y-2 text-xs">
-                              <div className="flex items-center justify-between text-[#9b978d]">
+                              <div className="flex items-center justify-between text-[var(--placeholder)]">
                                 <span>Tone</span>
-                                <span className="text-[#6B6862] capitalize">{response.tone}</span>
+                                <span className="text-[var(--muted)] capitalize">{response.tone}</span>
                               </div>
                               {response.wordCount && (
-                                <div className="flex items-center justify-between text-[#9b978d]">
+                                <div className="flex items-center justify-between text-[var(--placeholder)]">
                                   <span>Words</span>
-                                  <span className="text-[#6B6862]">{response.wordCount}</span>
+                                  <span className="text-[var(--muted)]">{response.wordCount}</span>
                                 </div>
                               )}
                               {response.generatedAt && (
-                                <div className="flex items-center justify-between text-[#9b978d]">
+                                <div className="flex items-center justify-between text-[var(--placeholder)]">
                                   <span>Generated</span>
-                                  <span className="text-[#6B6862]">
+                                  <span className="text-[var(--muted)]">
                                     {new Date(response.generatedAt).toLocaleTimeString()}
                                   </span>
                                 </div>
                               )}
                               {response.status === "edited" && response.editedContent !== response.draft && (
-                                <div className="flex items-center justify-between text-[#2C5C8A]/60">
+                                <div className="flex items-center justify-between text-[var(--info)]/60">
                                   <span>Status</span>
-                                  <span className="text-[#2C5C8A]">Modified</span>
+                                  <span className="text-[var(--info)]">Modified</span>
                                 </div>
                               )}
                             </div>
@@ -741,7 +741,7 @@ export default function ResponsesPage() {
                               <div>
                                 <button
                                   onClick={() => toggleSourceExpand(question.id)}
-                                  className="flex items-center gap-2 text-xs text-[#9b978d] hover:text-[#6B6862] transition-colors w-full"
+                                  className="flex items-center gap-2 text-xs text-[var(--placeholder)] hover:text-[var(--muted)] transition-colors w-full"
                                 >
                                   <BookOpen className="w-3 h-3" />
                                   <span>View Sources ({response.sourcesUsed.length})</span>
@@ -756,9 +756,9 @@ export default function ResponsesPage() {
                                     {response.sourcesUsed.map((src: ResponseSource, i: number) => (
                                       <div
                                         key={i}
-                                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-[#FAF9F6] border border-[#F2F0E9]"
+                                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-[var(--bg)] border border-[var(--bd3)]"
                                       >
-                                        <span className="text-[10px] text-[#8A867D] truncate flex-1 mr-2">
+                                        <span className="text-[10px] text-[var(--faint)] truncate flex-1 mr-2">
                                           {src.title}
                                         </span>
                                         {src.similarity != null && (
@@ -768,7 +768,7 @@ export default function ResponsesPage() {
                                                 ? "text-emerald-400"
                                                 : src.similarity >= 40
                                                 ? "text-amber-400"
-                                                : "text-[#9b978d]"
+                                                : "text-[var(--placeholder)]"
                                             }`}
                                           >
                                             {src.similarity}%
@@ -785,7 +785,7 @@ export default function ResponsesPage() {
                             <div className="flex items-center gap-1 pt-1">
                               <button
                                 onClick={() => generateResponse(question)}
-                                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-[#F6F4EF] text-[#9b978d] text-xs transition-colors"
+                                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-[var(--soft)] text-[var(--placeholder)] text-xs transition-colors"
                                 title="Regenerate"
                               >
                                 <RefreshCw className="w-3 h-3" />
@@ -796,7 +796,7 @@ export default function ResponsesPage() {
                                 className={`p-1.5 rounded-lg transition-colors ${
                                   response.rating === "up"
                                     ? "bg-emerald-500/20 text-emerald-400"
-                                    : "hover:bg-[#F6F4EF] text-[#9b978d]"
+                                    : "hover:bg-[var(--soft)] text-[var(--placeholder)]"
                                 }`}
                               >
                                 <ThumbsUp className="w-3.5 h-3.5" />
@@ -806,14 +806,14 @@ export default function ResponsesPage() {
                                 className={`p-1.5 rounded-lg transition-colors ${
                                   response.rating === "down"
                                     ? "bg-red-500/20 text-red-400"
-                                    : "hover:bg-[#F6F4EF] text-[#9b978d]"
+                                    : "hover:bg-[var(--soft)] text-[var(--placeholder)]"
                                 }`}
                               >
                                 <ThumbsDown className="w-3.5 h-3.5" />
                               </button>
                               <button
                                 onClick={() => copyToClipboard(question.id)}
-                                className="p-1.5 rounded-lg hover:bg-[#F6F4EF] text-[#9b978d] transition-colors"
+                                className="p-1.5 rounded-lg hover:bg-[var(--soft)] text-[var(--placeholder)] transition-colors"
                               >
                                 {copiedId === question.id ? (
                                   <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -827,14 +827,14 @@ export default function ResponsesPage() {
                           {/* Right: Editable response */}
                           <div className="space-y-2">
                             <textarea
-                              className="w-full px-4 py-3 rounded-xl bg-[#FAF9F6] border border-[#E5E3DC] text-sm text-[#3a382f] leading-relaxed min-h-[200px] resize-y focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-colors"
+                              className="w-full px-4 py-3 rounded-xl bg-[var(--bg)] border border-[var(--bd)] text-sm text-[var(--text2)] leading-relaxed min-h-[200px] resize-y focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-colors"
                               value={response.editedContent || response.draft}
                               onChange={(e) => updateEditedContent(question.id, e.target.value)}
                             />
                             {response.status === "edited" && response.editedContent !== response.draft && (
                               <button
                                 onClick={() => updateEditedContent(question.id, response.draft)}
-                                className="text-xs text-[#9b978d] hover:text-[#6B6862] transition-colors"
+                                className="text-xs text-[var(--placeholder)] hover:text-[var(--muted)] transition-colors"
                               >
                                 Reset to original
                               </button>
@@ -846,10 +846,10 @@ export default function ResponsesPage() {
 
                     {!isGenerating && !hasResponse && (
                       <div className="py-6 flex flex-col items-center gap-3">
-                        <p className="text-sm text-[#9b978d]">No response generated yet</p>
+                        <p className="text-sm text-[var(--placeholder)]">No response generated yet</p>
                         <button
                           onClick={() => generateResponse(question)}
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#146C43] hover:bg-[#0E5C38] text-sm font-medium transition-colors"
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-ink)] text-sm font-medium transition-colors"
                         >
                           <Sparkles className="w-4 h-4" />
                           Generate Response
@@ -864,7 +864,7 @@ export default function ResponsesPage() {
         </div>
 
         {displayedQuestions.length === 0 && showLowConfidenceOnly && (
-          <div className="text-center py-12 text-[#9b978d]">
+          <div className="text-center py-12 text-[var(--placeholder)]">
             <Check className="w-8 h-8 mx-auto mb-3 text-emerald-400" />
             <p className="text-sm">All responses are above the confidence threshold!</p>
           </div>
@@ -872,10 +872,10 @@ export default function ResponsesPage() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-[#F2F0E9] py-8 mt-12">
+      <footer className="border-t border-[var(--bd3)] py-8 mt-12">
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-          <span className="text-xs text-[#bdb9ae]">&copy; 2026 BidCraft. Built with AI.</span>
-          <span className="text-xs text-[#bdb9ae]">A portfolio project by Bhargav Hari</span>
+          <span className="text-xs text-[var(--faint3)]">&copy; 2026 BidCraft. Built with AI.</span>
+          <span className="text-xs text-[var(--faint3)]">A portfolio project by Bhargav Hari</span>
         </div>
       </footer>
 

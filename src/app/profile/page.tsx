@@ -155,23 +155,23 @@ export default function ProfilePage() {
   };
 
   const inputClass =
-    "w-full px-4 py-3 rounded-xl bg-[#FAF9F6] border border-[#E5E3DC] text-sm text-[#1B1A17] placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-colors";
+    "w-full px-4 py-3 rounded-xl bg-[var(--bg)] border border-[var(--bd)] text-sm text-[var(--text)] placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-colors";
 
   return (
-    <div className="h-full overflow-y-auto bg-[#FAF9F6] text-[#1B1A17]">
+    <div className="h-full overflow-y-auto bg-[var(--bg)] text-[var(--text)]">
       {/* Nav */}
-      <nav className="border-b border-[#E5E3DC] bg-[#FAF9F6]/90 backdrop-blur-xl sticky top-0 z-50">
+      <nav className="border-b border-[var(--bd)] bg-[var(--bg)]/90 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-2 text-sm text-[#8A867D] hover:text-[#3a382f] transition-colors"
+            className="flex items-center gap-2 text-sm text-[var(--faint)] hover:text-[var(--text2)] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to BidCraft
           </button>
           <button
             onClick={handleSave}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#146C43] hover:bg-[#0E5C38] text-sm font-medium transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-ink)] text-sm font-medium transition-colors"
           >
             {saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
             {saved ? "Saved!" : "Save Profile"}
@@ -182,7 +182,7 @@ export default function ProfilePage() {
       <div className="max-w-4xl mx-auto px-6 py-12">
         <div className="mb-10">
           <h1 className="text-3xl font-bold mb-2">Company Profile</h1>
-          <p className="text-[#8A867D] text-sm">
+          <p className="text-[var(--faint)] text-sm">
             This information helps BidCraft generate tailored, accurate RFP responses.
           </p>
         </div>
@@ -190,30 +190,30 @@ export default function ProfilePage() {
         {/* Auto-fill from document */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-9 h-9 rounded-lg bg-[#DDEAF5] flex items-center justify-center">
-              <Upload className="w-4 h-4 text-[#2C5C8A]" />
+            <div className="w-9 h-9 rounded-lg bg-[var(--info)]/10 flex items-center justify-center">
+              <Upload className="w-4 h-4 text-[var(--info)]" />
             </div>
             <div>
               <h2 className="text-lg font-semibold">Auto-Fill from Document</h2>
-              <p className="text-xs text-[#9b978d]">Upload a capability statement, about page, or marketing doc</p>
+              <p className="text-xs text-[var(--placeholder)]">Upload a capability statement, about page, or marketing doc</p>
             </div>
           </div>
           <label
             className={`flex items-center justify-center gap-3 px-6 py-4 rounded-xl border-2 border-dashed cursor-pointer transition-all ${
               isParsing
-                ? "border-[#2C5C8A]/30 bg-cyan-500/[0.04]"
-                : "border-[#E5E3DC] bg-transparent hover:border-[#EEECE5] hover:bg-[#FAF9F6]"
+                ? "border-[var(--info)]/30 bg-cyan-500/[0.04]"
+                : "border-[var(--bd)] bg-transparent hover:border-[var(--bd2)] hover:bg-[var(--bg)]"
             }`}
           >
             {isParsing ? (
               <>
-                <Loader2 className="w-5 h-5 text-[#2C5C8A] animate-spin" />
-                <span className="text-sm text-[#2C5C8A]">Analyzing document...</span>
+                <Loader2 className="w-5 h-5 text-[var(--info)] animate-spin" />
+                <span className="text-sm text-[var(--info)]">Analyzing document...</span>
               </>
             ) : (
               <>
-                <Upload className="w-5 h-5 text-[#9b978d]" />
-                <span className="text-sm text-[#8A867D]">
+                <Upload className="w-5 h-5 text-[var(--placeholder)]" />
+                <span className="text-sm text-[var(--faint)]">
                   Drop or click to upload (PDF, DOCX, TXT)
                 </span>
               </>
@@ -235,14 +235,14 @@ export default function ProfilePage() {
         {/* Company Info */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-[#146C43]/10 flex items-center justify-center">
-              <Building2 className="w-4 h-4 text-[#146C43]" />
+            <div className="w-9 h-9 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center">
+              <Building2 className="w-4 h-4 text-[var(--accent)]" />
             </div>
             <h2 className="text-lg font-semibold">Company Information</h2>
           </div>
           <div className="space-y-4">
             <div>
-              <label className="block text-xs text-[#8A867D] mb-1.5">Company Name</label>
+              <label className="block text-xs text-[var(--faint)] mb-1.5">Company Name</label>
               <input
                 className={inputClass}
                 placeholder="Acme Corporation"
@@ -252,7 +252,7 @@ export default function ProfilePage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs text-[#8A867D] mb-1.5">Industry</label>
+                <label className="block text-xs text-[var(--faint)] mb-1.5">Industry</label>
                 <input
                   className={inputClass}
                   placeholder="Information Technology"
@@ -261,23 +261,23 @@ export default function ProfilePage() {
                 />
               </div>
               <div>
-                <label className="block text-xs text-[#8A867D] mb-1.5">Company Size</label>
+                <label className="block text-xs text-[var(--faint)] mb-1.5">Company Size</label>
                 <select
                   className={inputClass}
                   value={profile.size}
                   onChange={(e) => updateField("size", e.target.value)}
                 >
-                  <option value="" className="bg-[#FAF9F6]">Select size</option>
-                  <option value="1-10" className="bg-[#FAF9F6]">1-10 employees</option>
-                  <option value="11-50" className="bg-[#FAF9F6]">11-50 employees</option>
-                  <option value="51-200" className="bg-[#FAF9F6]">51-200 employees</option>
-                  <option value="201-1000" className="bg-[#FAF9F6]">201-1,000 employees</option>
-                  <option value="1000+" className="bg-[#FAF9F6]">1,000+ employees</option>
+                  <option value="" className="bg-[var(--bg)]">Select size</option>
+                  <option value="1-10" className="bg-[var(--bg)]">1-10 employees</option>
+                  <option value="11-50" className="bg-[var(--bg)]">11-50 employees</option>
+                  <option value="51-200" className="bg-[var(--bg)]">51-200 employees</option>
+                  <option value="201-1000" className="bg-[var(--bg)]">201-1,000 employees</option>
+                  <option value="1000+" className="bg-[var(--bg)]">1,000+ employees</option>
                 </select>
               </div>
             </div>
             <div>
-              <label className="block text-xs text-[#8A867D] mb-1.5">Company Description</label>
+              <label className="block text-xs text-[var(--faint)] mb-1.5">Company Description</label>
               <textarea
                 className={`${inputClass} min-h-[100px] resize-none`}
                 placeholder="Describe your company's core competencies, services, and value proposition..."
@@ -291,8 +291,8 @@ export default function ProfilePage() {
         {/* Certifications */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-[#DDEAF5] flex items-center justify-center">
-              <Shield className="w-4 h-4 text-[#2C5C8A]" />
+            <div className="w-9 h-9 rounded-lg bg-[var(--info)]/10 flex items-center justify-center">
+              <Shield className="w-4 h-4 text-[var(--info)]" />
             </div>
             <h2 className="text-lg font-semibold">Certifications & Compliance</h2>
           </div>
@@ -306,25 +306,25 @@ export default function ProfilePage() {
             />
             <button
               onClick={addCertification}
-              className="px-4 rounded-xl bg-[#F6F4EF] border border-[#E5E3DC] hover:bg-[#EEECE5] transition-colors"
+              className="px-4 rounded-xl bg-[var(--soft)] border border-[var(--bd)] hover:bg-[var(--bd2)] transition-colors"
             >
-              <Plus className="w-4 h-4 text-[#6B6862]" />
+              <Plus className="w-4 h-4 text-[var(--muted)]" />
             </button>
           </div>
           <div className="flex flex-wrap gap-2">
             {profile.certifications.map((cert) => (
               <span
                 key={cert}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#DDEAF5] border border-cyan-500/20 text-xs text-[#2C5C8A]"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--info)]/10 border border-cyan-500/20 text-xs text-[var(--info)]"
               >
                 {cert}
-                <button onClick={() => removeCertification(cert)} className="text-[#2C5C8A]/50 hover:text-[#2C5C8A]">
+                <button onClick={() => removeCertification(cert)} className="text-[var(--info)]/50 hover:text-[var(--info)]">
                   <Trash2 className="w-3 h-3" />
                 </button>
               </span>
             ))}
             {profile.certifications.length === 0 && (
-              <span className="text-xs text-[#bdb9ae]">No certifications added yet</span>
+              <span className="text-xs text-[var(--faint3)]">No certifications added yet</span>
             )}
           </div>
         </section>
@@ -347,9 +347,9 @@ export default function ProfilePage() {
             />
             <button
               onClick={addTechnology}
-              className="px-4 rounded-xl bg-[#F6F4EF] border border-[#E5E3DC] hover:bg-[#EEECE5] transition-colors"
+              className="px-4 rounded-xl bg-[var(--soft)] border border-[var(--bd)] hover:bg-[var(--bd2)] transition-colors"
             >
-              <Plus className="w-4 h-4 text-[#6B6862]" />
+              <Plus className="w-4 h-4 text-[var(--muted)]" />
             </button>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -365,7 +365,7 @@ export default function ProfilePage() {
               </span>
             ))}
             {profile.technologies.length === 0 && (
-              <span className="text-xs text-[#bdb9ae]">No technologies added yet</span>
+              <span className="text-xs text-[var(--faint3)]">No technologies added yet</span>
             )}
           </div>
         </section>
@@ -382,7 +382,7 @@ export default function ProfilePage() {
             {profile.caseStudies.map((cs) => (
               <div
                 key={cs.id}
-                className="rounded-xl border border-[#E5E3DC] bg-transparent p-5 space-y-3"
+                className="rounded-xl border border-[var(--bd)] bg-transparent p-5 space-y-3"
               >
                 <div className="flex items-center justify-between">
                   <input
@@ -393,7 +393,7 @@ export default function ProfilePage() {
                   />
                   <button
                     onClick={() => removeCaseStudy(cs.id)}
-                    className="p-2 rounded-lg hover:bg-red-500/10 text-[#9b978d] hover:text-red-400 transition-colors"
+                    className="p-2 rounded-lg hover:bg-red-500/10 text-[var(--placeholder)] hover:text-red-400 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -421,7 +421,7 @@ export default function ProfilePage() {
           </div>
           <button
             onClick={addCaseStudy}
-            className="mt-4 flex items-center gap-2 px-4 py-2.5 rounded-xl border border-dashed border-[#E5E3DC] text-sm text-[#8A867D] hover:text-[#6B6862] hover:border-[#E5E3DC] transition-colors w-full justify-center"
+            className="mt-4 flex items-center gap-2 px-4 py-2.5 rounded-xl border border-dashed border-[var(--bd)] text-sm text-[var(--faint)] hover:text-[var(--muted)] hover:border-[var(--bd)] transition-colors w-full justify-center"
           >
             <Plus className="w-4 h-4" />
             Add Case Study
@@ -429,10 +429,10 @@ export default function ProfilePage() {
         </section>
 
         {/* Bottom save */}
-        <div className="flex justify-end pt-6 border-t border-[#E5E3DC]">
+        <div className="flex justify-end pt-6 border-t border-[var(--bd)]">
           <button
             onClick={handleSave}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[#146C43] hover:bg-[#0E5C38] text-sm font-medium transition-colors"
+            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-ink)] text-sm font-medium transition-colors"
           >
             {saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
             {saved ? "Saved!" : "Save Profile"}

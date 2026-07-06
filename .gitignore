@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/scripts/eval/last-run-report.json
 
 # next.js
 /.next/

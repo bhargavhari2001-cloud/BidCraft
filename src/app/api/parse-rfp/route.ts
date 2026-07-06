@@ -3,6 +3,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import mammoth from "mammoth";
 import { workbookToText } from "@/lib/xlsxParser";
 import { notifySlack } from "@/lib/notify";
+import { extractJson } from "@/lib/extractJson";
 import { checkRateLimit, getClientIP, rateLimitError } from "@/lib/rateLimit";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -155,22 +156,20 @@ Respond ONLY with valid JSON in this exact format, no other text:
     }
 
     const message = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-5",
       max_tokens: 4096,
       messages: [{ role: "user", content: userContent }],
     });
 
+    // claude-sonnet-5 may emit a leading "thinking" block before the text
+    // block, so find the first text block rather than assuming index 0.
     const responseText =
-      message.content[0].type === "text" ? message.content[0].text : "";
+      message.content.find((block) => block.type === "text")?.text ?? "";
 
-    let parsedResult;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- spread verbatim into the response below
+    let parsedResult: any;
     try {
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        parsedResult = JSON.parse(jsonMatch[0]);
-      } else {
-        throw new Error("No JSON found in response");
-      }
+      parsedResult = extractJson(responseText);
     } catch {
       return NextResponse.json(
         { error: "Failed to parse AI response", raw: responseText },

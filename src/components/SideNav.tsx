@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
+import { acquireScrollLock } from "@/lib/scrollLock";
 
 const NAV_SECTIONS = [
   {
@@ -63,11 +66,19 @@ export default function SideNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => { setMobileOpen(false); }, [pathname]);
+  // Close the mobile menu on navigation. Adjusted during render (React's
+  // recommended pattern for "reset state when a prop changes") rather than
+  // an effect, which would cause an extra render pass for the same result.
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setMobileOpen(false);
+  }
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (!mobileOpen) return;
+    const release = acquireScrollLock();
+    return release;
   }, [mobileOpen]);
 
   return (
@@ -109,17 +120,14 @@ export default function SideNav() {
             style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}
           >
             <div
+              id="bidcraft-logo-anchor"
               aria-hidden="true"
               style={{
-                width: 30, height: 30, borderRadius: 8, flexShrink: 0,
-                background: "var(--accent,#146C43)",
+                width: 30, height: 30, flexShrink: 0,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                boxShadow: "0 1px 2px rgba(22,167,92,.35)",
               }}
             >
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 6L9 17l-5-5" />
-              </svg>
+              <Logo size={26} />
             </div>
             <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
               <span style={{ fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em", color: "var(--sb-fg,var(--text,#1B1A17))" }}>
@@ -220,8 +228,9 @@ export default function SideNav() {
           ))}
         </div>
 
-        {/* User profile */}
-        <div style={{ padding: 12, borderTop: "1px solid var(--sb-border,var(--bd,#E5E3DC))" }}>
+        {/* Theme toggle + user profile */}
+        <div style={{ padding: 12, borderTop: "1px solid var(--sb-border,var(--bd,#E5E3DC))", display: "flex", flexDirection: "column", gap: 6 }}>
+          <ThemeToggle />
           <div style={{
             display: "flex", alignItems: "center", gap: 8,
             padding: "8px 10px", borderRadius: 8,

@@ -1,0 +1,83 @@
+name: RAG golden-set eval
+
+# Voyage AI is on the free tier (3 requests/min), and generate-response makes
+# 2 Voyage calls per question, so this deliberately does NOT run on every PR —
+# a 15-question run already takes ~10+ minutes of enforced pacing. It runs on
+# push to main (when retrieval/generation code actually changes) and can be
+# triggered manually with a custom sample size.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/lib/**"
+      - "src/app/api/**"
+      - "supabase/migrations/**"
+      - "scripts/eval-golden-set.ts"
+      - "scripts/eval/golden-qa-set.json"
+  workflow_dispatch:
+    inputs:
+      sample_size:
+        description: "Number of golden questions to run (max 75)"
+        required: false
+        default: "15"
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      VOYAGE_API_KEY: ${{ secrets.VOYAGE_API_KEY }}
+      EVAL_SAMPLE_SIZE: ${{ github.event.inputs.sample_size || '15' }}
+      BASE_URL: http://localhost:3001
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Start + wait + eval + cleanup all live in ONE step. GitHub Actions
+      # runs each `run:` block in its own shell process; a server backgrounded
+      # with `&` in one step is killed when that step's shell exits, so it
+      # would already be dead by the time a separate "run eval" step started.
+      - name: Start app and run eval
+        run: |
+          npm run dev -- --port 3001 &
+          SERVER_PID=$!
+
+          echo "Waiting for app to be ready..."
+          ready=false
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:3001 -o /dev/null; then
+              ready=true
+              break
+            fi
+            sleep 2
+          done
+
+          if [ "$ready" != "true" ]; then
+            echo "App did not become ready in time" >&2
+            kill "$SERVER_PID" 2>/dev/null || true
+            exit 1
+          fi
+          echo "App is up"
+
+          npm run eval:golden
+          code=$?
+
+          kill "$SERVER_PID" 2>/dev/null || true
+          exit $code
+
+      - name: Upload eval report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rag-eval-report
+          path: scripts/eval/last-run-report.json
