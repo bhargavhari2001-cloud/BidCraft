@@ -40,6 +40,14 @@
   --sb-border: #E5E3DC;
   --sb-active: #FFFFFF;
 
+  /* Glass card treatment — inert in light theme (falls back to --surface)
+     so .glass-card looks identical to a plain card. The actual blur is a
+     literal value scoped under [data-theme="dark"], not a token — Tailwind's
+     CSS pipeline silently drops backdrop-filter when its value is a var(). */
+  --glass-bg:     var(--surface);
+  --glass-border: var(--bd);
+  --ambient-display: none;
+
   /* Legacy aliases kept for components not yet migrated */
   --bg-base:      var(--bg);
   --bg-surface-1: var(--surface);
@@ -113,6 +121,14 @@
   --sb-border: #1C1F27;
   --sb-active: #1B1E26;
 
+  /* Glass card treatment — sourced from the dark-mode design reference:
+     translucent white over the dark base + backdrop blur is what actually
+     reads as "liquid glass"; a flat dark color alone (what we had before)
+     does not, no matter how dark. */
+  --glass-bg:     rgba(255,255,255,.035);
+  --glass-border: rgba(255,255,255,.08);
+  --ambient-display: block;
+
   /* Legacy aliases: forward to the tokens above so anything still
      reading these directly (rather than the modern names) tracks
      the active theme instead of staying stuck on light-mode hex. */
@@ -147,6 +163,70 @@ body {
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Liquid glass (dark theme) ──────────────────────────────────
+   Card surfaces get a translucent-white + backdrop-blur treatment
+   instead of a flat color; the ambient glow layer behind them is what
+   the blur actually picks up. Both are no-ops in light theme. */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+}
+[data-theme="dark"] .glass-card {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.sidenav {
+  background: var(--sb-bg);
+  border-right: 1px solid var(--sb-border);
+}
+[data-theme="dark"] .sidenav {
+  background: var(--glass-bg);
+  border-right-color: var(--glass-border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.ambient-bg {
+  display: var(--ambient-display);
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ambient-bg::before,
+.ambient-bg::after {
+  content: "";
+  position: absolute;
+  width: 640px;
+  height: 560px;
+  border-radius: 50%;
+  filter: blur(40px);
+}
+.ambient-bg::before {
+  top: -220px;
+  left: 20%;
+  background: radial-gradient(rgba(74,158,255,.16) 0%, rgba(0,0,0,0) 65%);
+}
+.ambient-bg::after {
+  top: 30%;
+  right: -140px;
+  background: radial-gradient(rgba(127,209,163,.14) 0%, rgba(0,0,0,0) 65%);
+}
+.ambient-grid {
+  display: var(--ambient-display);
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,.05) 0px, rgba(255,255,255,.05) 1px,
+    rgba(0,0,0,0) 1px, rgba(0,0,0,0) 120px
+  );
 }
 
 /* ── Skip to content ────────────────────────────────────────── */

@@ -5,28 +5,28 @@ import { useRouter } from "next/navigation";
 import { getRFPSessions } from "@/lib/storage";
 import { RFPSession } from "@/types";
 
-const ACCENT = "#146C43";
+const ACCENT = "var(--accent)";
 
 // Design-file static data for fields not in the current data model
 // (monetary values, win rate, deadlines, activity feed)
 const STATIC_BIDS = [
-  { name: "Municipal Cloud Migration",     client: "City of Westbrook",     value: "$1.2M", pct: "67%", pctColor: "#3FAE6E", due: "Jul 3",  dueNote: "4 days",    dueColor: "#A23A2E" },
-  { name: "Data Platform Modernization",   client: "Coastal Health Network", value: "$880K", pct: "41%", pctColor: "#146C43", due: "Jul 9",  dueNote: "10 days",   dueColor: "#1B1A17" },
-  { name: "Managed Security Services",     client: "Atlas Logistics",        value: "$520K", pct: "88%", pctColor: "#3FAE6E", due: "Jul 2",  dueNote: "3 days",    dueColor: "#A23A2E" },
-  { name: "DevOps Transformation",         client: "Pinnacle Retail Group",  value: "$1.05M",pct: "100%",pctColor: "#3FAE6E", due: "Jun 24", dueNote: "awaiting",  dueColor: "#1B1A17" },
+  { name: "Municipal Cloud Migration",     client: "City of Westbrook",     value: "$1.2M", pct: "67%", pctColor: "var(--pos)", due: "Jul 3",  dueNote: "4 days",    dueColor: "var(--neg)" },
+  { name: "Data Platform Modernization",   client: "Coastal Health Network", value: "$880K", pct: "41%", pctColor: "var(--accent)", due: "Jul 9",  dueNote: "10 days",   dueColor: "#1B1A17" },
+  { name: "Managed Security Services",     client: "Atlas Logistics",        value: "$520K", pct: "88%", pctColor: "var(--pos)", due: "Jul 2",  dueNote: "3 days",    dueColor: "var(--neg)" },
+  { name: "DevOps Transformation",         client: "Pinnacle Retail Group",  value: "$1.05M",pct: "100%",pctColor: "var(--pos)", due: "Jun 24", dueNote: "awaiting",  dueColor: "#1B1A17" },
 ];
 
 const deadlines = [
-  { mon: "Jul", day: "02", title: "Atlas Logistics — final review",    note: "3 days · 88% complete",   color: "#A23A2E" },
-  { mon: "Jul", day: "03", title: "City of Westbrook — submission",    note: "4 days · 8 questions left", color: "#9A5B1E" },
-  { mon: "Jul", day: "09", title: "Coastal Health — draft due",        note: "10 days · on track",       color: "#2F7048" },
+  { mon: "Jul", day: "02", title: "Atlas Logistics — final review",    note: "3 days · 88% complete",   color: "var(--neg)" },
+  { mon: "Jul", day: "03", title: "City of Westbrook — submission",    note: "4 days · 8 questions left", color: "var(--warn)" },
+  { mon: "Jul", day: "09", title: "Coastal Health — draft due",        note: "10 days · on track",       color: "var(--pos)" },
 ];
 
 const activity = [
-  { text: "Claude drafted 3 responses for City of Westbrook",    who: "AI assistant", time: "12 min ago", iconBg: "#EAF1EC", iconFg: ACCENT },
-  { text: 'Ravi marked "Security certifications" as complete',  who: "Ravi Kapoor",  time: "48 min ago", iconBg: "#EAF2EC", iconFg: "#2F7048" },
-  { text: "New RFP uploaded — Coastal Health Network",           who: "Dana Mercer",  time: "2 hr ago",   iconBg: "#E8EFF6", iconFg: "#2C5C8A" },
-  { text: 'Knowledge base entry "SLA commitments" updated',     who: "Ravi Kapoor",  time: "5 hr ago",   iconBg: "#F0ECF6", iconFg: "#5B4A8A" },
+  { text: "Claude drafted 3 responses for City of Westbrook",    who: "AI assistant", time: "12 min ago", iconBg: "var(--accent-soft)", iconFg: ACCENT },
+  { text: 'Ravi marked "Security certifications" as complete',  who: "Ravi Kapoor",  time: "48 min ago", iconBg: "var(--accent-soft)", iconFg: "var(--pos)" },
+  { text: "New RFP uploaded — Coastal Health Network",           who: "User",  time: "2 hr ago",   iconBg: "color-mix(in srgb, var(--info) 15%, var(--surface))", iconFg: "var(--info)" },
+  { text: 'Knowledge base entry "SLA commitments" updated',     who: "Ravi Kapoor",  time: "5 hr ago",   iconBg: "color-mix(in srgb, var(--purp) 15%, var(--surface))", iconFg: "var(--purp)" },
 ];
 
 const trendPts = [38,40,37,42,41,44,43,46,45,44,47,47];
@@ -54,6 +54,9 @@ export default function DashboardPage() {
   const [sessions, setSessions] = useState<RFPSession[]>([]);
 
   useEffect(() => {
+    // Reads client-only storage (localStorage-backed) after mount — the
+    // documented exception to this rule for syncing with an external source.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSessions(getRFPSessions());
   }, []);
 
@@ -71,7 +74,7 @@ export default function DashboardPage() {
     ? sessions.map(s => {
         const pct = sessionPct(s);
         const pctStr = `${pct}%`;
-        const pctColor = pct >= 80 ? "#3FAE6E" : pct >= 40 ? "#146C43" : "#9A5B1E";
+        const pctColor = pct >= 80 ? "var(--pos)" : pct >= 40 ? "var(--accent)" : "var(--warn)";
         const deadline = s.submissionDeadline
           ? new Date(s.submissionDeadline).toLocaleDateString("en-US", { month: "short", day: "numeric" })
           : "—";
@@ -80,10 +83,10 @@ export default function DashboardPage() {
     : STATIC_BIDS;
 
   const kpis = [
-    { label: "Active bids",         value: totalRFPs > 0 ? String(totalRFPs) : "6",   unit: "",      delta: "+2",        deltaColor: "#2F7048", barPct: totalRFPs > 0 ? `${Math.min(totalRFPs * 10, 100)}%` : "60%" },
-    { label: "Open value",          value: "$5.0",                                      unit: "M",     delta: "+$1.2M",    deltaColor: "#2F7048", barPct: "74%" },
+    { label: "Active bids",         value: totalRFPs > 0 ? String(totalRFPs) : "6",   unit: "",      delta: "+2",        deltaColor: "var(--pos)", barPct: totalRFPs > 0 ? `${Math.min(totalRFPs * 10, 100)}%` : "60%" },
+    { label: "Open value",          value: "$5.0",                                      unit: "M",     delta: "+$1.2M",    deltaColor: "var(--pos)", barPct: "74%" },
     { label: "Questions to answer", value: totalRFPs > 0 ? String(unanswered) : "31",  unit: "left",  delta: "−12 today", deltaColor: "#8A867D", barPct: totalRFPs > 0 && totalQuestions > 0 ? `${Math.round((unanswered / totalQuestions) * 100)}%` : "44%" },
-    { label: "Avg draft time",      value: totalRFPs > 0 ? avgMinPerQ : "2.1",         unit: "min/Q", delta: "−68%",      deltaColor: "#2F7048", barPct: "30%" },
+    { label: "Avg draft time",      value: totalRFPs > 0 ? avgMinPerQ : "2.1",         unit: "min/Q", delta: "−68%",      deltaColor: "var(--pos)", barPct: "30%" },
   ];
 
   const bidsSubtitle = totalRFPs > 0
@@ -96,7 +99,7 @@ export default function DashboardPage() {
       <header style={{
         flexShrink: 0, height: 62,
         display: "flex", alignItems: "center", gap: 18, padding: "0 28px",
-        background: "rgba(250,249,246,.85)", backdropFilter: "blur(8px)",
+        background: "color-mix(in srgb, var(--bg) 85%, transparent)", backdropFilter: "blur(8px)",
         borderBottom: "1px solid var(--bd,#E5E3DC)",
       }}>
         <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15, flexShrink: 0 }}>
@@ -128,7 +131,7 @@ export default function DashboardPage() {
               display: "flex", alignItems: "center", gap: 7, height: 36, padding: "0 14px",
               borderRadius: 9, border: `1px solid ${ACCENT}`, background: ACCENT,
               color: "#fff", fontFamily: "'Geist',sans-serif", fontSize: 13, fontWeight: 600,
-              cursor: "pointer", boxShadow: "0 1px 2px rgba(22,167,92,.25)",
+              cursor: "pointer", boxShadow: "0 1px 2px color-mix(in srgb, var(--accent) 25%, transparent)",
             }}
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
@@ -144,7 +147,7 @@ export default function DashboardPage() {
           {/* KPI row */}
           <div className="kpi-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 24 }}>
             {kpis.map((k) => (
-              <div key={k.label} style={{ background: "var(--surface,#fff)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 12, padding: "16px 17px", display: "flex", flexDirection: "column", gap: 10 }}>
+              <div key={k.label} className="glass-card" style={{ borderRadius: 12, padding: "16px 17px", display: "flex", flexDirection: "column", gap: 10 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 10.5, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--faint,#8A867D)" }}>{k.label}</span>
                   <span style={{ fontFamily: "'Geist Mono',monospace", fontSize: 11, fontWeight: 500, color: k.deltaColor }}>{k.delta}</span>
@@ -163,7 +166,7 @@ export default function DashboardPage() {
           <div style={{ display: "grid", gridTemplateColumns: "1.55fr 1fr", gap: 18, alignItems: "start" }}>
 
             {/* Active bids table */}
-            <section style={{ background: "var(--surface,#fff)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 12, overflow: "hidden" }}>
+            <section className="glass-card" style={{ borderRadius: 12, overflow: "hidden" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 18px", borderBottom: "1px solid var(--bd2,#EEECE5)" }}>
                 <div>
                   <h2 style={{ margin: 0, fontFamily: "'Newsreader',serif", fontSize: 17, fontWeight: 500, color: "var(--text,#1B1A17)" }}>Active bids</h2>
@@ -221,7 +224,7 @@ export default function DashboardPage() {
               </section>
 
               {/* Deadlines */}
-              <section style={{ background: "var(--surface,#fff)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 12, overflow: "hidden" }}>
+              <section className="glass-card" style={{ borderRadius: 12, overflow: "hidden" }}>
                 <div style={{ padding: "13px 18px", borderBottom: "1px solid var(--bd2,#EEECE5)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <h2 style={{ margin: 0, fontFamily: "'Newsreader',serif", fontSize: 15, fontWeight: 500, color: "var(--text,#1B1A17)" }}>Upcoming deadlines</h2>
                 </div>
@@ -240,7 +243,7 @@ export default function DashboardPage() {
               </section>
 
               {/* Activity feed */}
-              <section style={{ background: "var(--surface,#fff)", border: "1px solid var(--bd,#E5E3DC)", borderRadius: 12, overflow: "hidden" }}>
+              <section className="glass-card" style={{ borderRadius: 12, overflow: "hidden" }}>
                 <div style={{ padding: "13px 18px", borderBottom: "1px solid var(--bd2,#EEECE5)" }}>
                   <h2 style={{ margin: 0, fontFamily: "'Newsreader',serif", fontSize: 15, fontWeight: 500, color: "var(--text,#1B1A17)" }}>Recent activity</h2>
                 </div>

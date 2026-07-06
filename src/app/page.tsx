@@ -29,7 +29,7 @@ interface ParseResult {
 
 /* ── Design tokens (category + status) ───────────────────── */
 const CAT: Record<string, { border: string; badgeBg: string; badgeText: string; dot: string }> = {
-  "Technical":               { border:"#146C43", badgeBg:"rgba(20,108,67,.10)", badgeText:"#146C43", dot:"#146C43" },
+  "Technical":               { border:"var(--accent)", badgeBg:"color-mix(in srgb, var(--accent) 10%, transparent)", badgeText:"var(--accent)", dot:"var(--accent)" },
   "Security & Compliance":   { border:"#EF4444", badgeBg:"rgba(239,68,68,.12)",  badgeText:"#FCA5A5", dot:"#EF4444" },
   "Experience & References": { border:"#06B6D4", badgeBg:"rgba(6,182,212,.12)",  badgeText:"#67E8F9", dot:"#06B6D4" },
   "Staffing":                { border:"#F59E0B", badgeBg:"rgba(245,158,11,.12)", badgeText:"#FCD34D", dot:"#F59E0B" },
@@ -196,7 +196,7 @@ function QuestionCard({
               aria-controls={`q-text-${question.id}`}
               style={{
                 display:"inline-flex", alignItems:"center", gap:4,
-                fontSize:12, color:"#146C43", background:"none",
+                fontSize:12, color:"var(--accent)", background:"none",
                 border:"none", cursor:"pointer", padding:"0 0 8px",
                 fontFamily:"inherit",
               }}
@@ -555,12 +555,12 @@ export default function Home() {
                 style={{
                   display:"inline-flex", alignItems:"center", gap:8,
                   padding:"6px 16px", borderRadius:99,
-                  background:"#EAF1EC", border:"1px solid rgba(20,108,67,.25)",
+                  background:"var(--accent-soft)", border:"1px solid color-mix(in srgb, var(--accent) 25%, transparent)",
                   marginBottom:24,
                 }}
               >
-                <span style={{ width:6, height:6, borderRadius:"50%", background:"#146C43" }} />
-                <span style={{ fontSize:11, fontWeight:600, color:"#146C43", letterSpacing:"0.1em" }}>
+                <span style={{ width:6, height:6, borderRadius:"50%", background:"var(--accent)" }} />
+                <span style={{ fontSize:11, fontWeight:600, color:"var(--accent)", letterSpacing:"0.1em" }}>
                   POWERED BY AI
                 </span>
               </div>
@@ -577,7 +577,7 @@ export default function Home() {
                 <span
                   aria-label="In less time."
                   style={{
-                    backgroundImage:"linear-gradient(135deg,#146C43 0%,#17A95D 100%)",
+                    backgroundImage:"linear-gradient(135deg,var(--pos) 0%,var(--accent) 100%)",
                     WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
                     backgroundClip:"text",
                   }}
@@ -618,7 +618,7 @@ export default function Home() {
                       style={{
                         fontSize:28, fontWeight:800,
                         fontFamily:'"JetBrains Mono",monospace',
-                        backgroundImage:"linear-gradient(180deg,rgba(250,249,246,.97),rgba(250,249,246,.5))",
+                        backgroundImage:"linear-gradient(180deg,color-mix(in srgb, var(--text) 97%, transparent),color-mix(in srgb, var(--text) 50%, transparent))",
                         WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
                         backgroundClip:"text",
                       }}
@@ -650,7 +650,7 @@ export default function Home() {
                     <div
                       style={{
                         position:"absolute", inset:"-40px -60px",
-                        background:"radial-gradient(ellipse at center,rgba(20,108,67,.06) 0%,transparent 70%)",
+                        background:"radial-gradient(ellipse at center,color-mix(in srgb, var(--accent) 6%, transparent) 0%,transparent 70%)",
                         pointerEvents:"none",
                       }}
                     />
@@ -668,15 +668,15 @@ export default function Home() {
                     style={{
                       position:"relative",
                       border: isDragging
-                        ? "2px dashed #146C43"
+                        ? "2px dashed var(--accent)"
                         : "2px dashed #E5E3DC",
                       borderRadius:20, cursor:"pointer",
                       background: isDragging
-                        ? "rgba(20,108,67,.05)"
+                        ? "color-mix(in srgb, var(--accent) 5%, transparent)"
                         : "transparent",
                       transition:"all 0.25s ease-out",
                       transform: isDragging ? "scale(1.01)" : "scale(1)",
-                      boxShadow: isDragging ? "0 0 32px rgba(20,108,67,.12)" : "none",
+                      boxShadow: isDragging ? "0 0 32px color-mix(in srgb, var(--accent) 12%, transparent)" : "none",
                     }}
                   >
                     <div
@@ -692,17 +692,17 @@ export default function Home() {
                         style={{
                           width:64, height:64, borderRadius:16,
                           background: isDragging
-                            ? "rgba(20,108,67,.12)"
+                            ? "color-mix(in srgb, var(--accent) 12%, transparent)"
                             : "var(--soft,#F6F4EF)",
                           display:"flex", alignItems:"center", justifyContent:"center",
                           marginBottom:24,
                           transition:"all 0.25s",
-                          boxShadow: isDragging ? "0 0 20px rgba(20,108,67,.2)" : "none",
+                          boxShadow: isDragging ? "0 0 20px color-mix(in srgb, var(--accent) 20%, transparent)" : "none",
                         }}
                       >
                         <svg
                           width="28" height="28" viewBox="0 0 24 24" fill="none"
-                          stroke={isDragging ? "#146C43" : "#a8a499"}
+                          stroke={isDragging ? "var(--accent)" : "var(--faint2)"}
                           strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
                         >
                           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -716,7 +716,7 @@ export default function Home() {
                       </p>
                       <p style={{ fontSize:14, color:"var(--text-muted)", margin:"0 0 24px" }}>
                         or{" "}
-                        <span style={{ color:"#146C43", textDecoration:"underline", textDecorationColor:"rgba(20,108,67,.35)", textUnderlineOffset:3 }}>
+                        <span style={{ color:"var(--accent)", textDecoration:"underline", textDecorationColor:"color-mix(in srgb, var(--accent) 35%, transparent)", textUnderlineOffset:3 }}>
                           browse files
                         </span>{" "}
                         to upload
@@ -786,11 +786,11 @@ export default function Home() {
                       aria-hidden="true"
                       style={{
                         width:44, height:44, borderRadius:10, flexShrink:0,
-                        background:"#EAF1EC",
+                        background:"var(--accent-soft)",
                         display:"flex", alignItems:"center", justifyContent:"center",
                       }}
                     >
-                      <FileText style={{ width:20, height:20, color:"#146C43" }} aria-hidden="true" />
+                      <FileText style={{ width:20, height:20, color:"var(--accent)" }} aria-hidden="true" />
                     </div>
                     <div style={{ flex:1, minWidth:0 }}>
                       <p style={{ fontSize:14, fontWeight:500, color:"var(--text-primary)", margin:"0 0 2px", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
@@ -808,7 +808,7 @@ export default function Home() {
                       style={{
                         fontSize:13, fontWeight:500,
                         fontFamily:'"JetBrains Mono",monospace',
-                        color:"#146C43",
+                        color:"var(--accent)",
                       }}
                     >
                       {progress}%
@@ -826,7 +826,7 @@ export default function Home() {
                     <div
                       style={{
                         height:"100%", borderRadius:99,
-                        background:"linear-gradient(90deg,#146C43,#17A95D)",
+                        background:"linear-gradient(90deg,var(--pos),var(--accent))",
                         width:`${progress}%`,
                         transition:"width 0.3s ease-out",
                       }}
@@ -963,7 +963,7 @@ export default function Home() {
                         <span
                           style={{
                             fontFamily:'"JetBrains Mono",monospace', fontSize:11,
-                            fontWeight:700, color:"rgba(20,108,67,.6)",
+                            fontWeight:700, color:"color-mix(in srgb, var(--accent) 60%, transparent)",
                           }}
                         >
                           {step.n}
@@ -1014,7 +1014,7 @@ export default function Home() {
                 padding:"24px 28px",
                 borderRadius:16, border:"1px solid var(--border-subtle)",
                 background:"var(--bg-surface-1)",
-                borderLeft:"3px solid #146C43",
+                borderLeft:"3px solid var(--accent)",
               }}
             >
               <div>
@@ -1063,10 +1063,10 @@ export default function Home() {
                   style={{
                     display:"flex", alignItems:"center", gap:7,
                     padding:"9px 20px", borderRadius:8,
-                    background:"linear-gradient(135deg,#146C43,#17A95D)",
+                    background:"linear-gradient(135deg,var(--pos),var(--accent))",
                     border:"none", color:"white", fontSize:13,
                     fontWeight:600, cursor:"pointer", fontFamily:"inherit",
-                    boxShadow:"0 4px 12px rgba(20,108,67,.2)",
+                    boxShadow:"0 4px 12px color-mix(in srgb, var(--accent) 20%, transparent)",
                   }}
                 >
                   <Sparkles aria-hidden="true" style={{ width:14, height:14 }} />
@@ -1086,7 +1086,7 @@ export default function Home() {
                 }}
               >
                 {[
-                  { dt:questions.length, dd:"Total",       color:"#146C43", bg:"rgba(20,108,67,.08)" },
+                  { dt:questions.length, dd:"Total",       color:"var(--accent)", bg:"color-mix(in srgb, var(--accent) 8%, transparent)" },
                   { dt:pendingCount,     dd:"Pending",     color:"#8A867D", bg:"var(--soft,#F6F4EF)" },
                   { dt:inProgressCount,  dd:"In Progress", color:"#F59E0B", bg:"rgba(245,158,11,.08)" },
                   { dt:completeCount,    dd:"Complete",    color:"#10B981", bg:"rgba(16,185,129,.08)"  },
@@ -1153,9 +1153,9 @@ export default function Home() {
                   display:"flex", alignItems:"center", gap:7,
                   padding:"9px 14px", borderRadius:8, fontSize:13,
                   fontWeight:500, cursor:"pointer", fontFamily:"inherit",
-                  border: showFilters ? "1px solid rgba(20,108,67,.4)" : "1px solid var(--border-subtle)",
-                  background: showFilters ? "rgba(20,108,67,.08)" : "var(--bg-surface-1)",
-                  color: showFilters ? "#146C43" : "var(--text-muted)",
+                  border: showFilters ? "1px solid color-mix(in srgb, var(--accent) 40%, transparent)" : "1px solid var(--border-subtle)",
+                  background: showFilters ? "color-mix(in srgb, var(--accent) 8%, transparent)" : "var(--bg-surface-1)",
+                  color: showFilters ? "var(--accent)" : "var(--text-muted)",
                   transition:"all 0.15s",
                 }}
               >
@@ -1171,9 +1171,9 @@ export default function Home() {
                   display:"flex", alignItems:"center", gap:7,
                   padding:"9px 14px", borderRadius:8, fontSize:13,
                   fontWeight:500, cursor:"pointer", fontFamily:"inherit",
-                  border:"1px solid rgba(20,108,67,.3)",
-                  background:"#EAF1EC",
-                  color:"#146C43",
+                  border:"1px solid color-mix(in srgb, var(--accent) 30%, transparent)",
+                  background:"var(--accent-soft)",
+                  color:"var(--accent)",
                   transition:"all 0.15s",
                 }}
               >
@@ -1208,9 +1208,9 @@ export default function Home() {
                           padding:"5px 12px", borderRadius:6, fontSize:12,
                           fontWeight:500, cursor:"pointer", fontFamily:"inherit",
                           transition:"all 0.15s",
-                          background: activeCategory === cat ? "rgba(20,108,67,.1)" : "var(--bg-surface-2)",
-                          border: activeCategory === cat ? "1px solid rgba(20,108,67,.3)" : "1px solid var(--border-subtle)",
-                          color: activeCategory === cat ? "#146C43" : "var(--text-muted)",
+                          background: activeCategory === cat ? "color-mix(in srgb, var(--accent) 10%, transparent)" : "var(--bg-surface-2)",
+                          border: activeCategory === cat ? "1px solid color-mix(in srgb, var(--accent) 30%, transparent)" : "1px solid var(--border-subtle)",
+                          color: activeCategory === cat ? "var(--accent)" : "var(--text-muted)",
                         }}
                       >
                         {cat} ({catCount(cat)})
@@ -1234,9 +1234,9 @@ export default function Home() {
                           padding:"5px 12px", borderRadius:6, fontSize:12,
                           fontWeight:500, cursor:"pointer", fontFamily:"inherit",
                           transition:"all 0.15s",
-                          background: activeStatus === s ? "rgba(20,108,67,.1)" : "var(--bg-surface-2)",
-                          border: activeStatus === s ? "1px solid rgba(20,108,67,.3)" : "1px solid var(--border-subtle)",
-                          color: activeStatus === s ? "#146C43" : "var(--text-muted)",
+                          background: activeStatus === s ? "color-mix(in srgb, var(--accent) 10%, transparent)" : "var(--bg-surface-2)",
+                          border: activeStatus === s ? "1px solid color-mix(in srgb, var(--accent) 30%, transparent)" : "1px solid var(--border-subtle)",
+                          color: activeStatus === s ? "var(--accent)" : "var(--text-muted)",
                         }}
                       >
                         {s === "All" ? "All" : STATUS[s].label}
@@ -1321,7 +1321,7 @@ export default function Home() {
         onClose={closeAddModal}
       >
         {/* Gradient accent bar */}
-        <div style={{ height:3, background:"linear-gradient(90deg,#146C43,#17A95D)" }} />
+        <div style={{ height:3, background:"linear-gradient(90deg,var(--pos),var(--accent))" }} />
         <div style={{ padding:24 }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:20 }}>
             <h2 id="add-dialog-title" style={{ fontSize:17, fontWeight:700, margin:0, color:"var(--text-primary)" }}>
@@ -1415,7 +1415,7 @@ export default function Home() {
                 checked={modalMandatory}
                 onChange={(e) => setModalMandatory(e.target.checked)}
                 aria-label="Mark as mandatory question"
-                style={{ width:16, height:16, accentColor:"#146C43" }}
+                style={{ width:16, height:16, accentColor:"var(--accent)" }}
               />
               <span style={{ fontSize:14, color:"var(--text-secondary)" }}>
                 Mandatory question
@@ -1442,7 +1442,7 @@ export default function Home() {
               style={{
                 display:"flex", alignItems:"center", gap:7,
                 padding:"9px 18px", borderRadius:8,
-                background:"#146C43", border:"none",
+                background:"var(--accent)", border:"none",
                 color:"white", fontSize:13, fontWeight:600,
                 cursor:"pointer", fontFamily:"inherit",
               }}

@@ -108,8 +108,6 @@ export default function SideNav() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "var(--sb-bg,var(--soft2,#F4F3EF))",
-          borderRight: "1px solid var(--sb-border,var(--bd,#E5E3DC))",
         }}
       >
         {/* Logo */}
@@ -215,7 +213,7 @@ export default function SideNav() {
                       <span style={{
                         fontFamily: "'Geist Mono',monospace", fontSize: 10.5, fontWeight: 500,
                         padding: "1px 6px", borderRadius: 20,
-                        background: isActive ? "var(--accent,#146C43)" : "var(--bd,#E7E5DE)",
+                        background: isActive ? "var(--accent,var(--accent))" : "var(--bd,#E7E5DE)",
                         color: isActive ? "#04130A" : "var(--sb-muted,#8A867D)",
                       }}>
                         {badge}
@@ -252,7 +250,7 @@ export default function SideNav() {
                 Bid Manager
               </div>
             </div>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#3FAE6E", boxShadow: "0 0 0 3px rgba(63,174,110,.18)", flexShrink: 0 }} />
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--pos)", boxShadow: "0 0 0 3px color-mix(in srgb, var(--pos) 18%, transparent)", flexShrink: 0 }} />
           </div>
         </div>
       </nav>

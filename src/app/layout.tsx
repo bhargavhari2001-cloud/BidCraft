@@ -27,7 +27,13 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <div style={{ display: "flex", height: "100vh", width: "100%", overflow: "hidden", background: "var(--bg,#FAF9F6)", color: "var(--text,#1B1A17)", fontFamily: "'Geist',system-ui,sans-serif" }}>
+        {/* Ambient glow + grid texture behind the glass cards — dark theme
+            only (both render as display:none in light theme via tokens). */}
+        <div className="ambient-bg" aria-hidden="true" />
+        <div className="ambient-grid" aria-hidden="true" />
+        {/* No background here — body already paints it. Staying transparent
+            lets the ambient glow layer above show through in dark theme. */}
+        <div style={{ position: "relative", zIndex: 1, display: "flex", height: "100vh", width: "100%", overflow: "hidden", color: "var(--text,#1B1A17)", fontFamily: "'Geist',system-ui,sans-serif" }}>
           <SideNav />
           <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, height: "100%", overflow: "hidden" }}>
             {children}
